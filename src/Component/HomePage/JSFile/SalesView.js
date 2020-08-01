@@ -112,7 +112,7 @@ class SalesView extends Component {
 constructor(props){
   super(props);
   this.state={
-  checked:false,
+  checked:true,
   searchResult:[],
   item:'',
   Desc:'',
@@ -153,6 +153,7 @@ handleChange = () => {
   handleSearchItem =()=>{
   	this.setState({options:[]});
   	this.setState({checkedItems:[]});
+  	this.setState({searchResult:[]});
   	var item='';
   	var desc='';
   	var location='';

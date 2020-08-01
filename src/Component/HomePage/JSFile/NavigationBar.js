@@ -110,8 +110,9 @@ render()
     	<div className={classes.root}>
 		    <AppBar  position="fixed" style={{backgroundColor:'#4a4a4a'}}>
 		        <Toolbar style={{minHeight: 20}}>
-           <Link to="/Home" style={{ textDecoration: 'none' }} >
-            <Typography className={classes.title}> LOGO</Typography></Link>
+            <Typography className={classes.title}> 
+            <Link to="/Home" style={{ textDecoration: 'none' }} >LOGO
+            </Link></Typography>
 		        
     		       <div className={classes.search}>
                   <div className={classes.searchIcon}>

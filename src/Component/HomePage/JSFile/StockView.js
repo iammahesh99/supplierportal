@@ -112,7 +112,7 @@ class StockView extends Component {
 constructor(props){
   super(props);
   this.state={
-  checked:false,
+  checked:true,
   ischecked:'',
   searchResult:[],
   item:'',
@@ -154,6 +154,7 @@ handleChange = () => {
   handleSearchItem =()=>{
   	this.setState({options:[]});
   	this.setState({checkedItems:[]});
+  	this.setState({searchResult:[]});
   	var item='';
   	var desc='';
   	var location='';
