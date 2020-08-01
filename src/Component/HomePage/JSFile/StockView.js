@@ -175,7 +175,7 @@ handleChange = () => {
   	}
   	if(this.state.bar!='')
   	{
-       bar=(+"upc="+this.state.bar+'&').replace(/ /g,'');
+       bar=("upc="+this.state.bar+'&').replace(/ /g,'');
   	}
   	if(this.state.vpn!='')
   	{
