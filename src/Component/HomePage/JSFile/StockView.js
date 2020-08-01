@@ -152,6 +152,8 @@ handleChange = () => {
   }
 
   handleSearchItem =()=>{
+  	this.setState({options:[]});
+  	this.setState({checkedItems:[]});
   	var item='';
   	var desc='';
   	var location='';

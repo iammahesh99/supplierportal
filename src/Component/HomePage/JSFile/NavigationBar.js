@@ -23,6 +23,10 @@ import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import IconButton from '@material-ui/core/IconButton';
+import {
+  Route,
+  Link, Redirect,  
+} from "react-router-dom";
 
 
 
@@ -106,7 +110,8 @@ render()
     	<div className={classes.root}>
 		    <AppBar  position="fixed" style={{backgroundColor:'#4a4a4a'}}>
 		        <Toolbar style={{minHeight: 20}}>
-            <Typography className={classes.title}> LOGO</Typography>
+           <Link to="/Home" style={{ textDecoration: 'none' }} >
+            <Typography className={classes.title}> LOGO</Typography></Link>
 		        
     		       <div className={classes.search}>
                   <div className={classes.searchIcon}>
