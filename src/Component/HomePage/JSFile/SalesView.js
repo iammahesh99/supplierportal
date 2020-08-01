@@ -70,7 +70,7 @@ const styles = theme => ({
   		},
   	buttons:{
   		
-  		marginBottom: theme.spacing(1),
+  		marginTop: theme.spacing(1),
   		marginRight: theme.spacing(1),
 
   	},
@@ -108,12 +108,11 @@ const styles = theme => ({
 
 
 
-class StockView extends Component {
+class SalesView extends Component {
 constructor(props){
   super(props);
   this.state={
   checked:false,
-  ischecked:'',
   searchResult:[],
   item:'',
   Desc:'',
@@ -186,9 +185,9 @@ handleChange = () => {
           setTimeout(() => {
             Toast.hide();
           }, 2000);
-    const baseuri='http://ec2-3-15-215-175.us-east-2.compute.amazonaws.com/api/v1/stockdetail?';
+    const baseuri='http://ec2-3-15-215-175.us-east-2.compute.amazonaws.com/api/v1/salesdetail?';
     const itemsearch=query;
-      fetch(baseuri+itemsearch,{
+      fetch(baseuri,{
         method: 'GET',
         })
       .then(response =>  response.json())
@@ -206,7 +205,6 @@ handleChange = () => {
   	this.setState({vpn:''});
   }
   handleCheck = (event) => {
-  	
   	const options = this.state.options
     let index
 
@@ -226,13 +224,13 @@ handleChange = () => {
 
   };
   handleExport=()=>{
-  	 this.setState({checkedItems:[]});
+  	this.setState({checkedItems:[]});
   	 this.state.options.map(data =>{
   	 	this.state.checkedItems.push(JSON.parse(data));
 
 
   	 })
-  	 var ans = 'Stock'; 
+  	 var ans = 'Sales'; 
   	 var arr='0123456789qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM';
   	 var len=5;
       for (var i = len; i > 0; i--) { 
@@ -252,7 +250,6 @@ render()
  {
   const { classes}= this.props;
   const open = Boolean(this.state.ischecked);
-  var set='';
   
     return (
     	<div className={classes.mainscreen}>
@@ -291,11 +288,15 @@ render()
 						        </Grid>
 						        <Grid item xs={4} style={{display:'flex', justifyContent: 'flex-end'}}>
 						          <div className={classes.paper}>
-						          <label>Location:
-						          <input type="text"        
-        							className='input'
+						          <label>Start Date:
+						          <input 
+						          type="date"
+						          
+						            InputLabelProps={{
+							          shrink: true,
+							        }}
         							style={{ border: '1px solid red'}} 
-						          onBlur={this.locationChange} /></label>
+						           /></label>
 						          </div>
 						        </Grid>
 				        </Grid>
@@ -311,15 +312,23 @@ render()
 						        </Grid>
 						        <Grid item xs={4} style={{display:'flex', justifyContent: 'flex-end'}}>
 						          <div className={classes.paper}>
-						          <label>VPN:
+						          <label>Location:
 						         <input type="text"        
         							className='input'
         							style={{ border: '1px solid red'}} 
-						          onBlur={this.vpnChange} /></label>
+						          onBlur={this.locationChange} /></label>
 						          </div>
 						        </Grid>
-						        <Grid item xs={4}>
+						        <Grid item xs={4} style={{display:'flex', justifyContent: 'flex-end'}}>
 						          <div className={classes.paper}>
+						          <label>End Date:
+						         <input 
+						         	type="date"
+						          	
+						            InputLabelProps={{
+							         shrink: true,
+							        }}
+						          /></label>
 						          
 						          </div>
 						        </Grid>
@@ -330,12 +339,12 @@ render()
 				        display: 'flex',
 	    				flexDirection: 'column',}}>
 				        <div>
-				        <Button  size='small' className={classes.buttons}
+				        <Button size='small' className={classes.buttons}
 				         onClick={this.handleSearchItem}
 				         style={{backgroundColor:'red'}}>
 				         SEARCH
 				         </Button>
-				        <Button  size='small' className={classes.buttons}
+				        <Button size='small' className={classes.buttons}
 				        style={{backgroundColor:'red'}}
 				        onClick={this.handleReset}
 				        >
@@ -366,15 +375,18 @@ render()
 			            <TableCell padding='none' align="center" className={classes.table_head}>BARCODE</TableCell>
 			            <TableCell padding='none' align="center" className={classes.table_head}>VPN</TableCell>
 			            <TableCell padding='none' align="center" className={classes.table_head}>LOCATION</TableCell>
-			            <TableCell padding='none' align="center" className={classes.table_head}>TOTAL STOCK</TableCell>
-			            <TableCell padding='none' align="center" className={classes.table_head}>AVAILABLE STOCK</TableCell>
+			            <TableCell padding='none' align="center" className={classes.table_head}>TOTAL SALES</TableCell>
+			            <TableCell padding='none' align="center" className={classes.table_head}>RETURN</TableCell>
+			            <TableCell padding='none' align="center" className={classes.table_head}>NET SALES</TableCell>
+			            <TableCell padding='none' align="center" className={classes.table_head}>PROMO SALES</TableCell>
+
+
 
 			          </TableRow>
 			        </TableHead>
 
 			        <TableBody>
 			          {this.state.searchResult.map((row,index)=> (
-
 			            <TableRow >
 			            <TableCell padding='none' align="center" className={classes.table_column}>
 			              <input 
@@ -400,10 +412,16 @@ render()
 			                {row.locationName}
 			              </TableCell>
 			              <TableCell padding='none'  align="center" className={classes.table_column}>
-			                {row.totalStock}
+			                {row.totalSale}
 			              </TableCell>
 			              <TableCell padding='none'  align="center" className={classes.table_column}>
-			                {row.availableStock}
+			                {row.returns}
+			              </TableCell>
+			              <TableCell padding='none'  align="center" className={classes.table_column}>
+			                {row.netSale}
+			              </TableCell>
+			              <TableCell padding='none'  align="center" className={classes.table_column}>
+			                {row.promoSale}
 			              </TableCell>
 			              
 			            </TableRow>
@@ -423,7 +441,7 @@ render()
     	)
 }
 }
-StockView.propTypes = {
+SalesView.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-export default withStyles(styles)(StockView);
+export default withStyles(styles)(SalesView);

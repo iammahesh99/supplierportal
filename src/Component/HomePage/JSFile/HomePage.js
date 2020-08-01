@@ -89,6 +89,23 @@ constructor(props){
     this.setState({clickedButton:index});
 
   }
+  pageView(param){
+  	switch(param) {
+    case 'Stock':
+      return (
+      	<Link to="/Home/Stock" style={{ textDecoration: 'none' }} >
+		 <Paper>Stock</Paper></Link>);
+    case 'Sales':
+      return (
+      	<Link to="/Home/Sales" style={{ textDecoration: 'none' }} >
+		 <Paper>Sales</Paper></Link>);
+      	
+ 	default: 
+ 	return(
+		 <Paper>{this.state.clickedButton}</Paper>);
+
+  }
+ }
 render()
  {
   const { classes}= this.props;
@@ -140,10 +157,10 @@ render()
 		        </Grid>
 		        <Grid container  spacing={12}  style={{textAlign:'center'}}>
 		          		
-				        <Grid item xs={12} style={{textAlign:'center',paddingTop:'17%'}}>
+				        <Grid item xs={12} style={{textAlign:'center',paddingTop:'20%'}}>
 				        <div className={classes.paper}>
-				         <Link to="/Home/Stock" style={{ textDecoration: 'none' }} className={classes.paper}>
-				          <Paper>{this.state.clickedButton}</Paper></Link>
+				        {this.pageView(this.state.clickedButton)}
+				         
 				        </div>
 				         
 				        </Grid>
