@@ -85,6 +85,14 @@ const styles = theme => ({
     flexGrow: 1,
     textAlign:'start'
   },
+  bottomappBar: {
+    top: 'auto',
+    bottom: 3,
+  },
+  titlebottom: {
+    flexGrow: 1,
+    textAlign:'center'
+  },
 
   
 });
@@ -111,7 +119,7 @@ render()
 		    <AppBar  position="fixed" style={{backgroundColor:'#4a4a4a'}}>
 		        <Toolbar style={{minHeight: 20}}>
             <Typography className={classes.title}> 
-            <Link to="/Home" style={{ textDecoration: 'none' }} >LOGO
+            <Link to="/Home" style={{ textDecoration: 'none',color:'red'}} >LOGO
             </Link></Typography>
 		        
     		       <div className={classes.search}>
@@ -141,6 +149,14 @@ render()
           
 		          </Toolbar>
 		        </AppBar> 
+
+
+      <AppBar position="fixed" style={{backgroundColor:'#4a4a4a'}} className={classes.bottomappBar}>
+        <Toolbar style={{minHeight: 25}}>
+        <Typography className={classes.titlebottom}>Subscribe</Typography>
+          
+        </Toolbar>
+      </AppBar>
 			
       
     	</div>
