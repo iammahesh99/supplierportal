@@ -109,16 +109,30 @@ const styles = theme => ({
 
 
 class SalesView extends Component {
+
+	
 constructor(props){
+	var today = new Date();
+	var dd = today.getDate(); 
+    var mm = today.getMonth() + 1;
+    	if (dd < 10) { 
+            dd = '0' + dd; 
+        } 
+        if (mm < 10) { 
+            mm = '0' + mm; 
+        }  
+   var date = today.getFullYear() + '-' + mm + '-' + dd;
   super(props);
   this.state={
   checked:true,
+  currentDate: date,
   searchResult:[],
   item:'',
   Desc:'',
   location:'',
   bar:'',
-  vpn:'',
+  startDate:'',
+  endDate:'',
   checkedItems: [],
   options:[]
   }
@@ -146,8 +160,12 @@ handleChange = () => {
   barChange=(event)=>{
   	this.setState({bar:event.target.value})
   }
-  vpnChange=(event)=>{
-  	this.setState({vpn:event.target.value})
+  startDate=(event)=>{
+  	this.setState({startDate:event.target.value})
+  }
+  endDate=(event)=>{
+  	this.setState({endDate:event.target.value})
+
   }
 
   handleSearchItem =()=>{
@@ -158,7 +176,8 @@ handleChange = () => {
   	var desc='';
   	var location='';
   	var bar='';
-  	var vpn='';
+  	var startDate='';
+  	var endDate='';
   	if(this.state.item!=''){
   		item=("item="+this.state.item+'&').replace(/ /g,'');
 
@@ -176,11 +195,15 @@ handleChange = () => {
   	{
        bar=("upc="+this.state.bar+'&').replace(/ /g,'');
   	}
-  	if(this.state.vpn!='')
+  	if(this.state.startDate!='')
   	{
-       vpn=("vpn="+this.state.vpn+'&').replace(/ /g,'');
+       startDate=("startDate="+this.state.startDate+'&').replace(/ /g,'');
   	}
-  	var finalstring=item+desc+location+bar+vpn;
+  	if(this.state.endDate!='')
+  	{
+       endDate=("endDate="+this.state.endDate+'&').replace(/ /g,'');
+  	}
+  	var finalstring=item+desc+location+bar+startDate+endDate;
   	const query=finalstring.substring(0, finalstring.length - 1);
   	console.log(query);
 
@@ -190,7 +213,7 @@ handleChange = () => {
           }, 2000);
     const baseuri='http://ec2-3-15-215-175.us-east-2.compute.amazonaws.com/api/v1/salesdetail?';
     const itemsearch=query;
-      fetch(baseuri,{
+      fetch(baseuri+itemsearch,{
         method: 'GET',
         })
       .then(response =>  response.json())
@@ -253,7 +276,7 @@ render()
  {
   const { classes}= this.props;
   const open = Boolean(this.state.ischecked);
-  
+ 
     return (
     	<div className={classes.mainscreen}>
     	<div  className={classes.slide}>
@@ -294,7 +317,8 @@ render()
 						          <label>Start Date:
 						          <input 
 						          type="date"
-						          
+						          onChange={this.startDate}
+						          max={this.state.currentDate}
 						            InputLabelProps={{
 							          shrink: true,
 							        }}
@@ -327,6 +351,9 @@ render()
 						          <label>End Date:
 						         <input 
 						         	type="date"
+						         	onChange={this.endDate}
+						         	max={this.state.currentDate}
+						         	style={{ border: '1px solid red'}} 
 						          	
 						            InputLabelProps={{
 							         shrink: true,
