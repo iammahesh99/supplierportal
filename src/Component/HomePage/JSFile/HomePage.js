@@ -7,8 +7,6 @@ import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import { borders } from '@material-ui/system';
 import {
   Route,
   Link, Redirect,  
@@ -92,15 +90,40 @@ constructor(props){
   pageView(param){
   	switch(param) {
     case 'Stock':
-      return (
+      return (<div style={{display: 'flex',justifyContent:"center"}}>
+      	<div style={{borderLeft:'3px solid black' ,marginRight:'3%'}}></div>
       	<Link to="/Home/Stock" style={{ textDecoration: 'none' }} >
-		 <Paper>Stock</Paper></Link>);
+		 <Button  style={{textTransform: "none" ,fontWeight: 'bold'}}> View Stock</Button></Link>
+		 </div>);
+
     case 'Sales':
-      return (
+      return (<div style={{display: 'flex',justifyContent:"center"}}>
+      	<div style={{borderLeft:'3px solid black' ,marginRight:'3%'}}></div>
       	<Link to="/Home/Sales" style={{ textDecoration: 'none' }} >
-		 <Paper>Sales</Paper></Link>);
+		 <Button  style={{textTransform: "none" ,fontWeight: 'bold'}}>View Sales</Button></Link>
+		 </div>);
+
+	case 'Purchase Orders':
+      return (<div style={{display: 'flex',justifyContent:"center"}}>
+      	
+      	<div style={{borderLeft:'3px solid black' ,marginRight:'3%'}}></div>
+
+      	<Link to="/Home/PODetail" style={{ textDecoration: 'none' }} >
+		 <Button   style={{textTransform: "none" ,fontWeight: 'bold'}}>View Orders</Button ></Link>
+
+		 <div style={{borderLeft:'3px solid black',marginRight:'3%'}}></div>
+
+		 <Link  style={{ textDecoration: 'none' }} >
+		 <Button  style={{textTransform: "none" ,fontWeight: 'bold' }}>Create Orders</Button ></Link>
+
+		 <div style={{borderLeft:'3px solid black' ,marginRight:'3%'}}></div>
+
+		 <Link  style={{ textDecoration: 'none' }} >
+		 <Button  style={{textTransform: "none" ,fontWeight: 'bold'}}>Download Orders</Button></Link>
+		 </div>);
       	
  	default: 
+
  	return(
 		 <Paper>{this.state.clickedButton}</Paper>);
 
@@ -155,9 +178,9 @@ render()
 				          </div>
 				        </Grid>
 		        </Grid>
-		        <Grid container  spacing={12}  style={{textAlign:'center'}}>
+		        <Grid container  spacing={12}  >
 		          		
-				        <Grid item xs={12} style={{textAlign:'center',paddingTop:'20%'}}>
+				        <Grid item xs={12} style={{paddingTop:'25%'}}>
 				        <div className={classes.paper}>
 				        {this.pageView(this.state.clickedButton)}
 				         

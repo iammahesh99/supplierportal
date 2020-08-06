@@ -11,14 +11,6 @@ import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { withStyles,fade} from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import clsx from 'clsx';
-import {
-  faYoutube,
-  faFacebook,
-  faTwitter,
-  faInstagram
-} from "@fortawesome/free-brands-svg-icons";
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -27,6 +19,12 @@ import {
   Route,
   Link, Redirect,  
 } from "react-router-dom";
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import MenuList from '@material-ui/core/MenuList';
+import Button from '@material-ui/core/Button';
 
 
 
@@ -37,9 +35,7 @@ const styles = theme => ({
 		flexGrow: 1,
 
 	},
-  end:{
-    marginRight: theme.spacing(2),
-  },
+  
  
 
   search: {
@@ -105,13 +101,59 @@ class NavigationBar extends Component {
 constructor(props){
   super(props);
   this.state={
-  }
+    anchorEl:null,
+    
+  };
+  
  }
+handleProfileMenuOpen = event => {
+    this.setState({anchorEl:event.currentTarget})
+  };
+  handleMenuClose = () => {
+  this.setState({anchorEl:null})
+  };
+  
+  Apply= () =>{
+    // console.log('changed')
+    // localStorage.setItem('darkState',this.props.darkState);
 
+  }
 
 render()
  {
+  
   const { classes}= this.props;
+  const isMenuOpen = Boolean(this.state.anchorEl);
+
+  const menuId = 'primary-search-account-menu';
+              const renderMenu = (
+                <Menu
+                  anchorEl={this.state.anchorEl}
+                  anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                  id={menuId}
+                  keepMounted
+                  transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                  aria-haspopup="true"
+                  open={isMenuOpen}
+                  onClose={this.handleMenuClose}
+                >
+                
+                  
+                  <MenuItem >
+                  <FormControlLabel
+                    label="Dark Mode"
+                    labelPlacement="start"
+                    control=<Switch checked={this.props.darkState} onChange={this.props.handleThemeChange} />
+
+                  />
+                  </MenuItem>
+                  
+                 
+                  
+
+                  
+                </Menu>
+              );
   
     return (
     	<React.Fragment>
@@ -136,15 +178,26 @@ render()
                   />
                 </div>
 			      
-            
+
             <IconButton
-              edge="end"
+              
               aria-label="account of current user"
               aria-haspopup="true"
               color="inherit"
             >
               <AccountCircle />
             </IconButton>
+
+            <IconButton
+            
+            color="inherit"
+            aria-label="more"
+            aria-controls="long-menu"
+            aria-haspopup="true"
+            onClick={this.handleProfileMenuOpen}
+          >
+            <MoreVertIcon />
+          </IconButton>
             
           
 		          </Toolbar>
@@ -158,7 +211,7 @@ render()
         </Toolbar>
       </AppBar>
 			
-      
+      {renderMenu}
     	</div>
 
     	</React.Fragment>
