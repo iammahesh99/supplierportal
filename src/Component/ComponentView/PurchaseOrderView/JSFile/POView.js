@@ -21,6 +21,12 @@ import TableContainer from '@material-ui/core/TableContainer';
 import Checkbox from '@material-ui/core/Checkbox';
 import Toast from 'light-toast';
 import XLSX from 'xlsx';
+import Dialog from '@material-ui/core/Dialog';
+import POSummary from '../JSFile/POSummary.js';
+import {
+  
+  Link  
+} from "react-router-dom";
 
 
 
@@ -101,6 +107,10 @@ const styles = theme => ({
 	table_main:{
 		padding:'none'
 	},
+	dialogPaper: {
+        minHeight: '80vh',
+        maxHeight: '80vh',
+    },
 	
   
 });
@@ -134,9 +144,18 @@ constructor(props){
   startDate:'',
   endDate:'',
   checkedItems: [],
-  options:[]
+  options:[],
+  open:false
   }
  }
+
+handleClickOpen = () => {
+    this.setState({open:true});
+  };
+  handleClose = () => {
+    this.setState({open:false});
+  };
+
 
 handleChange = () => {
     this.setState({checked:!this.state.checked})
@@ -211,15 +230,35 @@ handleChange = () => {
           setTimeout(() => {
             Toast.hide();
           }, 2000);
-    const baseuri='http://ec2-3-15-215-175.us-east-2.compute.amazonaws.com/api/v1/salesdetail?';
-    const itemsearch=query;
-      fetch(baseuri+itemsearch,{
+
+
+const proxyurl = "https://cors-anywhere.herokuapp.com/";
+    
+    
+    const uri='http://kojsitmomapp01.kojamjoom.com:7003/RmsReSTServices/services/private/PurchaseOrders/recent/purchaseOrderSearch?statuses=A';
+    //console.log(uri);
+
+      fetch(proxyurl+uri,{
         method: 'GET',
-        })
-      .then(response =>  response.json())
-      .then(resData => { 
-      this.setState({searchResult:resData.result})       
-      })
+        
+        headers: {
+        'Authorization':'Basic ' + btoa('RMS_ADMIN'+ ':' +'Retek_123'),
+        'Content-Type':'application/xml',
+        'Accept':'application/json', 
+        'Accept-Versioning':'false',
+        'Accept-Language':'en-US,en;q=0.8'
+        }})
+    .then(response =>  response.text())
+    .then(resData => {
+    	console.log(resData);
+    	//this.setState({searchResult:resData.data})
+
+
+    })
+    .catch(error => console.log('error', error));
+
+
+    
   }
   handleReset=()=>
   {
@@ -276,6 +315,7 @@ render()
  {
   const { classes}= this.props;
   const open = Boolean(this.state.ischecked);
+  console.log(this.state.searchResult);
  
     return (
     	<div className={classes.mainscreen}>
@@ -416,6 +456,7 @@ render()
     	<div className={classes.tables}> 
     	<div className={classes.excel}>
     	<Button size='small' style={{backgroundColor:'#FFDEAD'}} onClick={this.handleExport}>EXPORT EXCEL</Button>
+    	
 
 
     	</div>
@@ -442,54 +483,65 @@ render()
 			        </TableHead>
 
 			        <TableBody>
-			          {this.state.searchResult.map((row,index)=> (
+			          
 			            <TableRow >
 			            <TableCell padding='none' align="center" className={classes.table_column}>
 			              <input 
 			              	type="checkbox"
-			              	value={JSON.stringify(row)}
+			              	
        					 	onChange={this.handleCheck}			
 					        inputProps={{ 'aria-label': 'primary checkbox' }}
      						 />		                
 			              </TableCell>
-			              <TableCell padding='none' align="center" className={classes.table_column}>
-			              {row.item}			                
+			              <TableCell padding='none' align="center" className={classes.table_column} onClick={this.handleClickOpen}>
+			             <Link style={{ color:'black' }}> 1123</Link>			                
 			              </TableCell>
 			              <TableCell padding='none' align="center" className={classes.table_column}>
-			              {row.itemDesc}
+			              1212
 			              </TableCell>
 			              <TableCell padding='none'  align="center" className={classes.table_column}>
-			                {row.itemUpc}
+			                12/09/2019
 			              </TableCell>
 			              <TableCell padding='none'  align="center" className={classes.table_column}>
-			                {row.vpn}
+			                CO-12342
 			              </TableCell>
 			              <TableCell padding='none'  align="center" className={classes.table_column}>
-			                {row.locationName}
+			                21
 			              </TableCell>
 			              <TableCell padding='none'  align="center" className={classes.table_column}>
-			                {row.totalSale}
+			                21
 			              </TableCell>
 			              <TableCell padding='none'  align="center" className={classes.table_column}>
-			                {row.returns}
+			                400
 			              </TableCell>
 			              <TableCell padding='none'  align="center" className={classes.table_column}>
-			                {row.netSale}
+			                1000
 			              </TableCell>
 			              <TableCell padding='none'  align="center" className={classes.table_column}>
-			                {row.promoSale}
+			                390
+			              </TableCell>
+			              <TableCell padding='none'  align="center" className={classes.table_column}>
+			                40
 			              </TableCell>
 			              
 			            </TableRow>
-			            ))}
+			            
 			          
 			        </TableBody>
 			      </Table>
 			  </TableContainer>
 
-
-    	
     	</div>
+	    	<Dialog
+			fullWidth
+	        open={this.state.open}
+	        maxWidth='md'
+	        classes={{ paper: classes.dialogPaper }}
+	        aria-labelledby="alert-dialog-title"
+	        aria-describedby="alert-dialog-description"
+	      >
+	        <POSummary handleClose={this.handleClose}/>
+	      </Dialog>
     	</div>
 
 
