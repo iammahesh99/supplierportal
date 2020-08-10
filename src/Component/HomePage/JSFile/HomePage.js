@@ -63,10 +63,8 @@ const styles = theme => ({
   },
   slide:{
 		marginTop:42,
-		width:'100%',
-		height:'10%',
 		backgroundColor:'red',
-		textAlign:'center'
+		
 	},
 
 });
@@ -116,11 +114,60 @@ constructor(props){
 		 <Link  style={{ textDecoration: 'none' }} >
 		 <Button  style={{textTransform: "none" ,fontWeight: 'bold' }}>Create Orders</Button ></Link>
 
+		 
+		 </div>);
+
+case 'costchange':
+      return (<div style={{display: 'flex',justifyContent:"center"}}>
+      	
+      	<div style={{borderLeft:'3px solid black' ,marginRight:'3%'}}></div>
+
+      	<Link  style={{ textDecoration: 'none' }} >
+		 <Button   style={{textTransform: "none" ,fontWeight: 'bold'}}>Create Cost Change</Button ></Link>
+
+		 <div style={{borderLeft:'3px solid black',marginRight:'3%'}}></div>
+
+		 <Link  style={{ textDecoration: 'none' }} >
+		 <Button  style={{textTransform: "none" ,fontWeight: 'bold' }}>View Cost Change</Button ></Link>
+
+		 
+		 </div>);
+
+	case 'Promotions':
+      return (<div style={{display: 'flex',justifyContent:"center"}}>
+      	
+      	<div style={{borderLeft:'3px solid black' ,marginRight:'3%'}}></div>
+
+      	<Link  style={{ textDecoration: 'none' }} >
+		 <Button   style={{textTransform: "none" ,fontWeight: 'bold'}}>Create Promotions</Button ></Link>
+
+		 <div style={{borderLeft:'3px solid black',marginRight:'3%'}}></div>
+
+		 <Link  style={{ textDecoration: 'none' }} >
+		 <Button  style={{textTransform: "none" ,fontWeight: 'bold' }}>View Promotions</Button ></Link>
+
+		 
+		 </div>);
+
+	case 'Invoices':
+      return (<div style={{display: 'flex',justifyContent:"center"}}>
+      	
+      	<div style={{borderLeft:'3px solid black' ,marginRight:'3%'}}></div>
+
+      	<Link  style={{ textDecoration: 'none' }} >
+		 <Button   style={{textTransform: "none" ,fontWeight: 'bold'}}>Create Invoices</Button ></Link>
+
+		 <div style={{borderLeft:'3px solid black',marginRight:'3%'}}></div>
+
+		 <Link  style={{ textDecoration: 'none' }} >
+		 <Button  style={{textTransform: "none" ,fontWeight: 'bold' }}>View Invoices</Button ></Link>
+
 		 <div style={{borderLeft:'3px solid black' ,marginRight:'3%'}}></div>
 
 		 <Link  style={{ textDecoration: 'none' }} >
-		 <Button  style={{textTransform: "none" ,fontWeight: 'bold'}}>Download Orders</Button></Link>
+		 <Button  style={{textTransform: "none" ,fontWeight: 'bold'}}>View Balances</Button></Link>
 		 </div>);
+
       	
  	default: 
 
@@ -135,13 +182,40 @@ render()
     return (
     	<div>
     	<div  className={classes.slide}>
-					<h2>PO Data</h2>
-				    </div>
-    	<Container component="main" maxWidth="xs">
+    	<Container component="main" maxWidth="sm">
+    			<Grid container  spacing={12}>
+		          		<Grid item xs={3}>
+				    		<Button size='small'  
+						    style={{textTransform: "none",color:'white'  }}>
+						    Purchase Orders</Button>
+				        </Grid>
+				        <Grid item xs={3}>
+				          <Button size='small'  
+						    style={{textTransform: "none",color:'white'  }}>
+						    Cost Change</Button>
+				        </Grid>
+				        <Grid item xs={3}>
+				          <Button size='small'  
+						    style={{textTransform: "none",color:'white'  }}>
+						    Promotions</Button>
+				        </Grid>
+				        <Grid item xs={3}>
+				          <Button size='small'  
+						    style={{textTransform: "none",color:'white'  }}>
+						    Invoices</Button>
+				        </Grid>
+		        </Grid>
+
+
+
+					
+					</Container>
+		</div>
+    	<Container component="main" maxWidth="sm">
     	
 
     	<div className={classes.root}>
-    	 <Grid container spacing={3}>
+    	 <Grid container spacing={2}>
 		        <Grid container  spacing={10}>
 		          		<Grid item xs={4}>
 				          <div  className={classes.avtarbox}>
@@ -180,7 +254,7 @@ render()
 		        </Grid>
 		        <Grid container  spacing={12}  >
 		          		
-				        <Grid item xs={12} style={{paddingTop:'25%'}}>
+				        <Grid item xs={12} style={{paddingTop:'15%'}}>
 				        <div className={classes.paper}>
 				        {this.pageView(this.state.clickedButton)}
 				         

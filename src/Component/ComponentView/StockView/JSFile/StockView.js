@@ -29,8 +29,7 @@ import XLSX from 'xlsx';
 const styles = theme => ({
 	search:{
 	
-		marginLeft: theme.spacing(30),
-		marginRight:theme.spacing(30),
+		
 	    display: 'flex',
 	    flexDirection: 'column',    
 	    justify:"center",
@@ -42,8 +41,7 @@ const styles = theme => ({
 	tables:{
 		
 		marginTop: theme.spacing(4),
-		marginLeft: theme.spacing(30),
-		marginRight:theme.spacing(30),
+		
 	    display: 'flex',
 	    flex:1,
 	    flexDirection: 'column',
@@ -258,7 +256,7 @@ render()
   var set='';
   
     return (
-    	<div className={classes.mainscreen}>
+    	<Container component="main" maxWidth="md">
     	<div  className={classes.slide}>
 				<FormControlLabel
 			        control={<Switch checked={this.state.checked} onChange={this.handleChange} />}
@@ -273,52 +271,52 @@ render()
 				        <Grid container item xs={12} >
 				          		<Grid item xs={4} style={{display:'flex', justifyContent: 'flex-end'}}>
 						          <div className={classes.paper}>
-						            <label> 
-    								Item Id:  
+						            <label style={{marginRight:'10px'}}> 
+    								Item Id: </label> 
 						          <input type="text"        
         							className='input'
         							style={{ border: '1px solid red'}}
 						          onBlur={this.itemChange}
-						           /></label>
+						           />
 						          </div>
 						        </Grid>
 						        <Grid item xs={4} style={{display:'flex', justifyContent: 'flex-end'}}>
 						          <div className={classes.paper}>
-						          <label>Item Desc:
+						          <label style={{marginRight:'10px'}}>Item Desc:</label>
 						          <input type="text"        
         							className='input' 
         							style={{ border: '1px solid red'}} 
 						          onBlur={this.descChange}
-						          /></label>
+						          />
 						          </div>
 						        </Grid>
 						        <Grid item xs={4} style={{display:'flex', justifyContent: 'flex-end'}}>
 						          <div className={classes.paper}>
-						          <label>Location:
+						          <label style={{marginRight:'10px'}} >Location: </label>
 						          <input type="text"        
         							className='input'
         							style={{ border: '1px solid red'}} 
-						          onBlur={this.locationChange} /></label>
+						          onBlur={this.locationChange} />
 						          </div>
 						        </Grid>
 				        </Grid>
 				        <Grid container item xs={12} >
 				          		<Grid item xs={4} style={{display:'flex', justifyContent: 'flex-end'}}>
 						          <div className={classes.paper}>
-						          <label>Barcode:
+						          <label style={{marginRight:'10px'}}>Barcode:</label>
 						          <input type="text"        
         							className='input'
         							style={{ border: '1px solid red'}} 
-						          onBlur={this.barChange} /></label>
+						          onBlur={this.barChange} />
 						          </div>
 						        </Grid>
 						        <Grid item xs={4} style={{display:'flex', justifyContent: 'flex-end'}}>
 						          <div className={classes.paper}>
-						          <label>VPN:
+						          <label style={{marginRight:'10px'}}>VPN:</label>
 						         <input type="text"        
         							className='input'
         							style={{ border: '1px solid red'}} 
-						          onBlur={this.vpnChange} /></label>
+						          onBlur={this.vpnChange} />
 						          </div>
 						        </Grid>
 						        <Grid item xs={4}>
@@ -419,7 +417,7 @@ render()
 
     	
     	</div>
-    	</div>
+    	</Container>
 
 
 

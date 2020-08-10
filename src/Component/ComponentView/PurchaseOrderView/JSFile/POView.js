@@ -27,16 +27,18 @@ import {
   
   Link  
 } from "react-router-dom";
+import TablePagination from '@material-ui/core/TablePagination';
 
 
 
 
 
 const styles = theme => ({
+	root:{
+		width:'100%'
+	},
 	search:{
 	
-		marginLeft: theme.spacing(30),
-		marginRight:theme.spacing(30),
 	    display: 'flex',
 	    flexDirection: 'column',    
 	    justify:"center",
@@ -48,13 +50,15 @@ const styles = theme => ({
 	tables:{
 		
 		marginTop: theme.spacing(4),
-		marginLeft: theme.spacing(30),
-		marginRight:theme.spacing(30),
-	    display: 'flex',
+  		maxHeight: 340,
+  		
+	},
+	container:{
+		display: 'flex',
 	    flex:1,
 	    flexDirection: 'column',
-  		border:'1px solid red',
-  		maxHeight: 390,
+		border:'1px solid red',
+		maxHeight: 280,
 	},
 	excel:{
 		backgroundColor:'red',
@@ -94,12 +98,12 @@ const styles = theme => ({
 
 	},
 	table_head:{
-		border: '1px solid #000000',
+		
 		padding:'none'
 
 	},
 	table_column:{
-		border: '1px solid #000000',
+		
 		padding:'none'
 
 
@@ -111,7 +115,7 @@ const styles = theme => ({
         minHeight: '80vh',
         maxHeight: '80vh',
     },
-	
+    
   
 });
 
@@ -145,10 +149,15 @@ constructor(props){
   endDate:'',
   checkedItems: [],
   options:[],
-  open:false
+  open:false,
+  page:0,
+  totalrecords:0
   }
  }
 
+handleChangePage = (event, newPage) => {
+    this.setState({page:newPage})
+  };
 handleClickOpen = () => {
     this.setState({open:true});
   };
@@ -232,13 +241,13 @@ handleChange = () => {
           }, 2000);
 
 
-const proxyurl = "https://cors-anywhere.herokuapp.com/";
+
     
     
-    const uri='http://kojsitmomapp01.kojamjoom.com:7003/RmsReSTServices/services/private/PurchaseOrders/recent/purchaseOrderSearch?statuses=A';
+    const uri='/PurchaseOrders/recent/purchaseOrderSearch?statuses=A';
     //console.log(uri);
 
-      fetch(proxyurl+uri,{
+      fetch(uri,{
         method: 'GET',
         
         headers: {
@@ -248,10 +257,12 @@ const proxyurl = "https://cors-anywhere.herokuapp.com/";
         'Accept-Versioning':'false',
         'Accept-Language':'en-US,en;q=0.8'
         }})
-    .then(response =>  response.text())
+    .then(response =>  response.json())
     .then(resData => {
     	console.log(resData);
-    	//this.setState({searchResult:resData.data})
+    	this.setState({searchResult:resData.results})
+    	this.setState({totalrecords:resData.totalRecordCount})
+
 
 
     })
@@ -318,7 +329,7 @@ render()
   console.log(this.state.searchResult);
  
     return (
-    	<div className={classes.mainscreen}>
+    	<Container component="main" maxWidth="md">
     	<div  className={classes.slide}>
 				<FormControlLabel
 			        control={<Switch checked={this.state.checked} onChange={this.handleChange} />}
@@ -334,33 +345,38 @@ render()
 				        <Grid container item xs={12} >
 				          		<Grid item xs={4} style={{display:'flex', justifyContent: 'flex-end'}}>
 						          <div className={classes.paper}>
-						            <label> 
-    								PO#:  
+						           <label style={{marginRight:'10px'}}>
+    								PO#: 
+    								</label> 
 						          <input type="text"        
         							className='input'
         							style={{ border: '1px solid red'}}
 						          onBlur={this.itemChange}
-						           /></label>
+						           />
 						          </div>
 						        </Grid>
 						        <Grid item xs={4} style={{display:'flex', justifyContent: 'flex-end'}}>
 						          <div className={classes.paper}>
-						          <label>Item ID:
+						          <label style={{marginRight:'10px'}}>
+						          Item ID:
+						          </label>
 						          <input type="text"        
         							className='input' 
         							style={{ border: '1px solid red'}} 
 						          onBlur={this.descChange}
-						          /></label>
+						          />
 						          </div>
 						        </Grid>
 						        <Grid item xs={4} style={{display:'flex', justifyContent: 'flex-end'}}>
 						          <div className={classes.paper}>
-						          <label>Item Desc:
+						          <label style={{marginRight:'10px'}}>
+						          Item Desc:
+						          </label>
 						          <input type="text"        
         							className='input' 
         							style={{ border: '1px solid red'}} 
 						          onBlur={this.descChange}
-						          /></label>
+						          />
 						          </div>
 						        </Grid>
 				        </Grid>
@@ -369,29 +385,35 @@ render()
 				        <Grid container item xs={12} >
 				          		<Grid item xs={4} style={{display:'flex', justifyContent: 'flex-end'}}>
 						          <div className={classes.paper}>
-						          <label>PR#:
+						          <label style={{marginRight:'10px'}}>
+						          PR#:
+						          </label>
 						          <input type="text"        
         							className='input'
         							style={{ border: '1px solid red'}} 
-						          onBlur={this.barChange} /></label>
+						          onBlur={this.barChange} />
 						          </div>
 						        </Grid>
 						        <Grid item xs={4} style={{display:'flex', justifyContent: 'flex-end'}}>
 						          <div className={classes.paper}>
-						          <label>Barcode:
+						          <label style={{marginRight:'10px'}}>
+						          Barcode:
+						          </label>
 						         <input type="text"        
         							className='input'
         							style={{ border: '1px solid red'}} 
-						          onBlur={this.locationChange} /></label>
+						          onBlur={this.locationChange} />
 						          </div>
 						        </Grid>
 						        <Grid item xs={4} style={{display:'flex', justifyContent: 'flex-end'}}>
 						          <div className={classes.paper}>
-						          <label>Start Date:
+						          <label style={{marginRight:'10px'}}>
+						          Start Date:
+						          </label>
 						         <input type="text"        
         							className='input'
         							style={{ border: '1px solid red'}} 
-						          onBlur={this.locationChange} /></label>
+						          onBlur={this.locationChange} />
 						          </div>
 						        </Grid>
 				        </Grid>
@@ -400,29 +422,35 @@ render()
 				        <Grid container item xs={12} >
 				          		<Grid item xs={4} style={{display:'flex', justifyContent: 'flex-end'}}>
 						          <div className={classes.paper}>
-						          <label>Location:
+						          <label style={{marginRight:'10px'}}>
+						          Location:
+						          </label>
 						          <input type="text"        
         							className='input'
         							style={{ border: '1px solid red'}} 
-						          onBlur={this.barChange} /></label>
+						          onBlur={this.barChange} />
 						          </div>
 						        </Grid>
 						        <Grid item xs={4} style={{display:'flex', justifyContent: 'flex-end'}}>
 						          <div className={classes.paper}>
-						          <label>Status:
+						          <label style={{marginRight:'10px'}}>
+						          Status:
+						          </label>
 						         <input type="text"        
         							className='input'
         							style={{ border: '1px solid red'}} 
-						          onBlur={this.locationChange} /></label>
+						          onBlur={this.locationChange} />
 						          </div>
 						        </Grid>
 						        <Grid item xs={4} style={{display:'flex', justifyContent: 'flex-end'}}>
 						          <div className={classes.paper}>
-						          <label>End Date:
+						          <label style={{marginRight:'10px'}}>
+						          End Date:
+						          </label>
 						         <input type="text"        
         							className='input'
         							style={{ border: '1px solid red'}} 
-						          onBlur={this.locationChange} /></label>
+						          onBlur={this.locationChange} />
 						          </div>
 						        </Grid>
 				        </Grid>
@@ -436,11 +464,11 @@ render()
 				        <div>
 				        <Button size='small' className={classes.buttons}
 				         onClick={this.handleSearchItem}
-				         style={{backgroundColor:'red'}}>
+				         style={{backgroundColor:'red',textTransform: "none"}}>
 				         SEARCH
 				         </Button>
 				        <Button size='small' className={classes.buttons}
-				        style={{backgroundColor:'red'}}
+				        style={{backgroundColor:'red',textTransform: "none"}}
 				        onClick={this.handleReset}
 				        >
 				        RESET</Button>
@@ -457,11 +485,9 @@ render()
     	<div className={classes.excel}>
     	<Button size='small' style={{backgroundColor:'#FFDEAD'}} onClick={this.handleExport}>EXPORT EXCEL</Button>
     	
-
-
-    	</div>
-
-    	<TableContainer component={Paper}>
+		</div>
+ 
+    	<TableContainer component={Paper} className={classes.container} >
 			      <Table  stickyHeader aria-label="sticky table" size="small" className={classes.table_main}>
 			        <TableHead >
 			          <TableRow >
@@ -483,7 +509,8 @@ render()
 			        </TableHead>
 
 			        <TableBody>
-			          
+			          {this.state.searchResult.slice(this.state.page * 100, this.state.page * 100 + 100).map((row) => {
+             		 return (
 			            <TableRow >
 			            <TableCell padding='none' align="center" className={classes.table_column}>
 			              <input 
@@ -494,7 +521,7 @@ render()
      						 />		                
 			              </TableCell>
 			              <TableCell padding='none' align="center" className={classes.table_column} onClick={this.handleClickOpen}>
-			             <Link style={{ color:'black' }}> 1123</Link>			                
+			             <Link style={{ color:'black' }}> {row.orderNumber}</Link>			                
 			              </TableCell>
 			              <TableCell padding='none' align="center" className={classes.table_column}>
 			              1212
@@ -521,15 +548,28 @@ render()
 			                390
 			              </TableCell>
 			              <TableCell padding='none'  align="center" className={classes.table_column}>
-			                40
+			                {row.status}
 			              </TableCell>
 			              
 			            </TableRow>
 			            
-			          
+			           );})}
 			        </TableBody>
 			      </Table>
 			  </TableContainer>
+			  <TablePagination
+		        style={{paddingBottom:'2%'}}
+		        component="Paper"
+		        
+		        count={this.state.totalrecords}
+		        rowsPerPage={100}
+		        labelRowsPerPage=''
+		        rowsPerPageOptions={[]}
+		        page={this.state.page}
+		        onChangePage={this.handleChangePage}
+		        
+		      />
+
 
     	</div>
 	    	<Dialog
@@ -542,7 +582,7 @@ render()
 	      >
 	        <POSummary handleClose={this.handleClose}/>
 	      </Dialog>
-    	</div>
+    	</Container>
 
 
 
