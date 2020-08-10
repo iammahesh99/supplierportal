@@ -23,6 +23,28 @@ import Toast from 'light-toast';
 import XLSX from 'xlsx';
 
 
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: "#696969",
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+    borderTop: 'solid 1px ',
+    
+  },
+}))(TableCell);
+
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
+    },
+     
+    
+  },
+}))(TableRow);
+
 
 
 
@@ -48,18 +70,12 @@ const styles = theme => ({
   		border:'1px solid red',
   		maxHeight: 390,
 	},
-	excel:{
-		backgroundColor:'red',
-		width:'100%',
-		justifyContent:'flex-end',
-		display:'flex',
-
-
-
-	},
+	
 	
   paper: {
     paddingTop: theme.spacing(3),
+     paddingLeft: theme.spacing(2)
+   
 
     
 
@@ -69,6 +85,11 @@ const styles = theme => ({
   	buttons:{
   		
   		marginBottom: theme.spacing(1),
+  		marginLeft: theme.spacing(1),
+
+  	},
+  	buttons2:{
+  		
   		marginRight: theme.spacing(1),
 
   	},
@@ -86,12 +107,12 @@ const styles = theme => ({
 
 	},
 	table_head:{
-		border: '1px solid #000000',
+		
 		padding:'none'
 
 	},
 	table_column:{
-		border: '1px solid #000000',
+		
 		padding:'none'
 
 
@@ -260,17 +281,22 @@ render()
     	<div  className={classes.slide}>
 				<FormControlLabel
 			        control={<Switch checked={this.state.checked} onChange={this.handleChange} />}
-			        label="Search Item"
+			        label="Search Stock"
 			      />
 			 </div>
 
     {this.state.checked?<div className={classes.search}> 
 
-    				<div>
+    				<Container component="main" maxWidth="md">
 				      <Grid container >
 				        <Grid container item xs={12} >
-				          		<Grid item xs={4} style={{display:'flex', justifyContent: 'flex-end'}}>
-						          <div className={classes.paper}>
+				          		<Grid item xs={4} 
+				          		container
+								  direction="row"
+								  justify="space-between"
+								  alignItems="center"
+								  className={classes.paper}>
+						          
 						            <label style={{marginRight:'10px'}}> 
     								Item Id: </label> 
 						          <input type="text"        
@@ -278,51 +304,71 @@ render()
         							style={{ border: '1px solid red'}}
 						          onBlur={this.itemChange}
 						           />
-						          </div>
+						          
 						        </Grid>
-						        <Grid item xs={4} style={{display:'flex', justifyContent: 'flex-end'}}>
-						          <div className={classes.paper}>
+						        <Grid item xs={4} 
+						        container
+								  direction="row"
+								  justify="space-between"
+								  alignItems="center"
+								  className={classes.paper}>
+						          
 						          <label style={{marginRight:'10px'}}>Item Desc:</label>
 						          <input type="text"        
         							className='input' 
         							style={{ border: '1px solid red'}} 
 						          onBlur={this.descChange}
 						          />
-						          </div>
+						          
 						        </Grid>
-						        <Grid item xs={4} style={{display:'flex', justifyContent: 'flex-end'}}>
-						          <div className={classes.paper}>
+						        <Grid item xs={4} 
+						        container
+								  direction="row"
+								  justify="space-between"
+								  alignItems="center"
+								  className={classes.paper}>
+						          
 						          <label style={{marginRight:'10px'}} >Location: </label>
 						          <input type="text"        
         							className='input'
         							style={{ border: '1px solid red'}} 
 						          onBlur={this.locationChange} />
-						          </div>
+						          
 						        </Grid>
 				        </Grid>
 				        <Grid container item xs={12} >
-				          		<Grid item xs={4} style={{display:'flex', justifyContent: 'flex-end'}}>
-						          <div className={classes.paper}>
+				          		<Grid item xs={4} 
+				          		container
+								  direction="row"
+								  justify="space-between"
+								  alignItems="center"
+								  className={classes.paper}>
+						          
 						          <label style={{marginRight:'10px'}}>Barcode:</label>
 						          <input type="text"        
         							className='input'
         							style={{ border: '1px solid red'}} 
 						          onBlur={this.barChange} />
-						          </div>
+						          
 						        </Grid>
-						        <Grid item xs={4} style={{display:'flex', justifyContent: 'flex-end'}}>
-						          <div className={classes.paper}>
+						        <Grid item xs={4} 
+						        container
+								  direction="row"
+								  justify="space-between"
+								  alignItems="center"
+								  className={classes.paper}>
+						          
 						          <label style={{marginRight:'10px'}}>VPN:</label>
 						         <input type="text"        
         							className='input'
         							style={{ border: '1px solid red'}} 
 						          onBlur={this.vpnChange} />
-						          </div>
+						          
 						        </Grid>
 						        <Grid item xs={4}>
-						          <div className={classes.paper}>
 						          
-						          </div>
+						          
+						          
 						        </Grid>
 				        </Grid>
 				        <Grid container item xs={12} >
@@ -331,28 +377,33 @@ render()
 				        display: 'flex',
 	    				flexDirection: 'column',}}>
 				        <div>
-				        <Button  size='small' className={classes.buttons}
+				        <button  size='small' className={classes.buttons}
 				         onClick={this.handleSearchItem}
-				         style={{backgroundColor:'red'}}>
+				         style={{backgroundColor:'red', color:"white"}}>
 				         SEARCH
-				         </Button>
-				        <Button  size='small' className={classes.buttons}
-				        style={{backgroundColor:'red'}}
+				         </button>
+				        <button  size='small' className={classes.buttons}
+				        style={{backgroundColor:'red',color:'white'}}
 				        onClick={this.handleReset}
 				        >
-				        RESET</Button>
+				        RESET</button>
 				        </div>
 
 				        </div>
 				          		
 				        </Grid>
 				      </Grid>
-				    </div>
+				    </Container>
 
     	</div>:null}
     	<div className={classes.tables}> 
-    	<div className={classes.excel}>
-    	<Button size='small' style={{backgroundColor:'#FFDEAD'}} onClick={this.handleExport}>EXPORT EXCEL</Button>
+    	<div style={{flexGrow: 1,
+				        alignItems: 'flex-end',
+				        display: 'flex',
+	    				flexDirection: 'column',
+	    				backgroundColor:'red'}}>
+
+    	<button size='small' className={classes.buttons2} onClick={this.handleExport}>EXPORT EXCEL</button>
 
 
     	</div>
@@ -361,14 +412,14 @@ render()
 			      <Table  stickyHeader aria-label="sticky table" size="small" className={classes.table_main}>
 			        <TableHead >
 			          <TableRow >
-			           <TableCell padding='none' align="center"className={classes.table_head}>SELECT</TableCell>
-			            <TableCell padding='none' align="center"className={classes.table_head}>ITEM ID</TableCell>
-			            <TableCell padding='none' align="center" className={classes.table_head}>ITEM DESCRIPTION</TableCell>
-			            <TableCell padding='none' align="center" className={classes.table_head}>BARCODE</TableCell>
-			            <TableCell padding='none' align="center" className={classes.table_head}>VPN</TableCell>
-			            <TableCell padding='none' align="center" className={classes.table_head}>LOCATION</TableCell>
-			            <TableCell padding='none' align="center" className={classes.table_head}>TOTAL STOCK</TableCell>
-			            <TableCell padding='none' align="center" className={classes.table_head}>AVAILABLE STOCK</TableCell>
+			           <StyledTableCell padding='none' align="center"className={classes.table_head}>SELECT</StyledTableCell>
+			            <StyledTableCell padding='none' align="center"className={classes.table_head}>ITEM ID</StyledTableCell>
+			            <StyledTableCell padding='none' align="center" className={classes.table_head}>ITEM DESCRIPTION</StyledTableCell>
+			            <StyledTableCell padding='none' align="center" className={classes.table_head}>BARCODE</StyledTableCell>
+			            <StyledTableCell padding='none' align="center" className={classes.table_head}>VPN</StyledTableCell>
+			            <StyledTableCell padding='none' align="center" className={classes.table_head}>LOCATION</StyledTableCell>
+			            <StyledTableCell padding='none' align="center" className={classes.table_head}>TOTAL STOCK</StyledTableCell>
+			            <StyledTableCell padding='none' align="center" className={classes.table_head}>AVAILABLE STOCK</StyledTableCell>
 
 			          </TableRow>
 			        </TableHead>
@@ -376,38 +427,38 @@ render()
 			        <TableBody>
 			          {this.state.searchResult.map((row,index)=> (
 
-			            <TableRow >
-			            <TableCell padding='none' align="center" className={classes.table_column}>
+			            <StyledTableRow>
+			            <StyledTableCell  align="center" className={classes.table_column}>
 			              <input 
 			              	type="checkbox"
 			              	value={JSON.stringify(row)}
        					 	onChange={this.handleCheck}			
 					        inputProps={{ 'aria-label': 'primary checkbox' }}
      						 />		                
-			              </TableCell>
-			              <TableCell padding='none' align="center" className={classes.table_column}>
+			              </StyledTableCell>
+			              <StyledTableCell  align="center" className={classes.table_column}>
 			              {row.item}			                
-			              </TableCell>
-			              <TableCell padding='none' align="center" className={classes.table_column}>
+			              </StyledTableCell>
+			              <StyledTableCell  align="center" className={classes.table_column}>
 			              {row.itemDesc}
-			              </TableCell>
-			              <TableCell padding='none'  align="center" className={classes.table_column}>
+			              </StyledTableCell>
+			              <StyledTableCell   align="center" className={classes.table_column}>
 			                {row.itemUpc}
-			              </TableCell>
-			              <TableCell padding='none'  align="center" className={classes.table_column}>
+			              </StyledTableCell>
+			              <StyledTableCell   align="center" className={classes.table_column}>
 			                {row.vpn}
-			              </TableCell>
-			              <TableCell padding='none'  align="center" className={classes.table_column}>
+			              </StyledTableCell>
+			              <StyledTableCell   align="center" className={classes.table_column}>
 			                {row.locationName}
-			              </TableCell>
-			              <TableCell padding='none'  align="center" className={classes.table_column}>
+			              </StyledTableCell>
+			              <StyledTableCell   align="center" className={classes.table_column}>
 			                {row.totalStock}
-			              </TableCell>
-			              <TableCell padding='none'  align="center" className={classes.table_column}>
+			              </StyledTableCell>
+			              <StyledTableCell   align="center" className={classes.table_column}>
 			                {row.availableStock}
-			              </TableCell>
+			              </StyledTableCell>
 			              
-			            </TableRow>
+			            </StyledTableRow>
 			            ))}
 			          
 			        </TableBody>

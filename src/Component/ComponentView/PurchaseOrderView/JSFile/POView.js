@@ -28,6 +28,33 @@ import {
   Link  
 } from "react-router-dom";
 import TablePagination from '@material-ui/core/TablePagination';
+import PO from '../JSFile/JSON/PO.json';
+import Box from '@material-ui/core/Box';
+
+
+
+
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: "#696969",
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+    borderTop: 'solid 1px ',
+    
+  },
+}))(TableCell);
+
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
+    },
+     
+    
+  },
+}))(TableRow);
 
 
 
@@ -50,7 +77,7 @@ const styles = theme => ({
 	tables:{
 		
 		marginTop: theme.spacing(4),
-  		maxHeight: 340,
+  		maxHeight: 350,
   		
 	},
 	container:{
@@ -58,30 +85,26 @@ const styles = theme => ({
 	    flex:1,
 	    flexDirection: 'column',
 		border:'1px solid red',
-		maxHeight: 280,
-	},
-	excel:{
-		backgroundColor:'red',
-		width:'100%',
-		justifyContent:'flex-end',
-		display:'flex',
-
-
-
+		maxHeight: 300,
 	},
 	
   paper: {
     paddingTop: theme.spacing(3),
-
+    paddingLeft: theme.spacing(2)
+   
     
 
     
-    
-  		},
+  },
   	buttons:{
   		
   		marginTop: theme.spacing(1),
-  		marginRight: theme.spacing(1),
+  		marginLeft: theme.spacing(1),
+
+  	},
+  	buttons2:{
+  		
+  		marginRight: theme.spacing(2),
 
   	},
   	slide:{
@@ -104,13 +127,15 @@ const styles = theme => ({
 	},
 	table_column:{
 		
-		padding:'none'
+		padding:'none',
+		
 
 
 	},
 	table_main:{
 		padding:'none'
 	},
+	
 	dialogPaper: {
         minHeight: '80vh',
         maxHeight: '80vh',
@@ -151,7 +176,8 @@ constructor(props){
   options:[],
   open:false,
   page:0,
-  totalrecords:0
+  totalrecords:0,
+  detail:false
   }
  }
 
@@ -197,76 +223,81 @@ handleChange = () => {
   }
 
   handleSearchItem =()=>{
-  	this.setState({options:[]});
-  	this.setState({checkedItems:[]});
-  	this.setState({searchResult:[]});
-  	var item='';
-  	var desc='';
-  	var location='';
-  	var bar='';
-  	var startDate='';
-  	var endDate='';
-  	if(this.state.item!=''){
-  		item=("item="+this.state.item+'&').replace(/ /g,'');
+		
 
-  	}
-  	if(this.state.Desc!='')
-  	{
-  		desc=("desc="+this.state.Desc+'&').replace(/ /g, '%20');;
+		this.setState({searchResult:PO.results})
+     	this.setState({totalrecords:PO.totalRecordCount})
 
-  	}
-  	if(this.state.location!='')
-  	{
-       location=("location="+this.state.location+'&').replace(/ /g, '%20');;
-  	}
-  	if(this.state.bar!='')
-  	{
-       bar=("upc="+this.state.bar+'&').replace(/ /g,'');
-  	}
-  	if(this.state.startDate!='')
-  	{
-       startDate=("startDate="+this.state.startDate+'&').replace(/ /g,'');
-  	}
-  	if(this.state.endDate!='')
-  	{
-       endDate=("endDate="+this.state.endDate+'&').replace(/ /g,'');
-  	}
-  	var finalstring=item+desc+location+bar+startDate+endDate;
-  	const query=finalstring.substring(0, finalstring.length - 1);
-  	console.log(query);
+  	// this.setState({options:[]});
+  	// this.setState({checkedItems:[]});
+  	// this.setState({searchResult:[]});
+  	// var item='';
+  	// var desc='';
+  	// var location='';
+  	// var bar='';
+  	// var startDate='';
+  	// var endDate='';
+  	// if(this.state.item!=''){
+  	// 	item=("item="+this.state.item+'&').replace(/ /g,'');
 
-  	Toast.loading('Searching');
-          setTimeout(() => {
-            Toast.hide();
-          }, 2000);
+  	// }
+  	// if(this.state.Desc!='')
+  	// {
+  	// 	desc=("desc="+this.state.Desc+'&').replace(/ /g, '%20');;
+
+  	// }
+  	// if(this.state.location!='')
+  	// {
+   //     location=("location="+this.state.location+'&').replace(/ /g, '%20');;
+  	// }
+  	// if(this.state.bar!='')
+  	// {
+   //     bar=("upc="+this.state.bar+'&').replace(/ /g,'');
+  	// }
+  	// if(this.state.startDate!='')
+  	// {
+   //     startDate=("startDate="+this.state.startDate+'&').replace(/ /g,'');
+  	// }
+  	// if(this.state.endDate!='')
+  	// {
+   //     endDate=("endDate="+this.state.endDate+'&').replace(/ /g,'');
+  	// }
+  	// var finalstring=item+desc+location+bar+startDate+endDate;
+  	// const query=finalstring.substring(0, finalstring.length - 1);
+  	// console.log(query);
+
+  	// Toast.loading('Searching');
+   //        setTimeout(() => {
+   //          Toast.hide();
+   //        }, 2000);
 
 
 
     
     
-    const uri='/PurchaseOrders/recent/purchaseOrderSearch?statuses=A';
-    //console.log(uri);
+   //  const uri='/PurchaseOrders/recent/purchaseOrderSearch?statuses=A';
+   //  //console.log(uri);
 
-      fetch(uri,{
-        method: 'GET',
+   //    fetch(uri,{
+   //      method: 'GET',
         
-        headers: {
-        'Authorization':'Basic ' + btoa('RMS_ADMIN'+ ':' +'Retek_123'),
-        'Content-Type':'application/xml',
-        'Accept':'application/json', 
-        'Accept-Versioning':'false',
-        'Accept-Language':'en-US,en;q=0.8'
-        }})
-    .then(response =>  response.json())
-    .then(resData => {
-    	console.log(resData);
-    	this.setState({searchResult:resData.results})
-    	this.setState({totalrecords:resData.totalRecordCount})
+   //      headers: {
+   //      'Authorization':'Basic ' + btoa('RMS_ADMIN'+ ':' +'Retek_123'),
+   //      'Content-Type':'application/xml',
+   //      'Accept':'application/json', 
+   //      'Accept-Versioning':'false',
+   //      'Accept-Language':'en-US,en;q=0.8'
+   //      }})
+   //  .then(response =>  response.json())
+   //  .then(resData => {
+   //  	console.log(resData);
+   //  	this.setState({searchResult:resData.results})
+   //  	this.setState({totalrecords:resData.totalRecordCount})
 
 
 
-    })
-    .catch(error => console.log('error', error));
+   //  })
+   //  .catch(error => console.log('error', error));
 
 
     
@@ -296,6 +327,13 @@ handleChange = () => {
 
     // update the state with the new array of options
     this.setState({ options: options })
+    if(this.state.options.length==1)
+    {
+    	this.setState({detail:true})
+    }
+    else{
+    	this.setState({detail:false})
+    }
    
 
   };
@@ -328,36 +366,48 @@ render()
   const open = Boolean(this.state.ischecked);
   console.log(this.state.searchResult);
  
+  
+ 
     return (
     	<Container component="main" maxWidth="md">
     	<div  className={classes.slide}>
 				<FormControlLabel
 			        control={<Switch checked={this.state.checked} onChange={this.handleChange} />}
-			        label="Search Item"
+			        label="Search PO"
 			      />
 			 </div>
 
     {this.state.checked?<div className={classes.search}> 
 
-    				<div>
+    				<Container component="main" maxWidth="md">
 				      <Grid container >
 
 				        <Grid container item xs={12} >
-				          		<Grid item xs={4} style={{display:'flex', justifyContent: 'flex-end'}}>
-						          <div className={classes.paper}>
-						           <label style={{marginRight:'10px'}}>
+				          		<Grid item xs={4} 
+				          		container
+								  direction="row"
+								  justify="space-between"
+								  alignItems="center"
+								  className={classes.paper}>
+						         
+						           <label>
     								PO#: 
-    								</label> 
+    								</label>	
 						          <input type="text"        
         							className='input'
         							style={{ border: '1px solid red'}}
 						          onBlur={this.itemChange}
 						           />
-						          </div>
+						          
 						        </Grid>
-						        <Grid item xs={4} style={{display:'flex', justifyContent: 'flex-end'}}>
-						          <div className={classes.paper}>
-						          <label style={{marginRight:'10px'}}>
+						        <Grid item xs={4}
+						        container
+								  direction="row"
+								  justify="space-between"
+								  alignItems="center"
+								  className={classes.paper} >
+						          
+						          <label style={{marginRight:''}}>
 						          Item ID:
 						          </label>
 						          <input type="text"        
@@ -365,11 +415,16 @@ render()
         							style={{ border: '1px solid red'}} 
 						          onBlur={this.descChange}
 						          />
-						          </div>
+						         
 						        </Grid>
-						        <Grid item xs={4} style={{display:'flex', justifyContent: 'flex-end'}}>
-						          <div className={classes.paper}>
-						          <label style={{marginRight:'10px'}}>
+						        <Grid item xs={4}
+						        container
+								  direction="row"
+								  justify="space-between"
+								  alignItems="center" 
+								  className={classes.paper}>
+						          
+						          <label style={{marginRight:''}}>
 						          Item Desc:
 						          </label>
 						          <input type="text"        
@@ -377,81 +432,105 @@ render()
         							style={{ border: '1px solid red'}} 
 						          onBlur={this.descChange}
 						          />
-						          </div>
+						          
 						        </Grid>
 				        </Grid>
 
 
 				        <Grid container item xs={12} >
-				          		<Grid item xs={4} style={{display:'flex', justifyContent: 'flex-end'}}>
-						          <div className={classes.paper}>
-						          <label style={{marginRight:'10px'}}>
+				          		<Grid item xs={4} 
+				          		container
+								  direction="row"
+								  justify="space-between"
+								  alignItems="center" className={classes.paper}>
+						          
+						          <label style={{marginRight:''}}>
 						          PR#:
 						          </label>
 						          <input type="text"        
         							className='input'
         							style={{ border: '1px solid red'}} 
 						          onBlur={this.barChange} />
-						          </div>
+						          
 						        </Grid>
-						        <Grid item xs={4} style={{display:'flex', justifyContent: 'flex-end'}}>
-						          <div className={classes.paper}>
-						          <label style={{marginRight:'10px'}}>
+						        <Grid item xs={4} 
+						        container
+								  direction="row"
+								  justify="space-between"
+								  alignItems="center" className={classes.paper}>
+						          
+						          <label style={{marginRight:''}}>
 						          Barcode:
 						          </label>
 						         <input type="text"        
         							className='input'
         							style={{ border: '1px solid red'}} 
 						          onBlur={this.locationChange} />
-						          </div>
+						          
 						        </Grid>
-						        <Grid item xs={4} style={{display:'flex', justifyContent: 'flex-end'}}>
-						          <div className={classes.paper}>
-						          <label style={{marginRight:'10px'}}>
+						        <Grid item xs={4}
+						        container
+								  direction="row"
+								  justify="space-between"
+								  alignItems="center" className={classes.paper} >
+						          
+						          <label style={{marginRight:''}}>
 						          Start Date:
 						          </label>
 						         <input type="text"        
         							className='input'
         							style={{ border: '1px solid red'}} 
 						          onBlur={this.locationChange} />
-						          </div>
+						          
 						        </Grid>
 				        </Grid>
 
 
 				        <Grid container item xs={12} >
-				          		<Grid item xs={4} style={{display:'flex', justifyContent: 'flex-end'}}>
-						          <div className={classes.paper}>
-						          <label style={{marginRight:'10px'}}>
+				          		<Grid item xs={4}
+				          		container
+								  direction="row"
+								  justify="space-between"
+								  alignItems="center" className={classes.paper} >
+						          
+						          <label style={{marginRight:''}}>
 						          Location:
 						          </label>
 						          <input type="text"        
         							className='input'
         							style={{ border: '1px solid red'}} 
 						          onBlur={this.barChange} />
-						          </div>
+						          
 						        </Grid>
-						        <Grid item xs={4} style={{display:'flex', justifyContent: 'flex-end'}}>
-						          <div className={classes.paper}>
-						          <label style={{marginRight:'10px'}}>
+						        <Grid item xs={4} 
+						        container
+								  direction="row"
+								  justify="space-between"
+								  alignItems="center" className={classes.paper}>
+						          
+						          <label style={{marginRight:''}}>
 						          Status:
 						          </label>
 						         <input type="text"        
         							className='input'
         							style={{ border: '1px solid red'}} 
 						          onBlur={this.locationChange} />
-						          </div>
+						          
 						        </Grid>
-						        <Grid item xs={4} style={{display:'flex', justifyContent: 'flex-end'}}>
-						          <div className={classes.paper}>
-						          <label style={{marginRight:'10px'}}>
+						        <Grid item xs={4} 
+						        container
+								  direction="row"
+								  justify="space-between"
+								  alignItems="center" className={classes.paper}>
+						          
+						          <label style={{marginRight:''}}>
 						          End Date:
 						          </label>
 						         <input type="text"        
         							className='input'
         							style={{ border: '1px solid red'}} 
 						          onBlur={this.locationChange} />
-						          </div>
+						          
 						        </Grid>
 				        </Grid>
 
@@ -462,46 +541,63 @@ render()
 				        display: 'flex',
 	    				flexDirection: 'column',}}>
 				        <div>
-				        <Button size='small' className={classes.buttons}
+				        <button size='small' className={classes.buttons}
 				         onClick={this.handleSearchItem}
-				         style={{backgroundColor:'red',textTransform: "none"}}>
+				         style={{backgroundColor:'red',textTransform: "none",color:"white"}}>
 				         SEARCH
-				         </Button>
-				        <Button size='small' className={classes.buttons}
-				        style={{backgroundColor:'red',textTransform: "none"}}
+				         </button>
+				        <button size='small' className={classes.buttons}
+				        style={{backgroundColor:'red',textTransform: "none",color:'white'}}
 				        onClick={this.handleReset}
 				        >
-				        RESET</Button>
+				        RESET</button>
 				        </div>
 
 				        </div>
 				          		
 				        </Grid>
 				      </Grid>
-				    </div>
+				    </Container>
 
     	</div>:null}
     	<div className={classes.tables}> 
-    	<div className={classes.excel}>
-    	<Button size='small' style={{backgroundColor:'#FFDEAD'}} onClick={this.handleExport}>EXPORT EXCEL</Button>
-    	
-		</div>
+    	<div style={{flexGrow: 1,
+				        alignItems: 'flex-end',
+				        display: 'flex',
+	    				flexDirection: 'column',
+	    				backgroundColor:'red'}}>
+				        <div>
+				        <button size='small' className={classes.buttons2}
+				         onClick={this.handleExport}
+				         >
+				         EXCEL
+				         </button>
+				         {
+				         	this.state.detail?
+				        <button size='small' className={classes.buttons2}
+				        
+				        
+				        >
+				        DETAIL</button>:null}
+				        </div>
+
+				        </div>
  
     	<TableContainer component={Paper} className={classes.container} >
 			      <Table  stickyHeader aria-label="sticky table" size="small" className={classes.table_main}>
 			        <TableHead >
 			          <TableRow >
-			           <TableCell padding='none' align="center"className={classes.table_head}>SELECT</TableCell>
-			            <TableCell padding='none' align="center"className={classes.table_head}>PR#</TableCell>
-			            <TableCell padding='none' align="center" className={classes.table_head}>PO#</TableCell>
-			            <TableCell padding='none' align="center" className={classes.table_head}>CREATE DATE</TableCell>
-			            <TableCell padding='none' align="center" className={classes.table_head}>LOCATION</TableCell>
-			            <TableCell padding='none' align="center" className={classes.table_head}>TOTAL ITEMS</TableCell>
-			            <TableCell padding='none' align="center" className={classes.table_head}>TOTAL QTY</TableCell>
-			            <TableCell padding='none' align="center" className={classes.table_head}>TOTAL COST</TableCell>
-			            <TableCell padding='none' align="center" className={classes.table_head}>SHORT QTY</TableCell>
-			            <TableCell padding='none' align="center" className={classes.table_head}>EXCESS QTY</TableCell>
-			            <TableCell padding='none' align="center" className={classes.table_head}>STATUS</TableCell>
+			           <StyledTableCell padding='none' align="center"className={classes.table_head}>SELECT</StyledTableCell>
+			            <StyledTableCell padding='none' align="center"className={classes.table_head}>PR#</StyledTableCell>
+			            <StyledTableCell padding='none' align="center" className={classes.table_head}>PO#</StyledTableCell>
+			            <StyledTableCell padding='none' align="center" className={classes.table_head}>CREATE DATE</StyledTableCell>
+			            <StyledTableCell padding='none' align="center" className={classes.table_head}>LOCATION</StyledTableCell>
+			            <StyledTableCell padding='none' align="center" className={classes.table_head}>TOTAL ITEMS</StyledTableCell>
+			            <StyledTableCell padding='none' align="center" className={classes.table_head}>TOTAL QTY</StyledTableCell>
+			            <StyledTableCell padding='none' align="center" className={classes.table_head}>TOTAL COST</StyledTableCell>
+			            <StyledTableCell padding='none' align="center" className={classes.table_head}>SHORT QTY</StyledTableCell>
+			            <StyledTableCell padding='none' align="center" className={classes.table_head}>EXCESS QTY</StyledTableCell>
+			            <StyledTableCell padding='none' align="center" className={classes.table_head}>STATUS</StyledTableCell>
 
 
 
@@ -509,52 +605,71 @@ render()
 			        </TableHead>
 
 			        <TableBody>
-			          {this.state.searchResult.slice(this.state.page * 100, this.state.page * 100 + 100).map((row) => {
+			          {this.state.searchResult.slice(this.state.page * 20, this.state.page * 20 + 20).map((row) => {
+			          	let bordercolor='';
+			          	if(row.status=='APPROVED')
+			          	{
+			          		bordercolor='2px solid #008000';
+
+			          	}
+			          	if(row.status=="REJECTED")
+			          	{
+			          		bordercolor='2px solid red';
+			          	}
+			          	if(row.status=="SUBMITTED")
+			          	{
+			          		bordercolor='2px solid #FFFF00';
+			          	}
              		 return (
-			            <TableRow >
-			            <TableCell padding='none' align="center" className={classes.table_column}>
+             		
+			            <StyledTableRow  >
+			            
+			            <StyledTableCell  align="center" className={classes.table_column}  >
 			              <input 
 			              	type="checkbox"
-			              	
+			              	value={JSON.stringify(row)}
        					 	onChange={this.handleCheck}			
 					        inputProps={{ 'aria-label': 'primary checkbox' }}
-     						 />		                
-			              </TableCell>
-			              <TableCell padding='none' align="center" className={classes.table_column} onClick={this.handleClickOpen}>
+     						 />	
+     						                 
+			              </StyledTableCell>
+			              <StyledTableCell  align="center" className={classes.table_column}  onClick={this.handleClickOpen}>
 			             <Link style={{ color:'black' }}> {row.orderNumber}</Link>			                
-			              </TableCell>
-			              <TableCell padding='none' align="center" className={classes.table_column}>
-			              1212
-			              </TableCell>
-			              <TableCell padding='none'  align="center" className={classes.table_column}>
-			                12/09/2019
-			              </TableCell>
-			              <TableCell padding='none'  align="center" className={classes.table_column}>
-			                CO-12342
-			              </TableCell>
-			              <TableCell padding='none'  align="center" className={classes.table_column}>
-			                21
-			              </TableCell>
-			              <TableCell padding='none'  align="center" className={classes.table_column}>
-			                21
-			              </TableCell>
-			              <TableCell padding='none'  align="center" className={classes.table_column}>
-			                400
-			              </TableCell>
-			              <TableCell padding='none'  align="center" className={classes.table_column}>
-			                1000
-			              </TableCell>
-			              <TableCell padding='none'  align="center" className={classes.table_column}>
-			                390
-			              </TableCell>
-			              <TableCell padding='none'  align="center" className={classes.table_column}>
-			                {row.status}
-			              </TableCell>
+			              </StyledTableCell>
+			              <StyledTableCell  align="center" className={classes.table_column} >
+			              {row.PO}
+			              </StyledTableCell>
+			              <StyledTableCell   align="center" className={classes.table_column} >
+			                {row.createDate}
+			              </StyledTableCell>
+			              <StyledTableCell   align="center" className={classes.table_column} >
+			                {row.location}
+			              </StyledTableCell>
+			              <StyledTableCell   align="center" className={classes.table_column} >
+			                {row.totalItem}
+			              </StyledTableCell>
+			              <StyledTableCell   align="center" className={classes.table_column} >
+			                {row.totalQTY}
+			              </StyledTableCell>
+			              <StyledTableCell   align="center" className={classes.table_column} >
+			                {row.totalCost}
+			              </StyledTableCell>
+			              <StyledTableCell   align="center" className={classes.table_column} >
+			                {row.shortQty}
+			              </StyledTableCell>
+			              <StyledTableCell   align="center" className={classes.table_column} >
+			                {row.excessQTY}
+			              </StyledTableCell>
+			              <StyledTableCell padding='none'  align="center" className={classes.table_column} >
+			                <div style={{border:bordercolor}}>{row.status}</div>
+			              </StyledTableCell>
 			              
-			            </TableRow>
+			            </StyledTableRow>
+
 			            
 			           );})}
 			        </TableBody>
+
 			      </Table>
 			  </TableContainer>
 			  <TablePagination
@@ -562,7 +677,7 @@ render()
 		        component="Paper"
 		        
 		        count={this.state.totalrecords}
-		        rowsPerPage={100}
+		        rowsPerPage={20}
 		        labelRowsPerPage=''
 		        rowsPerPageOptions={[]}
 		        page={this.state.page}
