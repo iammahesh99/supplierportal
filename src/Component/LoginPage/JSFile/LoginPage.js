@@ -79,7 +79,8 @@ constructor(props){
   username:'',
   password:'',
   status:0,
-  token:''
+  token:'',
+  loginfail:false
   }
  }
  handleUsername=(event)=>{
@@ -116,7 +117,10 @@ Toast.loading('Logging ');
                 {
                   this.setState({otp:true})
                   
-                }           
+                }  
+                else{
+                  this.setState({loginfail:true})
+                }          
           }, 2000);
 
           
@@ -195,6 +199,7 @@ render()
                   onBlur={this.handlePassword}
                   
                 />
+                {this.state.loginfail?<div style={{display:'flex',justifyContent:'center'}}><Typography style={{color:'red'}}>Bad Credential</Typography></div>:null}
                 
                <Button
                   
