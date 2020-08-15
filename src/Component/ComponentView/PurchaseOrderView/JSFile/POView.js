@@ -40,7 +40,7 @@ const StyledTableCell = withStyles((theme) => ({
     color: theme.palette.common.white,
   },
   body: {
-    fontSize: 14,
+    fontSize: 12,
     borderTop: 'solid 1px ',
     
   },

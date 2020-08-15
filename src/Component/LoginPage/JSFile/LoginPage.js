@@ -28,6 +28,9 @@ import {
   Link, Redirect,  
 } from "react-router-dom";
 import Paper from '@material-ui/core/Paper';
+import OtpSubmit from '../JSFile/OtpSubmit.js'
+import Toast from 'light-toast';
+
 
 const styles = theme => ({
   root: {
@@ -72,13 +75,73 @@ class LoginPage extends Component {
 constructor(props){
   super(props);
   this.state={
+  otp:false,
   username:'',
-  password:''
+  password:'',
+  status:0,
+  token:''
   }
+ }
+ handleUsername=(event)=>{
+  this.setState({username:event.target.value});
+
+ }
+ handlePassword=(event)=>{
+  this.setState({password:event.target.value})
+ }
+
+ handleClick=()=>{
+
+const proxyurl = "https://cors-anywhere.herokuapp.com/";
+
+const baseuri='http://ec2-3-23-104-101.us-east-2.compute.amazonaws.com/api/v1/authenticate';
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+
+var raw = JSON.stringify({"userName":this.state.username,"password":this.state.password});
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch(proxyurl+baseuri, requestOptions)
+  .then(response => {
+Toast.loading('Logging ');
+          setTimeout(() => {
+            Toast.hide();
+            if(response.status==200)
+                {
+                  this.setState({otp:true})
+                  
+                }           
+          }, 2000);
+
+          
+    
+    return response.json()})
+  .then(result => {
+    localStorage.setItem('token',result.token);
+
+    this.setState({token:result.token})
+    
+    })
+  .catch(error => console.log('error', error));
+
+
+
+
+    
+     
+
+  
  }
 render()
  {
   const { classes}= this.props;
+  console.log(this.state.otp)
   
     return (
       <div >
@@ -97,53 +160,59 @@ render()
 
       </AppBar>  
       </div>
-<Container component="main" maxWidth="xs">
-        <CssBaseline />
-      <div className={clsx(classes.paper)}>
-        <Avatar className={clsx(classes.avatar)}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <form className={clsx(classes.form)} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Username"
-            name="email"
-            autoComplete="username"
-            autoFocus
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          
-         <Link to="/Home" style={{ textDecoration: 'none' }}> <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            className={clsx(classes.submit)}
-            style={{backgroundColor:'red'}}
-          >
-            Sign In
-          </Button>
-          </Link>
-          
-        </form>
-      </div>
-      </Container>
+      {this.state.otp?<OtpSubmit token={this.state.token}/>:
+      <Container component="main" maxWidth="xs">
+              <CssBaseline />
+            <div className={clsx(classes.paper)}>
+              <Avatar className={clsx(classes.avatar)}>
+                <LockOutlinedIcon />
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                Sign in
+              </Typography>
+              
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Username"
+                  name="email"
+                  onBlur={this.handleUsername}
+                  
+                  autoFocus
+                />
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  onBlur={this.handlePassword}
+                  
+                />
+                
+               <Button
+                  
+                  fullWidth
+                  onClick={this.handleClick}
+                  variant="contained"
+                  className={clsx(classes.submit)}
+                  style={{backgroundColor:'red'}}
+                >
+                  Sign In
+                </Button>
+                
+                
+             
+            </div>
+            </Container>
+    }
+
 
         
 

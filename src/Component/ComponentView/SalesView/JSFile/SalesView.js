@@ -29,7 +29,7 @@ const StyledTableCell = withStyles((theme) => ({
     color: theme.palette.common.white,
   },
   body: {
-    fontSize: 14,
+    fontSize: 12,
     borderTop: 'solid 1px ',
     
   },
@@ -104,12 +104,12 @@ const styles = theme => ({
 
 	},
 	table_head:{
-		border: '1px solid #000000',
+		
 		padding:'none'
 
 	},
 	table_column:{
-		border: '1px solid #000000',
+		
 		padding:'none'
 
 
@@ -227,15 +227,26 @@ handleChange = () => {
           setTimeout(() => {
             Toast.hide();
           }, 2000);
-    const baseuri='http://ec2-3-15-215-175.us-east-2.compute.amazonaws.com/api/v1/salesdetail?';
+    const proxyurl = "https://cors-anywhere.herokuapp.com/";
+    const baseuri='http://ec2-3-23-104-101.us-east-2.compute.amazonaws.com/api/v1/salesdetail?';
     const itemsearch=query;
-      fetch(baseuri+itemsearch,{
-        method: 'GET',
-        })
-      .then(response =>  response.json())
-      .then(resData => { 
-      this.setState({searchResult:resData.result})       
-      })
+
+
+
+    var myHeaders = new Headers();
+	myHeaders.append("Authorization", "Bearer "+" "+localStorage.getItem('dataToken'));
+
+	var requestOptions = {
+	  method: 'GET',
+	  headers: myHeaders,
+	  redirect: 'follow'
+	};
+
+	fetch(proxyurl+baseuri+itemsearch, requestOptions)
+	  .then(response => response.json())
+	  .then(result => {this.setState({searchResult:result.result})})
+	  .catch(error => console.log('error', error));
+
   }
   handleReset=()=>
   {
