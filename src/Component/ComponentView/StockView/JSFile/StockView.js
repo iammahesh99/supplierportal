@@ -21,6 +21,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import Checkbox from '@material-ui/core/Checkbox';
 import Toast from 'light-toast';
 import XLSX from 'xlsx';
+import Dialog from '@material-ui/core/Dialog';
+import Map from '../JSFile/map.js';
 
 
 const StyledTableCell = withStyles((theme) => ({
@@ -120,6 +122,10 @@ const styles = theme => ({
 	table_main:{
 		padding:'none'
 	},
+	dialogPaper: {
+        minHeight: '80vh',
+        maxHeight: '80vh',
+    },
 	
   
 });
@@ -140,7 +146,10 @@ constructor(props){
   bar:'',
   vpn:'',
   checkedItems: [],
-  options:[]
+  options:[],
+  map:false,
+  enable:false
+
   }
  }
 
@@ -171,6 +180,7 @@ handleChange = () => {
   }
 
   handleSearchItem =()=>{
+
   	this.setState({options:[]});
   	this.setState({checkedItems:[]});
   	this.setState({searchResult:[]});
@@ -225,7 +235,9 @@ handleChange = () => {
 
 	fetch(proxyurl+baseuri+itemsearch, requestOptions)
 	  .then(response => response.json())
-	  .then(result => {this.setState({searchResult:result.result})})
+	  .then(result => {
+	  	this.setState({searchResult:result.result,enable:true})
+	})
 	  .catch(error => console.log('error', error));
 
 
@@ -289,6 +301,10 @@ handleChange = () => {
 	const workbook = XLSX.utils.book_new();
 	XLSX.utils.book_append_sheet(workbook, sheet, 'Sheet 1');
 	XLSX.writeFile(workbook, ans+`.xls`);
+
+  }
+  handleMapping=()=>{
+  	this.setState({map:true});
 
   }
 
@@ -425,11 +441,25 @@ render()
 				        display: 'flex',
 	    				flexDirection: 'column',
 	    				backgroundColor:'red'}}>
+				        <div>
+				        <button size='small' className={classes.buttons2}
+				         onClick={this.handleExport}
+				         >
+				         EXCEL
+				         </button>
+				         
+				        {
+				         	this.state.enable?
+				        <button size='small' className={classes.buttons2}
+				        onClick={this.handleMapping}
+				        
+				        
+				        >
+				        Mapping</button>:null}
+				        </div>
 
-    	<button size='small' className={classes.buttons2} onClick={this.handleExport}>EXPORT EXCEL</button>
-
-
-    	</div>
+				        </div>
+ 
 
     	<TableContainer component={Paper}>
 			      <Table  stickyHeader aria-label="sticky table" size="small" className={classes.table_main}>
@@ -487,6 +517,18 @@ render()
 			        </TableBody>
 			      </Table>
 			  </TableContainer>
+
+			  <Dialog
+			fullWidth
+	        open={this.state.map}
+	        maxWidth='md'
+	        classes={{ paper: classes.dialogPaper }}
+	        aria-labelledby="alert-dialog-title"
+	        aria-describedby="alert-dialog-description"
+	      >
+	        
+	        <Map searchResult={this.state.searchResult}/>
+	      </Dialog>
 
 
     	
