@@ -151,7 +151,6 @@ render()
             required
             fullWidth
             variant="outlined"
-            color='red'
             onBlur={this.handleOTP}
             margin="normal"
             label="OTP"

@@ -10,7 +10,7 @@
 
 .wip {
   width: 300px;
-  height: 300px;
+  height: 400px;
   
   top: 10;
   
@@ -20,7 +20,7 @@
   display: flex;
   
   width: 300px;
-  height: 300px;
+  height: 400px;
   justify-content: space-around;
   flex-direction: column;
   
@@ -32,7 +32,7 @@
 .droppable {
   
   width: 300px;
-  height: 300px;
+  height: 400px;
   
   top: 10;
  

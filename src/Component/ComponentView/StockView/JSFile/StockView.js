@@ -148,7 +148,8 @@ constructor(props){
   checkedItems: [],
   options:[],
   map:false,
-  enable:false
+  enable:false,
+  listOfHeader:[]
 
   }
  }
@@ -304,7 +305,17 @@ handleChange = () => {
 
   }
   handleMapping=()=>{
-  	this.setState({map:true});
+  	
+  	var list=[]
+  	 this.state.searchResult.slice(0,1).map(data=>(
+                        
+                        Object.entries(data).map(([make, type]) => (
+                           list.push(make)    
+                        ))
+
+                       ))
+  	 this.setState({listOfHeader:list})
+  	 this.setState({map:true});
 
   }
 
@@ -527,7 +538,7 @@ render()
 	        aria-describedby="alert-dialog-description"
 	      >
 	        
-	        <Map searchResult={this.state.searchResult}/>
+	        <Map searchResult={this.state.listOfHeader}/>
 	      </Dialog>
 
 

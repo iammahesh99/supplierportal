@@ -15,14 +15,19 @@ export default class Map extends Component {
             {name:"React", category:"wip", bgcolor:"pink"},
             {name:"Vue", category:"complete", bgcolor:"skyblue"}
           ],
-          selectedFile: null,
           right:[],
-          imported:false
-    }
+          selectedFile: null,
+          imported:false,
+          searchResult:props.searchResult,
+          matched:["hello"],
+          matchingStart:false
+          
+    };
+
 }
 
     onDragStart = (ev, id) => {
-        console.log('dragstart:',id);
+       // console.log('dragstart:',id);
         ev.dataTransfer.setData("id", id);
     }
 
@@ -31,19 +36,16 @@ export default class Map extends Component {
     }
 
     onDrop = (ev, cat) => {
+      this.setState({matchingStart:true})
        let id = ev.dataTransfer.getData("id");
+       console.log(cat);
+       console.log(id)
        
-       let tasks = this.state.tasks.filter((task) => {
-           if (task.name == id) {
-               task.category = cat;
-           }
-           return task;
-       });
-
-       this.setState({
-           ...this.state,
-           tasks
-       });
+       var List=this.state.matched
+       List.push(cat+'+'+id)
+       this.setState({matched:List})
+       
+       
     }
     onFileChange = event => { 
         this.setState({imported:true})
@@ -75,6 +77,9 @@ export default class Map extends Component {
              
     }
 
+
+    
+
     fileData = () => { 
      
       if (this.state.selectedFile) { 
@@ -99,9 +104,13 @@ export default class Map extends Component {
         ); 
       } 
     }; 
+
      
 
     render() {
+      console.log(this.state.searchResult)
+      
+    
         var tasks = {
             wip: [],
             complete: []
@@ -119,38 +128,57 @@ export default class Map extends Component {
                 </Paper>
             );
         });
+        
+
+       
+
+
+        
+
+
 
         return (
         <div>
        <div style={{display:'flex',justifyContent:'flex-end'}}> <input type="file" onChange={this.onFileChange} /></div>
             <div className="App">
                 <div className="wip"
-                    onDragOver={(e)=>this.onDragOver(e)}
-                    onDrop={(e)=>{this.onDrop(e, "wip")}}>
+                
+                    >
+                    <div className="left">
+                     {this.state.searchResult.map(data=>(
+                      <Paper style={{overflow:'wrap',backgroundColor:'red'}}
+                      onDragOver={(e)=>this.onDragOver(e)}
+                      onDrop={(e)=>{this.onDrop(e,data )}}
+                        
+                      ><Typography>
+                      {data}</Typography></Paper>))}
+                    </div>
                     
-                    { this.props.searchResult.slice(0,1).map(data=>(
-                        <div className="left">
-                        {Object.entries(data).map(([make, type]) => (
-                           <Paper style={{overflow:'wrap',backgroundColor:'red'}}
-                           onDragStart = {(e) => this.onDragStart(e, make)}
-                            draggable
-                           ><Typography>{make}</Typography></Paper>     
-                        ))}
-                        </div>
-
-                       ))}
                 </div>
-                <div className="droppable" 
-                    onDragOver={(e)=>this.onDragOver(e)}
-                    onDrop={(e)=>this.onDrop(e, "complete")}>
-                    
+                <div className="droppable"  > 
+                <div className="left">
+               { this.state.matched.map(match=>(
+                  <Paper>
+                  <Typography>
+                   {match}
+                  </Typography>
+                  </Paper>
+
+                  ))}
+
+                </div>                
+
+                     
+                     
+                </div>
+                <div className="droppable"  >                 
 
                      
                      { this.state.imported ?this.state.right.slice(0,1).map(data=>(
                         <div className="left">
                         {Object.entries(data).map(([make, type]) => (
                            <Paper style={{overflow:'wrap',backgroundColor:'red'}}
-                           onDragStart = {(e) => this.onDragStart(e, make)}
+                           onDragStart = {(e) => this.onDragStart(e, type)}
                             draggable
                            ><Typography>{type}</Typography></Paper>     
                         ))}
