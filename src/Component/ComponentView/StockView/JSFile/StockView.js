@@ -318,6 +318,9 @@ handleChange = () => {
   	 this.setState({map:true});
 
   }
+  handleClose=()=>{
+  	this.setState({map:false});
+  }
 
 
 render()
@@ -532,6 +535,7 @@ render()
 			  <Dialog
 			fullWidth
 	        open={this.state.map}
+	        onClose={this.handleClose}
 	        maxWidth='md'
 	        classes={{ paper: classes.dialogPaper }}
 	        aria-labelledby="alert-dialog-title"

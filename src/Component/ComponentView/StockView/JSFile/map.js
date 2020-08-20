@@ -4,23 +4,21 @@ import Typography from '@material-ui/core/Typography';
 
 import '../CSSFile/Map.css';
 import * as XLSX from 'xlsx';
+import CloseIcon from '@material-ui/icons/Close';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
 
 export default class Map extends Component {
     constructor(props){
   super(props);
   this.state={
     
-        tasks: [
-            {name:"Learn Angular",category:"wip", bgcolor: "yellow"},
-            {name:"React", category:"wip", bgcolor:"pink"},
-            {name:"Vue", category:"complete", bgcolor:"skyblue"}
-          ],
           right:[],
           selectedFile: null,
           imported:false,
           searchResult:props.searchResult,
-          matched:["hello"],
-          matchingStart:false
+          matched:[],
+          matchingStart:true
           
     };
 
@@ -36,20 +34,27 @@ export default class Map extends Component {
     }
 
     onDrop = (ev, cat) => {
-      this.setState({matchingStart:true})
+      this.setState({matchingStart:false})
        let id = ev.dataTransfer.getData("id");
        console.log(cat);
        console.log(id)
        
        var List=this.state.matched
-       List.push(cat+'+'+id)
+       List.push(cat+' '+'mapped as'+' '+id)
        this.setState({matched:List})
+
+       var options=this.state.right
+
+       let index = options.indexOf(id)
+        options.splice(index, 1)
+        this.setState({right:options})
        
        
     }
     onFileChange = event => { 
         this.setState({imported:true})
         const scope = this
+        var list=[];
         
      
       // Update the state 
@@ -65,10 +70,15 @@ export default class Map extends Component {
              
              // header: 1 instructs xlsx to create an 'array of arrays'
               var result = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
-              console.log(result[0])
-              scope.setState({right:result})
-             
-             // data preview
+              result.slice(0,1).map(data=>(
+                        
+                        Object.entries(data).map(([make, type]) => (
+                           list.push(type)    
+                        ))
+
+                       ))
+              scope.setState({right:list})
+                          // data preview
              
            };
            FR.readAsArrayBuffer(file); 
@@ -76,62 +86,31 @@ export default class Map extends Component {
           
              
     }
+ onRemove=(event, val)=>{
 
+  var options=this.state.matched
+
+       let index = options.indexOf(val)
+        options.splice(index, 1)
+        this.setState({matched:options})
+
+    let addInRight=val.split(" ")[3].trim();
+    var pushForRight=this.state.right;
+    pushForRight.push(addInRight);
+    this.setState({right:pushForRight});
+    
+
+
+
+ }
 
     
 
-    fileData = () => { 
-     
-      if (this.state.selectedFile) { 
-          
-        return ( 
-          <div> 
-            <h2>File Details:</h2> 
-            <p>File Name: {this.state.selectedFile.name}</p> 
-            <p>File Type: {this.state.selectedFile.type}</p> 
-            <p> 
-              Last Modified:{" "} 
-              {this.state.selectedFile.lastModifiedDate.toDateString()} 
-            </p> 
-          </div> 
-        ); 
-      } else { 
-        return ( 
-          <div> 
-            <br /> 
-            <h4>Choose before Pressing the Upload button</h4> 
-          </div> 
-        ); 
-      } 
-    }; 
-
+    
      
 
     render() {
       console.log(this.state.searchResult)
-      
-    
-        var tasks = {
-            wip: [],
-            complete: []
-        }
-
-        this.state.tasks.forEach ((t) => {
-            tasks[t.category].push(
-                <Paper key={t.name} 
-                    onDragStart = {(e) => this.onDragStart(e, t.name)}
-                    draggable
-                   
-                    style = {{backgroundColor: t.bgcolor}}
-                >
-                    {t.name}
-                </Paper>
-            );
-        });
-        
-
-       
-
 
         
 
@@ -157,11 +136,14 @@ export default class Map extends Component {
                 </div>
                 <div className="droppable"  > 
                 <div className="left">
-               { this.state.matched.map(match=>(
-                  <Paper>
-                  <Typography>
+                {this.state.matchingStart?<h3>Here Mapped Parameter</h3>:null}
+               {this.state.matched.map(match=>(
+                  <Paper style={{overflow:'wrap',backgroundColor:'green',display:'flex',justifyContent:'space-between'}}>
+                  <Typography style={{color:'white'}}>
                    {match}
+                   
                   </Typography>
+                  <button style={{color:'red',backgroundColor:'black'}} onClick={(e)=>{this.onRemove(e,match)}}>Remove</button>
                   </Paper>
 
                   ))}
@@ -171,25 +153,22 @@ export default class Map extends Component {
                      
                      
                 </div>
-                <div className="droppable"  >                 
+                <div className="droppable"  >  
 
-                     
-                     { this.state.imported ?this.state.right.slice(0,1).map(data=>(
-                        <div className="left">
-                        {Object.entries(data).map(([make, type]) => (
-                           <Paper style={{overflow:'wrap',backgroundColor:'red'}}
-                           onDragStart = {(e) => this.onDragStart(e, type)}
-                            draggable
-                           ><Typography>{type}</Typography></Paper>     
-                        ))}
-                        </div>
+                    <div className="left">
 
-                       )):null}
-                </div>
+                        {this.state.imported? this.state.right.map(data=>(
+                              <Paper style={{overflow:'wrap',backgroundColor:'red'}}
+                                   onDragStart = {(e) => this.onDragStart(e, data)}
+                                    draggable
+                                   ><Typography>
+                              {data}</Typography></Paper>)):null}
 
+                    </div>
 
-            </div>
+              </div>
             
+            </div>
             </div>
         );
     }
