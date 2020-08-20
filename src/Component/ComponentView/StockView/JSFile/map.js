@@ -29,8 +29,26 @@ export default class Map extends Component {
         ev.dataTransfer.setData("id", id);
     }
 
-    onDragOver = (ev) => {
+    onDragOver = (ev,cat) => {
+      let final='';
+     
+      this.state.matched.map(data=>{
+        let string= data.split(" ")[0].trim();
+        if(string==cat)
+        {
+          final=cat;
+
+        }
+        
+      })
+      if(final=='')
+      {
         ev.preventDefault();
+      }
+
+        
+
+
     }
 
     onDrop = (ev, cat) => {
@@ -118,6 +136,11 @@ export default class Map extends Component {
 
         return (
         <div>
+        <Toolbar style={{display:'flex',justifyContent:'flex-end'}}>
+        <IconButton edge="start" color="inherit" onClick={this.props.handleClose} aria-label="close">
+              <CloseIcon style={{ color: 'red' }} />
+            </IconButton>
+            </Toolbar>
        <div style={{display:'flex',justifyContent:'flex-end'}}> <input type="file" onChange={this.onFileChange} /></div>
             <div className="App">
                 <div className="wip"
@@ -126,7 +149,7 @@ export default class Map extends Component {
                     <div className="left">
                      {this.state.searchResult.map(data=>(
                       <Paper style={{overflow:'wrap',backgroundColor:'red'}}
-                      onDragOver={(e)=>this.onDragOver(e)}
+                      onDragOver={(e)=>this.onDragOver(e,data)}
                       onDrop={(e)=>{this.onDrop(e,data )}}
                         
                       ><Typography>

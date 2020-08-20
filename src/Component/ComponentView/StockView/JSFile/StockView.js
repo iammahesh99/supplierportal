@@ -23,6 +23,9 @@ import Toast from 'light-toast';
 import XLSX from 'xlsx';
 import Dialog from '@material-ui/core/Dialog';
 import Map from '../JSFile/map.js';
+import CloseIcon from '@material-ui/icons/Close';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
 
 
 const StyledTableCell = withStyles((theme) => ({
@@ -322,12 +325,20 @@ handleChange = () => {
   	this.setState({map:false});
   }
 
+//   shouldComponentUpdate(nextProps, nextState) {
+//   if (nextState.map === this.state.map) {
+//     return false;
+//   } else {
+//     return true;
+//   }
+// }
 
 render()
  {
   const { classes}= this.props;
   const open = Boolean(this.state.ischecked);
   var set='';
+  console.log('render');
   
     return (
     	<Container component="main" maxWidth="md">
@@ -541,8 +552,9 @@ render()
 	        aria-labelledby="alert-dialog-title"
 	        aria-describedby="alert-dialog-description"
 	      >
+	      
 	        
-	        <Map searchResult={this.state.listOfHeader}/>
+	        <Map searchResult={this.state.listOfHeader} handleClose={this.handleClose}/>
 	      </Dialog>
 
 
