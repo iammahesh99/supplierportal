@@ -226,7 +226,7 @@ handleChange = () => {
   	Toast.loading('Searching');
           setTimeout(() => {
             Toast.hide();
-          }, 2000);
+          }, 4000);
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
     const baseuri='http://ec2-3-23-104-101.us-east-2.compute.amazonaws.com/api/v1/salesdetail?';
     const itemsearch=query;

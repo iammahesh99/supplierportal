@@ -1,0 +1,10 @@
+.table{
+	margin-bottom: '20px';
+	border: 1px solid red;
+
+}
+.col{
+	border-right:hidden; 
+	background-color: 'red';
+
+}

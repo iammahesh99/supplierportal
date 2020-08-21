@@ -22,7 +22,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Toast from 'light-toast';
 import XLSX from 'xlsx';
 import Dialog from '@material-ui/core/Dialog';
-import Map from '../JSFile/map.js';
+
 import CloseIcon from '@material-ui/icons/Close';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -150,9 +150,9 @@ constructor(props){
   vpn:'',
   checkedItems: [],
   options:[],
-  map:false,
-  enable:false,
-  listOfHeader:[]
+  // map:false,
+  // enable:false,
+  // listOfHeader:[]
 
   }
  }
@@ -221,7 +221,7 @@ handleChange = () => {
   	Toast.loading('Searching');
           setTimeout(() => {
             Toast.hide();
-          }, 2000);
+          }, 4000);
      const proxyurl = "https://cors-anywhere.herokuapp.com/";
     const baseuri='http://ec2-3-23-104-101.us-east-2.compute.amazonaws.com/api/v1/stockdetail?';
     const itemsearch=query;
@@ -240,7 +240,7 @@ handleChange = () => {
 	fetch(proxyurl+baseuri+itemsearch, requestOptions)
 	  .then(response => response.json())
 	  .then(result => {
-	  	this.setState({searchResult:result.result,enable:true})
+	  	this.setState({searchResult:result.result})
 	})
 	  .catch(error => console.log('error', error));
 
@@ -307,31 +307,25 @@ handleChange = () => {
 	XLSX.writeFile(workbook, ans+`.xls`);
 
   }
-  handleMapping=()=>{
+  // handleMapping=()=>{
   	
-  	var list=[]
-  	 this.state.searchResult.slice(0,1).map(data=>(
+  // 	var list=[]
+  // 	 this.state.searchResult.slice(0,1).map(data=>(
                         
-                        Object.entries(data).map(([make, type]) => (
-                           list.push(make)    
-                        ))
+  //                       Object.entries(data).map(([make, type]) => (
+  //                          list.push(make)    
+  //                       ))
 
-                       ))
-  	 this.setState({listOfHeader:list})
-  	 this.setState({map:true});
+  //                      ))
+  // 	 this.setState({listOfHeader:list})
+  // 	 this.setState({map:true});
 
-  }
-  handleClose=()=>{
-  	this.setState({map:false});
-  }
+  // }
+  // handleClose=()=>{
+  // 	this.setState({map:false});
+  // }
 
-//   shouldComponentUpdate(nextProps, nextState) {
-//   if (nextState.map === this.state.map) {
-//     return false;
-//   } else {
-//     return true;
-//   }
-// }
+
 
 render()
  {
@@ -473,14 +467,7 @@ render()
 				         EXCEL
 				         </button>
 				         
-				        {
-				         	this.state.enable?
-				        <button size='small' className={classes.buttons2}
-				        onClick={this.handleMapping}
-				        
-				        
-				        >
-				        Mapping</button>:null}
+				 
 				        </div>
 
 				        </div>
@@ -542,20 +529,6 @@ render()
 			        </TableBody>
 			      </Table>
 			  </TableContainer>
-
-			  <Dialog
-			fullWidth
-	        open={this.state.map}
-	        onClose={this.handleClose}
-	        maxWidth='md'
-	        classes={{ paper: classes.dialogPaper }}
-	        aria-labelledby="alert-dialog-title"
-	        aria-describedby="alert-dialog-description"
-	      >
-	      
-	        
-	        <Map searchResult={this.state.listOfHeader} handleClose={this.handleClose}/>
-	      </Dialog>
 
 
     	

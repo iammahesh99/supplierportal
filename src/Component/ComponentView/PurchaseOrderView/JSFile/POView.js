@@ -29,8 +29,7 @@ import {
 } from "react-router-dom";
 import TablePagination from '@material-ui/core/TablePagination';
 import PO from '../JSFile/JSON/PO.json';
-import Box from '@material-ui/core/Box';
-
+import '../CSSFile/POView.css';
 
 
 
@@ -42,6 +41,7 @@ const StyledTableCell = withStyles((theme) => ({
   body: {
     fontSize: 12,
     borderTop: 'solid 1px ',
+    borderCollapse:'seperate'
     
   },
 }))(TableCell);
@@ -584,7 +584,7 @@ render()
 				        </div>
  
     	<TableContainer component={Paper} className={classes.container} >
-			      <Table  stickyHeader aria-label="sticky table" size="small" className={classes.table_main}>
+			      <Table  stickyHeader aria-label="sticky table" size="small" className={classes.table_main} >
 			        <TableHead >
 			          <TableRow >
 			           <StyledTableCell padding='none' align="center"className={classes.table_head}>SELECT</StyledTableCell>

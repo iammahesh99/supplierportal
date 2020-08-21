@@ -7,6 +7,8 @@ import * as XLSX from 'xlsx';
 import CloseIcon from '@material-ui/icons/Close';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
+import Container from '@material-ui/core/Container';
+import Toast from 'light-toast';
 
 export default class Map extends Component {
     constructor(props){
@@ -16,7 +18,7 @@ export default class Map extends Component {
           right:[],
           selectedFile: null,
           imported:false,
-          searchResult:props.searchResult,
+          searchResult:[],
           matched:[],
           matchingStart:true
           
@@ -82,6 +84,7 @@ export default class Map extends Component {
            
            var FR = new FileReader();
            FR.onload = function(e) {
+            scope.setState({matched:[]})
              var data = new Uint8Array(e.target.result);
              var workbook = XLSX.read(data, {type: 'array'});
              var firstSheet = workbook.Sheets[workbook.SheetNames[0]];
@@ -121,6 +124,44 @@ export default class Map extends Component {
 
 
  }
+ componentDidMount(){
+
+    Toast.loading('Fetching Stock Headers');
+          setTimeout(() => {
+            Toast.hide();
+          }, 4000);
+     const proxyurl = "https://cors-anywhere.herokuapp.com/";
+    const baseuri='http://ec2-3-23-104-101.us-east-2.compute.amazonaws.com/api/v1/stockdetail?';
+    
+
+
+    var myHeaders = new Headers();
+  myHeaders.append("Authorization", "Bearer "+" "+localStorage.getItem('dataToken'));
+
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+
+  fetch(proxyurl+baseuri, requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      var list=[]
+     result.result.slice(0,1).map(data=>(
+                        
+                        Object.entries(data).map(([make, type]) => (
+                           list.push(make)    
+                        ))
+
+                       ))
+     this.setState({searchResult:list})
+      
+  })
+    .catch(error => console.log('error', error));
+
+
+ }
 
     
 
@@ -135,12 +176,8 @@ export default class Map extends Component {
 
 
         return (
-        <div>
-        <Toolbar style={{display:'flex',justifyContent:'flex-end'}}>
-        <IconButton edge="start" color="inherit" onClick={this.props.handleClose} aria-label="close">
-              <CloseIcon style={{ color: 'red' }} />
-            </IconButton>
-            </Toolbar>
+        <Container component="main" maxWidth="md">
+        
        <div style={{display:'flex',justifyContent:'flex-end'}}> <input type="file" onChange={this.onFileChange} /></div>
             <div className="App">
                 <div className="wip"
@@ -192,7 +229,7 @@ export default class Map extends Component {
               </div>
             
             </div>
-            </div>
+            </Container>
         );
     }
 }

@@ -2,6 +2,7 @@ import React ,{useState}from "react";
 import HomePage from '../JSFile/HomePage.js';
 import {BrowserRouter, Route, Switch,Link} from 'react-router-dom';
 import NavigationBar from '../JSFile/NavigationBar';
+import AdminPanel from '../JSFile/AdminPanel';
 import StockView from '../../ComponentView/StockView/JSFile/StockView.js';
 import SalesView from '../../ComponentView/SalesView/JSFile/SalesView.js';
 import POView from '../../ComponentView/PurchaseOrderView/JSFile/POView.js';
@@ -49,6 +50,7 @@ console.log(darkState)
         <Route path="/Home/Stock"  ><StockView /></Route>
         <Route path="/Home/Sales"  ><SalesView /></Route>
         <Route path="/Home/PODetail"  ><POView /></Route>
+        <Route path="/Home/AdminPanel"  ><AdminPanel /></Route>
       </Switch>
       
       </div>

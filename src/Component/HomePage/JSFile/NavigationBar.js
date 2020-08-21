@@ -147,6 +147,9 @@ render()
 
                   />
                   </MenuItem>
+                  <MenuItem >
+                  <Link to="/Home/AdminPanel" style={{ textDecoration: 'none',color:'black' }} >Admin Panel</Link>
+                  </MenuItem>
                   
                  
                   
