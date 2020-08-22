@@ -21,6 +21,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import Checkbox from '@material-ui/core/Checkbox';
 import Toast from 'light-toast';
 import XLSX from 'xlsx';
+import { properties } from '../../../../Properties.js';
 
 
 const StyledTableCell = withStyles((theme) => ({
@@ -228,7 +229,8 @@ handleChange = () => {
             Toast.hide();
           }, 4000);
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    const baseuri='http://ec2-3-23-104-101.us-east-2.compute.amazonaws.com/api/v1/salesdetail?';
+    const endUrl=properties.endUrl
+    const baseuri=endUrl+'api/v1/salesdetail?';
     const itemsearch=query;
 
 

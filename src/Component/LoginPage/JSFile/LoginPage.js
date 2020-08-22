@@ -30,6 +30,7 @@ import {
 import Paper from '@material-ui/core/Paper';
 import OtpSubmit from '../JSFile/OtpSubmit.js'
 import Toast from 'light-toast';
+import { properties } from '../../../Properties.js';
 
 
 const styles = theme => ({
@@ -94,8 +95,9 @@ constructor(props){
  handleClick=()=>{
 
 const proxyurl = "https://cors-anywhere.herokuapp.com/";
+const endUrl=properties.endUrl
 
-const baseuri='http://ec2-3-23-104-101.us-east-2.compute.amazonaws.com/api/v1/authenticate';
+const baseuri=endUrl+'api/v1/authenticate';
 var myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
 

@@ -26,6 +26,7 @@ import Dialog from '@material-ui/core/Dialog';
 import CloseIcon from '@material-ui/icons/Close';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
+import { properties } from '../../../../Properties.js';
 
 
 const StyledTableCell = withStyles((theme) => ({
@@ -223,7 +224,8 @@ handleChange = () => {
             Toast.hide();
           }, 4000);
      const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    const baseuri='http://ec2-3-23-104-101.us-east-2.compute.amazonaws.com/api/v1/stockdetail?';
+     const endUrl=properties.endUrl
+    const baseuri=endUrl+'api/v1/stockdetail?';
     const itemsearch=query;
 
 

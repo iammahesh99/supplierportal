@@ -9,7 +9,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Container from '@material-ui/core/Container';
 import Toast from 'light-toast';
-
+import { properties } from '../../../../Properties.js';
 export default class Map extends Component {
     constructor(props){
   super(props);
@@ -131,7 +131,8 @@ export default class Map extends Component {
             Toast.hide();
           }, 4000);
      const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    const baseuri='http://ec2-3-23-104-101.us-east-2.compute.amazonaws.com/api/v1/stockdetail?';
+     const endUrl=properties.endUrl
+    const baseuri=endUrl+'api/v1/stockdetail?';
     
 
 

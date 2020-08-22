@@ -12,6 +12,7 @@ import clsx from 'clsx';
 import Paper from '@material-ui/core/Paper';
 import Toast from 'light-toast';
 import Typography from '@material-ui/core/Typography';
+import { properties } from '../../../Properties.js';
 
 
 const styles = theme => ({
@@ -79,7 +80,8 @@ constructor(props){
 submit=()=>{
   this.setState({counter:false})
    const proxyurl = "https://cors-anywhere.herokuapp.com/";
-   const baseuri ="http://ec2-3-23-104-101.us-east-2.compute.amazonaws.com/api/v1/otp/submit";
+   const endUrl=properties.endUrl
+   const baseuri =endUrl+"api/v1/otp/submit";
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Authorization", "Bearer "+" "+localStorage.getItem('token'));
@@ -119,7 +121,8 @@ submit=()=>{
 
  fetchData(params){
   const proxyurl = "https://cors-anywhere.herokuapp.com/";
-  const baseuri ="http://ec2-3-23-104-101.us-east-2.compute.amazonaws.com/api/v1/otp/request";
+  const endUrl=properties.endUrl
+  const baseuri =endUrl+"api/v1/otp/request";
   var myHeaders = new Headers();
 myHeaders.append("Authorization", "Bearer "+" "+params);
 
