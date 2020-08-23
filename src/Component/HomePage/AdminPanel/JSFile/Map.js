@@ -10,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Container from '@material-ui/core/Container';
 import Toast from 'light-toast';
 import { properties } from '../../../../Properties.js';
+
 export default class Map extends Component {
     constructor(props){
   super(props);
@@ -18,7 +19,7 @@ export default class Map extends Component {
           right:[],
           selectedFile: null,
           imported:false,
-          searchResult:[],
+          searchResult:props.searchResult,
           matched:[],
           matchingStart:true
           
@@ -124,45 +125,7 @@ export default class Map extends Component {
 
 
  }
- componentDidMount(){
-
-    Toast.loading('Fetching Stock Headers');
-          setTimeout(() => {
-            Toast.hide();
-          }, 4000);
-     const proxyurl = "https://cors-anywhere.herokuapp.com/";
-     const endUrl=properties.endUrl
-    const baseuri=endUrl+'api/v1/stockdetail?';
-    
-
-
-    var myHeaders = new Headers();
-  myHeaders.append("Authorization", "Bearer "+" "+localStorage.getItem('dataToken'));
-
-  var requestOptions = {
-    method: 'GET',
-    headers: myHeaders,
-    redirect: 'follow'
-  };
-
-  fetch(proxyurl+baseuri, requestOptions)
-    .then(response => response.json())
-    .then(result => {
-      var list=[]
-     result.result.slice(0,1).map(data=>(
-                        
-                        Object.entries(data).map(([make, type]) => (
-                           list.push(make)    
-                        ))
-
-                       ))
-     this.setState({searchResult:list})
-      
-  })
-    .catch(error => console.log('error', error));
-
-
- }
+ 
 
     
 
