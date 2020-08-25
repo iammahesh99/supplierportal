@@ -8,6 +8,7 @@ import SalesView from '../../ComponentView/SalesView/JSFile/SalesView.js';
 import POView from '../../ComponentView/PurchaseOrderView/JSFile/POView.js';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import SupplierConfig from '../../ComponentView/SupplierConfiguration/JSFile/SupplierConfig.js';
 
 function HomeRouter() {
 
@@ -51,6 +52,7 @@ console.log(darkState)
         <Route path="/Home/Sales"  ><SalesView /></Route>
         <Route path="/Home/PODetail"  ><POView /></Route>
         <Route path="/Home/AdminPanel"  ><AdminPanel /></Route>
+        <Route path="/Home/Supplier"  ><SupplierConfig /></Route>
       </Switch>
       
       </div>

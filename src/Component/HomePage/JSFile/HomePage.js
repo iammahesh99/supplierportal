@@ -168,6 +168,13 @@ case 'costchange':
 		 <Button  style={{textTransform: "none" ,fontWeight: 'bold'}}>View Balances</Button></Link>
 		 </div>);
 
+	case 'configuration':
+      return (<div style={{display: 'flex',justifyContent:"center"}}>
+      	<div style={{borderLeft:'3px solid black' ,marginRight:'3%'}}></div>
+      	<Link to="/Home/Supplier" style={{ textDecoration: 'none' }} >
+		 <Button  style={{textTransform: "none" ,fontWeight: 'bold'}}>Configure Supplier</Button></Link>
+		 </div>);
+
       	
  	default: 
 
@@ -263,8 +270,8 @@ render()
 				        </Grid>
 				        
 		        </Grid>
-		        <Grid container  spacing={10}>
-		          		<Grid item xs={4}>
+		        <Grid container  spacing={12}>
+		          		<Grid item xs={3}>
 				          <div  className={classes.avtarbox2}>
 						          <Avatar alt="Remy Sharp" className={classes.large}> 
 						          <img src={require('../Icons/costchange.svg')} className={classes.icons}
@@ -275,7 +282,7 @@ render()
 						        </b>
 				          </div>
 				        </Grid>
-				        <Grid item xs={4}>
+				        <Grid item xs={3}>
 				          <div  className={classes.avtarbox}>
 						          <Avatar alt="Remy Sharp" className={classes.large} > 
 						          <img src={require('../Icons/promotions.svg')} className={classes.icons} 
@@ -286,7 +293,7 @@ render()
 						        </b>
 				          </div>
 				        </Grid>
-				        <Grid item xs={4}>
+				        <Grid item xs={3}>
 				          <div  className={classes.avtarbox}>
 						          <Avatar alt="Remy Sharp" className={classes.large}> 
 						          <img src={require('../Icons/invoices.svg')} className={classes.icons} 
@@ -294,6 +301,17 @@ render()
 						          </Avatar>
 						          <b>
 						          Invoices
+						        </b>
+				          </div>
+				        </Grid>
+				        <Grid item xs={3}>
+				          <div  className={classes.avtarbox2}>
+						          <Avatar alt="Remy Sharp" className={classes.large}> 
+						          <img src={require('../Icons/supplier.svg')} className={classes.icons}
+						          onClick={event => this._onButtonClick(event, 'configuration')} />
+						          </Avatar>
+						          <b>
+						          Configuration
 						        </b>
 				          </div>
 				        </Grid>

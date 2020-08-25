@@ -143,6 +143,7 @@ render()
                   <FormControlLabel
                     label="Dark Mode"
                     labelPlacement="start"
+                    
                     control=<Switch checked={this.props.darkState} onChange={this.props.handleThemeChange} />
 
                   />

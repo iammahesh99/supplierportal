@@ -1,0 +1,55 @@
+{
+    
+    "results": [
+        {
+            "supplierId": 1123,
+            "supplierName":"papperThoughts Services Private Limited",
+            "status": "Active",
+            "salesConfigured": "false",
+            "stockConfigured": "false",
+            "orderConfigured": "false",
+            "invoicesConfigured": "false"
+            
+            
+        },
+        {
+           "supplierId":1123,
+            "supplierName":"papperThoughts Services Private Limited",
+            "status": "Active",
+            "salesConfigured": "true",
+            "stockConfigured": "true",
+            "orderConfigured": "true",
+            "invoicesConfigured": "true"
+            
+        },
+        {
+            "supplierId": 1123,
+            "supplierName":"papperThoughts Services Private Limited",
+            "status": "Active",
+            "salesConfigured": "true",
+            "stockConfigured": "true",
+            "orderConfigured": "false",
+            "invoicesConfigured": "true"
+        },
+        {
+            "supplierId": 1123,
+            "supplierName":"papperThoughts Services Private Limited",
+            "status": "Active",
+            "salesConfigured": "false",
+            "stockConfigured": "false",
+            "orderConfigured": "true",
+            "invoicesConfigured": "false"
+            
+        },
+        {
+            "supplierId": 1123,
+            "supplierName":"papperThoughts Services Private Limited",
+            "status": "Active",
+            "salesConfigured": "false",
+            "stockConfigured": "true",
+            "orderConfigured": "false",
+            "invoicesConfigured": "true"
+            
+        }
+            ]
+}
