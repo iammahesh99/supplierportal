@@ -65,7 +65,7 @@ const styles = (theme) => ({
   },
   customizeToolbar: {
     minHeight: 36,
-    padding: '1%',
+    padding: '0%',
   },
   siteLogo: {
     width: '30%',
@@ -195,13 +195,23 @@ class LoginPage extends Component {
             color='primary'
             className={classes.appBannerBorder}
           ></AppBar>
+          <AppBar
+            position='absolute'
+            color='primary'
+            style={{
+              top: 'unset',
+              bottom: 0,
+              height: '2rem',
+              backgroundColor: '#66686A',
+            }}
+          ></AppBar>
         </div>
         {this.state.otp ? (
           <OtpSubmit token={this.state.token} />
         ) : (
           <Container component='main' maxWidth='xs'>
             <CssBaseline />
-            <div className={clsx(classes.paper)}>
+            <div className={clsx(classes.paper)} style={{ marginTop: '20%' }}>
               <Avatar className={clsx(classes.avatar)}>
                 <LockOutlinedIcon />
               </Avatar>
@@ -244,6 +254,7 @@ class LoginPage extends Component {
                 onClick={this.handleClick}
                 variant='contained'
                 color='primary'
+                style={{ marginTop: '2%' }}
               >
                 Sign In
               </Button>

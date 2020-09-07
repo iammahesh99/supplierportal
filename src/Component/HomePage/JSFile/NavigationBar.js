@@ -167,6 +167,16 @@ class NavigationBar extends Component {
           </Toolbar>
         </AppBar>
         {renderMenu}
+        <AppBar
+          position='absolute'
+          color='primary'
+          style={{
+            top: 'unset',
+            bottom: 0,
+            height: '2rem',
+            backgroundColor: '#66686A',
+          }}
+        ></AppBar>
       </>
     );
   }

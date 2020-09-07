@@ -27,10 +27,12 @@ const styles = (theme) => ({
     width: theme.spacing(11),
     height: theme.spacing(11),
     textAlign: 'center',
+    cursor: 'pointer',
   },
   avtarbox2: {
     width: theme.spacing(18),
     height: theme.spacing(11),
+    cursor: 'pointer',
   },
   large: {
     width: theme.spacing(11),
@@ -83,9 +85,7 @@ class HomePage extends Component {
       case 'Sales':
         return (
           <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <div
-              style={{ borderLeft: '3px solid black', marginRight: '3%' }}
-            ></div>
+            <div style={{ borderLeft: '3px solid black' }}></div>
             <Link to='/Home/Sales' style={{ textDecoration: 'none' }}>
               <Button style={{ textTransform: 'none', fontWeight: 'bold' }}>
                 View Sales
@@ -97,9 +97,7 @@ class HomePage extends Component {
       case 'Purchase Orders':
         return (
           <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <div
-              style={{ borderLeft: '3px solid black', marginRight: '3%' }}
-            ></div>
+            <div style={{ borderLeft: '3px solid black' }}></div>
 
             <Link to='/Home/PODetail' style={{ textDecoration: 'none' }}>
               <Button style={{ textTransform: 'none', fontWeight: 'bold' }}>
@@ -107,9 +105,7 @@ class HomePage extends Component {
               </Button>
             </Link>
 
-            <div
-              style={{ borderLeft: '3px solid black', marginRight: '3%' }}
-            ></div>
+            <div style={{ borderLeft: '3px solid black' }}></div>
 
             <Link style={{ textDecoration: 'none' }}>
               <Button style={{ textTransform: 'none', fontWeight: 'bold' }}>
@@ -122,9 +118,7 @@ class HomePage extends Component {
       case 'costchange':
         return (
           <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <div
-              style={{ borderLeft: '3px solid black', marginRight: '3%' }}
-            ></div>
+            <div style={{ borderLeft: '3px solid black' }}></div>
 
             <Link style={{ textDecoration: 'none' }}>
               <Button style={{ textTransform: 'none', fontWeight: 'bold' }}>
@@ -147,9 +141,7 @@ class HomePage extends Component {
       case 'Promotions':
         return (
           <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <div
-              style={{ borderLeft: '3px solid black', marginRight: '3%' }}
-            ></div>
+            <div style={{ borderLeft: '3px solid black' }}></div>
 
             <Link style={{ textDecoration: 'none' }}>
               <Button style={{ textTransform: 'none', fontWeight: 'bold' }}>
@@ -172,9 +164,7 @@ class HomePage extends Component {
       case 'Invoices':
         return (
           <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <div
-              style={{ borderLeft: '3px solid black', marginRight: '3%' }}
-            ></div>
+            <div style={{ borderLeft: '3px solid black' }}></div>
 
             <Link style={{ textDecoration: 'none' }}>
               <Button style={{ textTransform: 'none', fontWeight: 'bold' }}>
@@ -207,9 +197,7 @@ class HomePage extends Component {
       case 'configuration':
         return (
           <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <div
-              style={{ borderLeft: '3px solid black', marginRight: '3%' }}
-            ></div>
+            <div style={{ borderLeft: '3px solid black' }}></div>
             <Link to='/Home/Supplier' style={{ textDecoration: 'none' }}>
               <Button style={{ textTransform: 'none', fontWeight: 'bold' }}>
                 Configure Supplier
@@ -228,159 +216,177 @@ class HomePage extends Component {
     return (
       <>
         <AppBar className={classes.slide}>
-          <Container component='main' maxWidth='sm'>
+          <Container maxWidth='md'>
             <Grid
               container
               spacing={12}
               alignContent='center'
-              style={{ padding: '1%' }}
+              justify='center'
+              style={{ padding: '1%', textAlign: 'center' }}
             >
               <Grid item xs={3}>
-                <Button
-                  size='small'
-                  style={{ textTransform: 'none', color: 'white' }}
+                <Typography
+                  component='h5'
+                  variant='h5'
+                  style={{ fontSize: '20px' }}
                 >
                   Purchase Orders
-                </Button>
+                </Typography>
               </Grid>
               <Grid item xs={3}>
-                <Button
-                  size='small'
-                  style={{ textTransform: 'none', color: 'white' }}
+                <Typography
+                  component='h5'
+                  variant='h5'
+                  style={{ fontSize: '20px' }}
                 >
                   Cost Change
-                </Button>
+                </Typography>
               </Grid>
               <Grid item xs={3}>
-                <Button
-                  size='small'
-                  style={{ textTransform: 'none', color: 'white' }}
+                <Typography
+                  component='h5'
+                  variant='h5'
+                  style={{ fontSize: '20px' }}
                 >
                   Promotions
-                </Button>
+                </Typography>
               </Grid>
               <Grid item xs={3}>
-                <Button
-                  size='small'
-                  style={{ textTransform: 'none', color: 'white' }}
+                <Typography
+                  component='h5'
+                  variant='h5'
+                  style={{ fontSize: '20px' }}
                 >
                   Invoices
-                </Button>
+                </Typography>
               </Grid>
             </Grid>
           </Container>
         </AppBar>
-        <Container component='main' maxWidth='sm'>
-          <div className={classes.root}>
-            <Grid container spacing={2}>
-              <Grid container spacing={10}>
-                <Grid item xs={4}>
-                  <div className={classes.avtarbox}>
-                    <Avatar borderRadius='50%' className={classes.large}>
-                      <img
-                        src={require('../Icons/stock.svg')}
-                        className={classes.icons}
-                        onClick={(event) => this._onButtonClick(event, 'Stock')}
-                      />
-                    </Avatar>
 
-                    <b>Stock</b>
-                  </div>
-                </Grid>
-                <Grid item xs={4}>
-                  <div className={classes.avtarbox}>
-                    <Avatar alt='Remy Sharp' className={classes.large}>
-                      <img
-                        src={require('../Icons/sales.svg')}
-                        className={classes.icons}
-                        onClick={(event) => this._onButtonClick(event, 'Sales')}
-                      />
-                    </Avatar>
-                    <b>Sales</b>
-                  </div>
-                </Grid>
-                <Grid item xs={4}>
-                  <div className={classes.avtarbox2}>
-                    <Avatar alt='Remy Sharp' className={classes.large}>
-                      <img
-                        src={require('../Icons/PO.svg')}
-                        className={classes.icons}
-                        onClick={(event) =>
-                          this._onButtonClick(event, 'Purchase Orders')
-                        }
-                      />
-                    </Avatar>
-                    <b>Purchase Orders</b>
-                  </div>
-                </Grid>
-              </Grid>
-              <Grid container spacing={12}>
-                <Grid item xs={12} style={{ paddingTop: '15%' }}>
-                  <div className={classes.paper}>
-                    {this.pageView(this.state.clickedButton)}
-                  </div>
-                </Grid>
-              </Grid>
-              <Grid container spacing={12}>
-                <Grid item xs={3}>
-                  <div className={classes.avtarbox2}>
-                    <Avatar alt='Remy Sharp' className={classes.large}>
-                      <img
-                        src={require('../Icons/costchange.svg')}
-                        className={classes.icons}
-                        onClick={(event) =>
-                          this._onButtonClick(event, 'costchange')
-                        }
-                      />
-                    </Avatar>
-                    <b>Cost Changes</b>
-                  </div>
-                </Grid>
-                <Grid item xs={3}>
-                  <div className={classes.avtarbox}>
-                    <Avatar alt='Remy Sharp' className={classes.large}>
-                      <img
-                        src={require('../Icons/promotions.svg')}
-                        className={classes.icons}
-                        onClick={(event) =>
-                          this._onButtonClick(event, 'Promotions')
-                        }
-                      />
-                    </Avatar>
-                    <b>Promotions</b>
-                  </div>
-                </Grid>
-                <Grid item xs={3}>
-                  <div className={classes.avtarbox}>
-                    <Avatar alt='Remy Sharp' className={classes.large}>
-                      <img
-                        src={require('../Icons/invoices.svg')}
-                        className={classes.icons}
-                        onClick={(event) =>
-                          this._onButtonClick(event, 'Invoices')
-                        }
-                      />
-                    </Avatar>
-                    <b>Invoices</b>
-                  </div>
-                </Grid>
-                <Grid item xs={3}>
-                  <div className={classes.avtarbox2}>
-                    <Avatar alt='Remy Sharp' className={classes.large}>
-                      <img
-                        src={require('../Icons/supplier.svg')}
-                        className={classes.icons}
-                        onClick={(event) =>
-                          this._onButtonClick(event, 'configuration')
-                        }
-                      />
-                    </Avatar>
-                    <b>Configuration</b>
-                  </div>
-                </Grid>
-              </Grid>
+        <Container
+          maxWidth='md'
+          style={{ marginTop: '10%', paddingLeft: '6%' }}
+        >
+          <Grid container justify='center' alignItems='center'>
+            <Grid item xs={3}>
+              <div className={classes.avtarbox}>
+                <Avatar borderRadius='50%' className={classes.large}>
+                  <img
+                    src={require('../Icons/stock.svg')}
+                    className={classes.icons}
+                    onClick={(event) => this._onButtonClick(event, 'Stock')}
+                  />
+                </Avatar>
+                <b>Stock</b>
+              </div>
             </Grid>
-          </div>
+            <Grid item xs={3}>
+              <div className={classes.avtarbox}>
+                <Avatar alt='Remy Sharp' className={classes.large}>
+                  <img
+                    src={require('../Icons/sales.svg')}
+                    className={classes.icons}
+                    onClick={(event) => this._onButtonClick(event, 'Sales')}
+                  />
+                </Avatar>
+                <b>Sales</b>
+              </div>
+            </Grid>
+            <Grid item xs={3}>
+              <div className={classes.avtarbox2}>
+                <Avatar alt='Remy Sharp' className={classes.large}>
+                  <img
+                    src={require('../Icons/PO.svg')}
+                    className={classes.icons}
+                    onClick={(event) =>
+                      this._onButtonClick(event, 'Purchase Orders')
+                    }
+                  />
+                </Avatar>
+                <b>Purchase Orders</b>
+              </div>
+            </Grid>
+            <Grid item xs={3}>
+              <div className={classes.avtarbox2}>
+                <Avatar alt='Remy Sharp' className={classes.large}>
+                  <img
+                    src={require('../Icons/PO.svg')}
+                    className={classes.icons}
+                    onClick={(event) =>
+                      this._onButtonClick(event, 'Purchase Orders')
+                    }
+                  />
+                </Avatar>
+                <b>Purchase Orders</b>
+              </div>
+            </Grid>
+          </Grid>
+
+          <Grid container justify='center' alignItems='center'>
+            <Grid item style={{ paddingTop: '8%' }}>
+              <div className={classes.paper} style={{ width: '500px' }}>
+                {this.pageView(this.state.clickedButton)}
+              </div>
+            </Grid>
+          </Grid>
+
+          <Grid container justify='center' alignItems='center'>
+            <Grid item xs={3}>
+              <div className={classes.avtarbox2}>
+                <Avatar alt='Remy Sharp' className={classes.large}>
+                  <img
+                    src={require('../Icons/costchange.svg')}
+                    className={classes.icons}
+                    onClick={(event) =>
+                      this._onButtonClick(event, 'costchange')
+                    }
+                  />
+                </Avatar>
+                <b>Cost Changes</b>
+              </div>
+            </Grid>
+            <Grid item xs={3}>
+              <div className={classes.avtarbox}>
+                <Avatar alt='Remy Sharp' className={classes.large}>
+                  <img
+                    src={require('../Icons/promotions.svg')}
+                    className={classes.icons}
+                    onClick={(event) =>
+                      this._onButtonClick(event, 'Promotions')
+                    }
+                  />
+                </Avatar>
+                <b>Promotions</b>
+              </div>
+            </Grid>
+            <Grid item xs={3}>
+              <div className={classes.avtarbox}>
+                <Avatar alt='Remy Sharp' className={classes.large}>
+                  <img
+                    src={require('../Icons/invoices.svg')}
+                    className={classes.icons}
+                    onClick={(event) => this._onButtonClick(event, 'Invoices')}
+                  />
+                </Avatar>
+                <b>Invoices</b>
+              </div>
+            </Grid>
+            <Grid item xs={3}>
+              <div className={classes.avtarbox2}>
+                <Avatar alt='Remy Sharp' className={classes.large}>
+                  <img
+                    src={require('../Icons/supplier.svg')}
+                    className={classes.icons}
+                    onClick={(event) =>
+                      this._onButtonClick(event, 'configuration')
+                    }
+                  />
+                </Avatar>
+                <b>Configuration</b>
+              </div>
+            </Grid>
+          </Grid>
         </Container>
       </>
     );
