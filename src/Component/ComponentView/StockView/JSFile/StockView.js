@@ -1,43 +1,44 @@
-import React ,{Component}from "react";
+import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import Button from '@material-ui/core/Button';
-import Container from '@material-ui/core/Container';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
-//import CollapsibleTable from '../JSFile/table.js'
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TableContainer from '@material-ui/core/TableContainer';
-import Checkbox from '@material-ui/core/Checkbox';
+import {
+  Paper,
+  Grid,
+  TextField,
+  Typography,
+  TextareaAutosize,
+  Button,
+  Container,
+  FormControlLabel,
+  Switch,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  CssBaseline,
+  TableContainer,
+  Checkbox,
+  Dialog,
+  Toolbar,
+  IconButton,
+  Box,
+  Radio,
+} from '@material-ui/core';
 import Toast from 'light-toast';
 import XLSX from 'xlsx';
-import Dialog from '@material-ui/core/Dialog';
-
 import CloseIcon from '@material-ui/icons/Close';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import { properties } from '../../../../Properties.js';
-
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: "#696969",
+    backgroundColor: '#696969',
     color: theme.palette.common.white,
   },
   body: {
     fontSize: 12,
     borderTop: 'solid 1px ',
-    
   },
 }))(TableCell);
 
@@ -46,501 +47,585 @@ const StyledTableRow = withStyles((theme) => ({
     '&:nth-of-type(odd)': {
       backgroundColor: theme.palette.action.hover,
     },
-     
-    
   },
 }))(TableRow);
 
+const styles = (theme) => ({
+  search: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    border: 'solid 1px ',
+    borderColor: 'red',
+  },
+  tables: {
+    marginTop: theme.spacing(4),
 
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
+    border: '1px solid red',
+    maxHeight: 390,
+  },
 
-
-const styles = theme => ({
-	search:{
-	
-		
-	    display: 'flex',
-	    flexDirection: 'column',    
-	    justify:"center",
-	    border: 'solid 1px ',
-    	borderColor: 'red',
-
-    	
-	},
-	tables:{
-		
-		marginTop: theme.spacing(4),
-		
-	    display: 'flex',
-	    flex:1,
-	    flexDirection: 'column',
-  		border:'1px solid red',
-  		maxHeight: 390,
-	},
-	
-	
   paper: {
     paddingTop: theme.spacing(3),
-     paddingLeft: theme.spacing(2)
-   
-
-    
-
-    
-    
-  		},
-  	buttons:{
-  		
-  		marginBottom: theme.spacing(1),
-  		marginLeft: theme.spacing(1),
-
-  	},
-  	buttons2:{
-  		
-  		marginRight: theme.spacing(1),
-
-  	},
-  	slide:{
-		marginTop:42,
-		width:'100%',
-		height:'10%',
-		textAlign:'center'
-	},
-	mainscreen:{
-		flex:1,
-		flexDirection: 'column',  
-		display: 'flex',
-		
-
-	},
-	table_head:{
-		
-		padding:'none'
-
-	},
-	table_column:{
-		
-		padding:'none'
-
-
-	},
-	table_main:{
-		padding:'none'
-	},
-	dialogPaper: {
-        minHeight: '80vh',
-        maxHeight: '80vh',
-    },
-	
-  
+    paddingLeft: theme.spacing(2),
+  },
+  buttons: {
+    marginBottom: theme.spacing(1),
+    marginLeft: theme.spacing(1),
+  },
+  buttons2: {
+    marginRight: theme.spacing(1),
+  },
+  slide: {
+    marginTop: 42,
+    width: '100%',
+    height: '10%',
+    textAlign: 'center',
+  },
+  mainscreen: {
+    flex: 1,
+    flexDirection: 'column',
+    display: 'flex',
+  },
+  table_head: {
+    padding: 'none',
+  },
+  table_column: {
+    padding: 'none',
+  },
+  table_main: {
+    padding: 'none',
+  },
+  dialogPaper: {
+    minHeight: '80vh',
+    maxHeight: '80vh',
+  },
+  table_row_bordertd: {
+    borderTop: '1px solid #d7d6d6',
+    borderBottom: '1px solid #d7d6d6',
+  },
+  table_row_bordertd1: {
+    borderTop: '1px solid #d7d6d6',
+    borderBottom: '1px solid #d7d6d6',
+    borderLeft: '1px solid #d7d6d6',
+    borderTopLeftRadius: ' 10px',
+    borderBottomLeftRadius: '10px',
+    padding: '10px',
+  },
+  table_row_bordertdL: {
+    borderTop: '1px solid #d7d6d6',
+    borderBottom: '1px solid #d7d6d6',
+    borderRight: '1px solid #d7d6d6',
+    borderTopRightRadius: ' 10px',
+    borderBottomRightRadius: '10px',
+  },
+  main_table: {
+    borderCollapse: 'separate',
+    borderSpacing: '0 5px',
+  },
+  main_table_root: {
+    padding: '0% 1% 0% 1%',
+  },
+  cssOutlinedInput: {
+    borderColor: `red !important`,
+  },
+  textBoxInputLabel: {
+    fontWeight: 'bolder',
+    fontSize: '18px',
+    color: '#000000',
+  },
 });
 
-
-
-
 class StockView extends Component {
-constructor(props){
-  super(props);
-  this.state={
-  checked:true,
-  ischecked:'',
-  searchResult:[],
-  item:'',
-  Desc:'',
-  location:'',
-  bar:'',
-  vpn:'',
-  checkedItems: [],
-  options:[],
-  // map:false,
-  // enable:false,
-  // listOfHeader:[]
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      checked: true,
+      ischecked: '',
+      searchResult: [],
+      item: '',
+      Desc: '',
+      location: '',
+      bar: '',
+      vpn: '',
+      checkedItems: [],
+      options: [],
+      // map:false,
+      // enable:false,
+      // listOfHeader:[]
+    };
   }
- }
 
-handleChange = () => {
-    this.setState({checked:!this.state.checked})
+  handleChange = () => {
+    this.setState({ checked: !this.state.checked });
   };
 
-  
-  itemChange=(event)=>{
-  	this.setState({item:event.target.value})
-  	console.log(this.state.item)
+  itemChange = (event) => {
+    this.setState({ item: event.target.value });
+    console.log(this.state.item);
+  };
+  descChange = (event) => {
+    this.setState({ Desc: event.target.value });
+    console.log(this.state.Desc);
+  };
+  locationChange = (event) => {
+    this.setState({ location: event.target.value });
+  };
+  barChange = (event) => {
+    this.setState({ bar: event.target.value });
+  };
+  vpnChange = (event) => {
+    this.setState({ vpn: event.target.value });
+  };
 
-  }
-  descChange=(event)=>{
-  	this.setState({Desc:event.target.value})
-  	console.log(this.state.Desc)
+  handleSearchItem = () => {
+    this.setState({ options: [] });
+    this.setState({ checkedItems: [] });
+    this.setState({ searchResult: [] });
+    var item = '';
+    var desc = '';
+    var location = '';
+    var bar = '';
+    var vpn = '';
+    if (this.state.item != '') {
+      item = ('item=' + this.state.item + '&').replace(/ /g, '');
+    }
+    if (this.state.Desc != '') {
+      desc = ('desc=' + this.state.Desc + '&').replace(/ /g, '%20');
+    }
+    if (this.state.location != '') {
+      location = ('location=' + this.state.location + '&').replace(/ /g, '%20');
+    }
+    if (this.state.bar != '') {
+      bar = ('upc=' + this.state.bar + '&').replace(/ /g, '');
+    }
+    if (this.state.vpn != '') {
+      vpn = ('vpn=' + this.state.vpn + '&').replace(/ /g, '');
+    }
+    var finalstring = item + desc + location + bar + vpn;
+    const query = finalstring.substring(0, finalstring.length - 1);
+    console.log(query);
 
-  	
-  }
-  locationChange=(event)=>{
-  	this.setState({location:event.target.value})
-  }
-  barChange=(event)=>{
-  	this.setState({bar:event.target.value})
-  }
-  vpnChange=(event)=>{
-  	this.setState({vpn:event.target.value})
-  }
-
-  handleSearchItem =()=>{
-
-  	this.setState({options:[]});
-  	this.setState({checkedItems:[]});
-  	this.setState({searchResult:[]});
-  	var item='';
-  	var desc='';
-  	var location='';
-  	var bar='';
-  	var vpn='';
-  	if(this.state.item!=''){
-  		item=("item="+this.state.item+'&').replace(/ /g,'');
-
-  	}
-  	if(this.state.Desc!='')
-  	{
-  		desc=("desc="+this.state.Desc+'&').replace(/ /g, '%20');;
-
-  	}
-  	if(this.state.location!='')
-  	{
-       location=("location="+this.state.location+'&').replace(/ /g, '%20');;
-  	}
-  	if(this.state.bar!='')
-  	{
-       bar=("upc="+this.state.bar+'&').replace(/ /g,'');
-  	}
-  	if(this.state.vpn!='')
-  	{
-       vpn=("vpn="+this.state.vpn+'&').replace(/ /g,'');
-  	}
-  	var finalstring=item+desc+location+bar+vpn;
-  	const query=finalstring.substring(0, finalstring.length - 1);
-  	console.log(query);
-
-  	Toast.loading('Searching');
-          setTimeout(() => {
-            Toast.hide();
-          }, 4000);
-     const proxyurl = "https://cors-anywhere.herokuapp.com/";
-     const endUrl=properties.endUrl
-    const baseuri=endUrl+'api/v1/stockdetail?';
-    const itemsearch=query;
-
-
+    Toast.loading('Searching');
+    setTimeout(() => {
+      Toast.hide();
+    }, 4000);
+    const proxyurl = 'https://cors-anywhere.herokuapp.com/';
+    const endUrl = properties.endUrl;
+    const baseuri = endUrl + 'api/v1/stockdetail?';
+    const itemsearch = query;
 
     var myHeaders = new Headers();
-	myHeaders.append("Authorization", "Bearer "+" "+localStorage.getItem('dataToken'));
+    myHeaders.append(
+      'Authorization',
+      'Bearer ' + ' ' + localStorage.getItem('dataToken')
+    );
 
-	var requestOptions = {
-	  method: 'GET',
-	  headers: myHeaders,
-	  redirect: 'follow'
-	};
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow',
+    };
 
-	fetch(proxyurl+baseuri+itemsearch, requestOptions)
-	  .then(response => response.json())
-	  .then(result => {
-	  	this.setState({searchResult:result.result})
-	})
-	  .catch(error => console.log('error', error));
+    fetch(proxyurl + baseuri + itemsearch, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        this.setState({ searchResult: result.result });
+      })
+      .catch((error) => console.log('error', error));
 
-
-
-
-
-
-      // fetch(baseuri+itemsearch,{
-      //   method: 'GET',
-      //   })
-      // .then(response =>  response.json())
-      // .then(resData => { 
-      // this.setState({searchResult:resData.result})       
-      // })
-  }
-  handleReset=()=>
-  {
-  	this.setState({searchResult:[]});
-  	this.setState({item:''});
-  	this.setState({desc:''});
-  	this.setState({location:''});
-  	this.setState({bar:''});
-  	this.setState({vpn:''});
-  }
+    // fetch(baseuri+itemsearch,{
+    //   method: 'GET',
+    //   })
+    // .then(response =>  response.json())
+    // .then(resData => {
+    // this.setState({searchResult:resData.result})
+    // })
+  };
+  handleReset = () => {
+    this.setState({ searchResult: [] });
+    this.setState({ item: '' });
+    this.setState({ desc: '' });
+    this.setState({ location: '' });
+    this.setState({ bar: '' });
+    this.setState({ vpn: '' });
+  };
   handleCheck = (event) => {
-  	
-  	const options = this.state.options
-    let index
+    const options = this.state.options;
+    let index;
 
     // check if the check box is checked or unchecked
     if (event.target.checked) {
       // add the numerical value of the checkbox to options array
-      options.push(event.target.value)
+      options.push(event.target.value);
     } else {
       // or remove the value from the unchecked checkbox from the array
-      index = options.indexOf(event.target.value)
-      options.splice(index, 1)
+      index = options.indexOf(event.target.value);
+      options.splice(index, 1);
     }
 
     // update the state with the new array of options
-    this.setState({ options: options })
-   
-
+    this.setState({ options: options });
   };
-  handleExport=()=>{
-  	 this.setState({checkedItems:[]});
-  	 this.state.options.map(data =>{
-  	 	this.state.checkedItems.push(JSON.parse(data));
+  handleExport = () => {
+    this.setState({ checkedItems: [] });
+    this.state.options.map((data) => {
+      this.state.checkedItems.push(JSON.parse(data));
+    });
+    var ans = 'Stock';
+    var arr = '0123456789qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM';
+    var len = 5;
+    for (var i = len; i > 0; i--) {
+      ans += arr[Math.floor(Math.random() * arr.length)];
+    }
 
+    const sheet = XLSX.utils.json_to_sheet(this.state.checkedItems);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, sheet, 'Sheet 1');
+    XLSX.writeFile(workbook, ans + `.xls`);
+  };
 
-  	 })
-  	 var ans = 'Stock'; 
-  	 var arr='0123456789qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM';
-  	 var len=5;
-      for (var i = len; i > 0; i--) { 
-         ans += arr[Math.floor(Math.random() * arr.length)]; 
-            } 
+  render() {
+    const { classes } = this.props;
+    const open = Boolean(this.state.ischecked);
+    var set = '';
 
-
-  	const sheet = XLSX.utils.json_to_sheet(this.state.checkedItems);
-	const workbook = XLSX.utils.book_new();
-	XLSX.utils.book_append_sheet(workbook, sheet, 'Sheet 1');
-	XLSX.writeFile(workbook, ans+`.xls`);
-
-  }
-  // handleMapping=()=>{
-  	
-  // 	var list=[]
-  // 	 this.state.searchResult.slice(0,1).map(data=>(
-                        
-  //                       Object.entries(data).map(([make, type]) => (
-  //                          list.push(make)    
-  //                       ))
-
-  //                      ))
-  // 	 this.setState({listOfHeader:list})
-  // 	 this.setState({map:true});
-
-  // }
-  // handleClose=()=>{
-  // 	this.setState({map:false});
-  // }
-
-
-
-render()
- {
-  const { classes}= this.props;
-  const open = Boolean(this.state.ischecked);
-  var set='';
-  console.log('render');
-  
     return (
-    	<Container component="main" maxWidth="md">
-    	<div  className={classes.slide}>
-				<FormControlLabel
-			        control={<Switch checked={this.state.checked} onChange={this.handleChange} />}
-			        label="Search Stock"
-			      />
-			 </div>
+      <Container component='main' maxWidth='lg'>
+        <div className={classes.slide}>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={this.state.checked}
+                onChange={this.handleChange}
+              />
+            }
+            label='Search Stock'
+          />
+        </div>
 
-    {this.state.checked?<div className={classes.search}> 
+        {this.state.checked ? (
+          <Box
+            border={1}
+            borderRadius={5}
+            borderColor='red'
+            display='flex'
+            flexWrap='nowrap'
+            className={classes.search}
+          >
+            <Container
+              fixed={true}
+              maxWidth='lg'
+              style={{ textAlign: 'center' }}
+            >
+              <Grid
+                container
+                spacing={0}
+                alignContent='center'
+                alignItems='center'
+              >
+                <Grid container item xs={12}>
+                  <Grid item xs={4} className={classes.paper}>
+                    <TextField
+                      id='outlined-number'
+                      label='Item Id'
+                      type='text'
+                      InputProps={{
+                        classes: {
+                          root: classes.cssOutlinedInput,
+                        },
+                      }}
+                      InputLabelProps={{
+                        classes: {
+                          root: classes.textBoxInputLabel,
+                        },
+                        shrink: true,
+                      }}
+                      variant='outlined'
+                      style={{ width: 300, borderColor: 'Red' }}
+                      onBlur={this.itemChange}
+                    />
+                  </Grid>
 
-    				<Container component="main" maxWidth="md">
-				      <Grid container >
-				        <Grid container item xs={12} >
-				          		<Grid item xs={4} 
-				          		container
-								  direction="row"
-								  justify="space-between"
-								  alignItems="center"
-								  className={classes.paper}>
-						          
-						            <label style={{marginRight:'10px'}}> 
-    								Item Id: </label> 
-						          <input type="text"        
-        							className='input'
-        							style={{ border: '1px solid red'}}
-						          onBlur={this.itemChange}
-						           />
-						          
-						        </Grid>
-						        <Grid item xs={4} 
-						        container
-								  direction="row"
-								  justify="space-between"
-								  alignItems="center"
-								  className={classes.paper}>
-						          
-						          <label style={{marginRight:'10px'}}>Item Desc:</label>
-						          <input type="text"        
-        							className='input' 
-        							style={{ border: '1px solid red'}} 
-						          onBlur={this.descChange}
-						          />
-						          
-						        </Grid>
-						        <Grid item xs={4} 
-						        container
-								  direction="row"
-								  justify="space-between"
-								  alignItems="center"
-								  className={classes.paper}>
-						          
-						          <label style={{marginRight:'10px'}} >Location: </label>
-						          <input type="text"        
-        							className='input'
-        							style={{ border: '1px solid red'}} 
-						          onBlur={this.locationChange} />
-						          
-						        </Grid>
-				        </Grid>
-				        <Grid container item xs={12} >
-				          		<Grid item xs={4} 
-				          		container
-								  direction="row"
-								  justify="space-between"
-								  alignItems="center"
-								  className={classes.paper}>
-						          
-						          <label style={{marginRight:'10px'}}>Barcode:</label>
-						          <input type="text"        
-        							className='input'
-        							style={{ border: '1px solid red'}} 
-						          onBlur={this.barChange} />
-						          
-						        </Grid>
-						        <Grid item xs={4} 
-						        container
-								  direction="row"
-								  justify="space-between"
-								  alignItems="center"
-								  className={classes.paper}>
-						          
-						          <label style={{marginRight:'10px'}}>VPN:</label>
-						         <input type="text"        
-        							className='input'
-        							style={{ border: '1px solid red'}} 
-						          onBlur={this.vpnChange} />
-						          
-						        </Grid>
-						        <Grid item xs={4}>
-						          
-						          
-						          
-						        </Grid>
-				        </Grid>
-				        <Grid container item xs={12} >
-				        <div style={{flexGrow: 1,
-				        alignItems: 'flex-end',
-				        display: 'flex',
-	    				flexDirection: 'column',}}>
-				        <div>
-				        <button  size='small' className={classes.buttons}
-				         onClick={this.handleSearchItem}
-				         style={{backgroundColor:'red', color:"white"}}>
-				         SEARCH
-				         </button>
-				        <button  size='small' className={classes.buttons}
-				        style={{backgroundColor:'red',color:'white'}}
-				        onClick={this.handleReset}
-				        >
-				        RESET</button>
-				        </div>
+                  <Grid item xs={4} className={classes.paper}>
+                    <TextField
+                      id='outlined-number'
+                      label='Item Desc'
+                      type='text'
+                      InputProps={{
+                        classes: {
+                          root: classes.cssOutlinedInput,
+                        },
+                      }}
+                      InputLabelProps={{
+                        classes: {
+                          root: classes.textBoxInputLabel,
+                        },
+                        shrink: true,
+                      }}
+                      variant='outlined'
+                      style={{ width: 300, borderColor: 'Red' }}
+                      onBlur={this.descChange}
+                    />
+                  </Grid>
 
-				        </div>
-				          		
-				        </Grid>
-				      </Grid>
-				    </Container>
+                  <Grid item xs={4} className={classes.paper}>
+                    <TextField
+                      id='outlined-number'
+                      label='Location'
+                      type='text'
+                      InputProps={{
+                        classes: {
+                          root: classes.cssOutlinedInput,
+                        },
+                      }}
+                      InputLabelProps={{
+                        classes: {
+                          root: classes.textBoxInputLabel,
+                        },
+                        shrink: true,
+                      }}
+                      variant='outlined'
+                      style={{ width: 300, borderColor: 'Red' }}
+                      onBlur={this.locationChange}
+                    />
+                  </Grid>
+                </Grid>
+                <Grid container item xs={12}>
+                  <Grid item xs={4} className={classes.paper}>
+                    <TextField
+                      id='outlined-number'
+                      label='Barcode'
+                      type='text'
+                      InputProps={{
+                        classes: {
+                          root: classes.cssOutlinedInput,
+                        },
+                      }}
+                      InputLabelProps={{
+                        classes: {
+                          root: classes.textBoxInputLabel,
+                        },
+                        shrink: true,
+                      }}
+                      variant='outlined'
+                      style={{ width: 300, borderColor: 'Red' }}
+                      onBlur={this.barChange}
+                    />
+                  </Grid>
 
-    	</div>:null}
-    	<div className={classes.tables}> 
-    	<div style={{flexGrow: 1,
-				        alignItems: 'flex-end',
-				        display: 'flex',
-	    				flexDirection: 'column',
-	    				backgroundColor:'red'}}>
-				        <div>
-				        <button size='small' className={classes.buttons2}
-				         onClick={this.handleExport}
-				         >
-				         EXCEL
-				         </button>
-				         
-				 
-				        </div>
+                  <Grid item xs={4} className={classes.paper}>
+                    <TextField
+                      id='outlined-number'
+                      label='VPN'
+                      type='text'
+                      InputProps={{
+                        classes: {
+                          root: classes.cssOutlinedInput,
+                        },
+                      }}
+                      InputLabelProps={{
+                        classes: {
+                          root: classes.textBoxInputLabel,
+                        },
+                        shrink: true,
+                      }}
+                      variant='outlined'
+                      style={{ width: 300, borderColor: 'Red' }}
+                      onBlur={this.vpnChange}
+                    />
+                  </Grid>
+                </Grid>
+                <Grid container item xs={12}>
+                  <div
+                    style={{
+                      flexGrow: 1,
+                      alignItems: 'flex-end',
+                      display: 'flex',
+                      flexDirection: 'column',
+                    }}
+                  >
+                    <div style={{ marginRight: '3%' }}>
+                      <Button
+                        variant='contained'
+                        color='primary'
+                        className={classes.buttons}
+                        onClick={this.handleSearchItem}
+                      >
+                        SEARCH
+                      </Button>
+                      <Button
+                        variant='contained'
+                        color='primary'
+                        className={classes.buttons}
+                        onClick={this.handleReset}
+                      >
+                        RESET
+                      </Button>
+                    </div>
+                  </div>
+                </Grid>
+              </Grid>
+            </Container>
+          </Box>
+        ) : null}
 
-				        </div>
- 
+        <div className={classes.tables}>
+          <div
+            style={{
+              flexGrow: 1,
+              alignItems: 'flex-end',
+              display: 'flex',
+              flexDirection: 'column',
+              backgroundColor: 'red',
+              /* position: "relative",*/
+              bottom: '-10px',
+              padding: '5px',
+            }}
+          >
+            <div>
+              <Button
+                variant='contained'
+                color='default'
+                className={classes.buttons2}
+                startIcon={<CloudDownloadIcon />}
+                onClick={this.handleExport}
+                style={{
+                  border: 'none',
+                  background: 'white',
+                  padding: '5px 18px',
+                  borderRadius: '5px',
+                }}
+              >
+                EXCEL
+              </Button>
+            </div>
+          </div>
 
-    	<TableContainer component={Paper}>
-			      <Table  stickyHeader aria-label="sticky table" size="small" className={classes.table_main}>
-			        <TableHead >
-			          <TableRow >
-			           <StyledTableCell padding='none' align="center"className={classes.table_head}>SELECT</StyledTableCell>
-			            <StyledTableCell padding='none' align="center"className={classes.table_head}>ITEM ID</StyledTableCell>
-			            <StyledTableCell padding='none' align="center" className={classes.table_head}>ITEM DESCRIPTION</StyledTableCell>
-			            <StyledTableCell padding='none' align="center" className={classes.table_head}>BARCODE</StyledTableCell>
-			            <StyledTableCell padding='none' align="center" className={classes.table_head}>VPN</StyledTableCell>
-			            <StyledTableCell padding='none' align="center" className={classes.table_head}>LOCATION</StyledTableCell>
-			            <StyledTableCell padding='none' align="center" className={classes.table_head}>TOTAL STOCK</StyledTableCell>
-			            <StyledTableCell padding='none' align="center" className={classes.table_head}>AVAILABLE STOCK</StyledTableCell>
+          <TableContainer component={Paper} style={{ boxShadow: 'none' }}>
+            <Table
+              stickyHeader
+              aria-label='sticky table'
+              padding='default'
+              size='medium'
+              hover={true}
+              classes={{ root: classes.main_table_root }}
+              className={classes.main_table}
+            >
+              <TableHead>
+                <TableRow>
+                  <TableCell
+                    padding='default'
+                    sortDirection='asc'
+                    className={classes.table_row_bordertd1}
+                  >
+                    SELECT
+                  </TableCell>
+                  <TableCell
+                    padding='default'
+                    sortDirection='asc'
+                    className={classes.table_row_bordertd}
+                  >
+                    ITEM ID
+                  </TableCell>
+                  <TableCell
+                    padding='default'
+                    sortDirection='asc'
+                    className={classes.table_row_bordertd}
+                  >
+                    ITEM DESCRIPTION
+                  </TableCell>
+                  <TableCell
+                    padding='default'
+                    sortDirection='asc'
+                    className={classes.table_row_bordertd}
+                  >
+                    BARCODE
+                  </TableCell>
+                  <TableCell
+                    padding='default'
+                    sortDirection='asc'
+                    className={classes.table_row_bordertd}
+                  >
+                    VPN
+                  </TableCell>
+                  <TableCell
+                    padding='default'
+                    sortDirection='asc'
+                    className={classes.table_row_bordertd}
+                  >
+                    LOCATION
+                  </TableCell>
+                  <TableCell
+                    padding='default'
+                    sortDirection='asc'
+                    className={classes.table_row_bordertd}
+                  >
+                    TOTAL STOCK
+                  </TableCell>
+                  <TableCell
+                    padding='default'
+                    sortDirection='asc'
+                    className={classes.table_row_bordertdL}
+                  >
+                    AVAILABLE STOCK
+                  </TableCell>
+                </TableRow>
+              </TableHead>
 
-			          </TableRow>
-			        </TableHead>
+              <TableBody>
+                {this.state.searchResult.map((row, index) => (
+                  <TableRow>
+                    <TableCell className={classes.table_row_bordertd1}>
+                      <Radio
+                        value={JSON.stringify(row)}
+                        onChange={this.handleCheck}
+                        name='radio-button-demo'
+                      />
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      {row.item}
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      {row.itemDesc}
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      {row.itemUpc}
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      {row.vpn}
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      {row.locationName}
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      {row.totalStock}
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertdL}>
+                      {row.availableStock}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
 
-			        <TableBody>
-			          {this.state.searchResult.map((row,index)=> (
-
-			            <StyledTableRow>
-			            <StyledTableCell  align="center" className={classes.table_column}>
-			              <input 
-			              	type="checkbox"
-			              	value={JSON.stringify(row)}
-       					 	onChange={this.handleCheck}			
-					        inputProps={{ 'aria-label': 'primary checkbox' }}
-     						 />		                
-			              </StyledTableCell>
-			              <StyledTableCell  align="center" className={classes.table_column}>
-			              {row.item}			                
-			              </StyledTableCell>
-			              <StyledTableCell  align="center" className={classes.table_column}>
-			              {row.itemDesc}
-			              </StyledTableCell>
-			              <StyledTableCell   align="center" className={classes.table_column}>
-			                {row.itemUpc}
-			              </StyledTableCell>
-			              <StyledTableCell   align="center" className={classes.table_column}>
-			                {row.vpn}
-			              </StyledTableCell>
-			              <StyledTableCell   align="center" className={classes.table_column}>
-			                {row.locationName}
-			              </StyledTableCell>
-			              <StyledTableCell   align="center" className={classes.table_column}>
-			                {row.totalStock}
-			              </StyledTableCell>
-			              <StyledTableCell   align="center" className={classes.table_column}>
-			                {row.availableStock}
-			              </StyledTableCell>
-			              
-			            </StyledTableRow>
-			            ))}
-			          
-			        </TableBody>
-			      </Table>
-			  </TableContainer>
-
-
-    	
-    	</div>
-    	</Container>
-
-
-
-    	)
-}
+          <div
+            style={{
+              flexGrow: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              backgroundColor: 'white',
+              padding: '10px',
+            }}
+          ></div>
+        </div>
+      </Container>
+    );
+  }
 }
 StockView.propTypes = {
   classes: PropTypes.object.isRequired,
