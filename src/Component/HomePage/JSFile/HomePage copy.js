@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
-import {
-  Paper,
-  Grid,
-  Container,
-  CssBaseline,
-  Avatar,
-  Typography,
-  Button,
-  AppBar,
-} from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
+import Container from '@material-ui/core/Container';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Avatar from '@material-ui/core/Avatar';
+import Typography from '@material-ui/core/Typography';
 import { Route, Link, Redirect } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 
 const styles = (theme) => ({
   root: {
@@ -46,8 +43,8 @@ const styles = (theme) => ({
     height: theme.spacing(8),
   },
   slide: {
-    top: 'unset',
-    position: 'relative !important',
+    marginTop: 42,
+    backgroundColor: 'red',
   },
 });
 
@@ -62,7 +59,6 @@ class HomePage extends Component {
   _onButtonClick = (event, index) => {
     this.setState({ clickedButton: index });
   };
-
   pageView(param) {
     switch (param) {
       case 'Stock':
@@ -222,19 +218,13 @@ class HomePage extends Component {
         return <Paper>{this.state.clickedButton}</Paper>;
     }
   }
-
   render() {
     const { classes } = this.props;
     return (
-      <>
-        <AppBar className={classes.slide}>
+      <div>
+        <div className={classes.slide}>
           <Container component='main' maxWidth='sm'>
-            <Grid
-              container
-              spacing={12}
-              alignContent='center'
-              style={{ padding: '1%' }}
-            >
+            <Grid container spacing={12}>
               <Grid item xs={3}>
                 <Button
                   size='small'
@@ -269,7 +259,7 @@ class HomePage extends Component {
               </Grid>
             </Grid>
           </Container>
-        </AppBar>
+        </div>
         <Container component='main' maxWidth='sm'>
           <div className={classes.root}>
             <Grid container spacing={2}>
@@ -382,7 +372,7 @@ class HomePage extends Component {
             </Grid>
           </div>
         </Container>
-      </>
+      </div>
     );
   }
 }

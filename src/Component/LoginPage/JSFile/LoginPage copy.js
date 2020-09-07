@@ -2,21 +2,20 @@ import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  IconButton,
-  Avatar,
-  CssBaseline,
-  TextField,
-  Grid,
-  Container,
-} from '@material-ui/core';
+import AppBar from '@material-ui/core/AppBar';
 import '../CSSFile/LoginPage.css';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
+
+import Avatar from '@material-ui/core/Avatar';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Container from '@material-ui/core/Container';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faYoutube,
@@ -38,8 +37,8 @@ const styles = (theme) => ({
     marginRight: theme.spacing(2),
   },
   title: {
-    fontSize: '35px',
-    fontWeight: 'bold',
+    flexGrow: 1,
+    textAlign: 'center',
   },
   appBar: {
     top: 'auto',
@@ -65,13 +64,6 @@ const styles = (theme) => ({
   },
   customizeToolbar: {
     minHeight: 36,
-    padding: '1%',
-  },
-  siteLogo: {
-    width: '30%',
-  },
-  appBannerBorder: {
-    height: '40px',
   },
 });
 
@@ -142,59 +134,33 @@ class LoginPage extends Component {
     return (
       <div>
         <div className={clsx(classes.root)}>
-          <AppBar position='static' style={{ backgroundColor: '#66686A' }}>
+          <AppBar style={{ backgroundColor: '#66686A' }}>
             <Toolbar className={clsx(classes.customizeToolbar)}>
-              <Grid
-                container
-                direction='row'
-                spacing={20}
-                justify='center'
-                alignItems='center'
-              >
-                <Grid item xs={4}>
-                  <img
-                    className={classes.siteLogo}
-                    src={
-                      'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg'
-                    }
-                    alt='Bosch Logo'
-                  />
-                </Grid>
-                <Grid item xs={5}>
-                  <Typography variant='h1' className={clsx(classes.title)}>
-                    SIGN IN <br /> SUPPLIER PORTAL
-                  </Typography>
-                </Grid>
-                <Grid item xs={3}>
-                  <FontAwesomeIcon
-                    icon={faFacebook}
-                    size='2x'
-                    className={clsx(classes.menuButton)}
-                  />
-                  <FontAwesomeIcon
-                    icon={faInstagram}
-                    size='2x'
-                    className={clsx(classes.menuButton)}
-                  />
-                  <FontAwesomeIcon
-                    icon={faYoutube}
-                    size='2x'
-                    className={clsx(classes.menuButton)}
-                  />
-                  <FontAwesomeIcon
-                    icon={faTwitter}
-                    size='2x'
-                    className={clsx(classes.menuButton)}
-                  />
-                </Grid>
-              </Grid>
+              <Typography variant='h5' className={clsx(classes.title)}>
+                SIGN IN SUPPLIER PORTAL
+              </Typography>
+              <FontAwesomeIcon
+                icon={faFacebook}
+                size='2x'
+                className={clsx(classes.menuButton)}
+              />
+              <FontAwesomeIcon
+                icon={faInstagram}
+                size='2x'
+                className={clsx(classes.menuButton)}
+              />
+              <FontAwesomeIcon
+                icon={faYoutube}
+                size='2x'
+                className={clsx(classes.menuButton)}
+              />
+              <FontAwesomeIcon
+                icon={faTwitter}
+                size='2x'
+                className={clsx(classes.menuButton)}
+              />
             </Toolbar>
           </AppBar>
-          <AppBar
-            position='relative'
-            color='primary'
-            className={classes.appBannerBorder}
-          ></AppBar>
         </div>
         {this.state.otp ? (
           <OtpSubmit token={this.state.token} />
@@ -243,7 +209,8 @@ class LoginPage extends Component {
                 fullWidth
                 onClick={this.handleClick}
                 variant='contained'
-                color='primary'
+                className={clsx(classes.submit)}
+                style={{ backgroundColor: 'red' }}
               >
                 Sign In
               </Button>
