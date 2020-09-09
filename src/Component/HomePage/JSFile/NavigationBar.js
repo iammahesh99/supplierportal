@@ -131,7 +131,10 @@ class NavigationBar extends Component {
 
     return (
       <>
-        <AppBar position='initial' style={{ backgroundColor: '#66686A' }}>
+        <AppBar
+          position='initial'
+          style={{ backgroundColor: '#66686A', height: '57px' }}
+        >
           <Toolbar>
             <Typography className={classes.title}>
               <img
@@ -172,6 +175,7 @@ class NavigationBar extends Component {
           color='primary'
           style={{
             top: 'unset',
+            position: 'fixed',
             bottom: 0,
             height: '2rem',
             backgroundColor: '#66686A',

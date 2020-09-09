@@ -60,14 +60,12 @@ const styles = (theme) => ({
   },
   tables: {
     marginTop: theme.spacing(4),
-
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
     border: '1px solid red',
-    maxHeight: 390,
+    height: 400,
   },
-
   paper: {
     paddingTop: theme.spacing(3),
     paddingLeft: theme.spacing(2),
@@ -75,12 +73,16 @@ const styles = (theme) => ({
   buttons: {
     marginBottom: theme.spacing(1),
     marginLeft: theme.spacing(1),
+    height: '30px',
+    fontSize: '10px',
   },
   buttons2: {
     marginRight: theme.spacing(1),
+    height: '30px',
+    fontSize: '10px',
   },
   slide: {
-    marginTop: 42,
+    marginTop: 10,
     width: '100%',
     height: '10%',
     textAlign: 'center',
@@ -131,6 +133,7 @@ const styles = (theme) => ({
   },
   cssOutlinedInput: {
     borderColor: `red !important`,
+    height: '40px',
   },
   textBoxInputLabel: {
     fontWeight: 'bolder',
@@ -295,17 +298,24 @@ class StockView extends Component {
 
     return (
       <Container component='main' maxWidth='lg'>
-        <div className={classes.slide}>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={this.state.checked}
-                onChange={this.handleChange}
-              />
-            }
-            label='Search Stock'
-          />
-        </div>
+        <Grid container spacing={3} direction='row' alignItems='center'>
+          <Grid item xs={6}>
+            <Typography style={{ fontWeight: 800 }} variant='body2'>
+              Search Criteria
+            </Typography>
+          </Grid>
+          <Grid item xs={6} style={{ textAlign: 'end' }}>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={this.state.checked}
+                  onChange={this.handleChange}
+                />
+              }
+              label='Search Stock'
+            />
+          </Grid>
+        </Grid>
 
         {this.state.checked ? (
           <Box
@@ -345,7 +355,11 @@ class StockView extends Component {
                         shrink: true,
                       }}
                       variant='outlined'
-                      style={{ width: 300, borderColor: 'Red' }}
+                      style={{
+                        width: 300,
+                        borderColor: 'Red',
+                        height: '0.1876em',
+                      }}
                       onBlur={this.itemChange}
                     />
                   </Grid>
@@ -476,12 +490,10 @@ class StockView extends Component {
         <div className={classes.tables}>
           <div
             style={{
-              flexGrow: 1,
               alignItems: 'flex-end',
               display: 'flex',
               flexDirection: 'column',
               backgroundColor: 'red',
-              /* position: "relative",*/
               bottom: '-10px',
               padding: '5px',
             }}

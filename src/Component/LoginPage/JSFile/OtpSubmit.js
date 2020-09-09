@@ -14,13 +14,12 @@ import { properties } from '../../../Properties.js';
 const styles = (theme) => ({
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
   paper: {
-    marginTop: theme.spacing(28),
+    marginTop: '50%',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',

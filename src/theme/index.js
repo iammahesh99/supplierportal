@@ -5,7 +5,7 @@ const colorGrey = '#66686A';
 const colorRed = '#FB263B';
 const colorWhite = '#FFFFFF';
 const colorBlack = '#000000';
-const fontFamily = 'Arial, Helvetica, sans-serif';
+const fontFamily = 'Arial';
 
 const theme = createMuiTheme({
   palette: {

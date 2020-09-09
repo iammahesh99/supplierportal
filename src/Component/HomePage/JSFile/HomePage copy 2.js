@@ -24,13 +24,14 @@ const styles = (theme) => ({
     height: theme.spacing(14),
   },
   avtarbox: {
+    width: theme.spacing(11),
     height: theme.spacing(11),
     textAlign: 'center',
     cursor: 'pointer',
   },
   avtarbox2: {
+    width: theme.spacing(18),
     height: theme.spacing(11),
-    textAlign: 'center',
     cursor: 'pointer',
   },
   large: {
@@ -39,6 +40,7 @@ const styles = (theme) => ({
     border: 'solid 1px ',
     borderColor: 'red',
     backgroundColor: 'white',
+
     margin: theme.spacing(1),
   },
   icons: {
@@ -60,10 +62,6 @@ const styles = (theme) => ({
     fontSize: '13px',
     fontWeight: 'bold',
   },
-  removeFlex: {
-    flexBasis: 'unset',
-    padding: '0% 5% 0% 5%',
-  },
 });
 
 class HomePage extends Component {
@@ -82,13 +80,7 @@ class HomePage extends Component {
     switch (param) {
       case 'Stock':
         return (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              padding: '10% 0% 10% 0%',
-            }}
-          >
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
             <div
               style={{ borderLeft: '3px solid black', marginRight: '3%' }}
             ></div>
@@ -103,13 +95,7 @@ class HomePage extends Component {
 
       case 'Sales':
         return (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              padding: '10% 0% 10% 0%',
-            }}
-          >
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
             <div style={{ borderLeft: '3px solid black' }}></div>
             <Link to='/Home/Sales' style={{ textDecoration: 'none' }}>
               <Button style={{ textTransform: 'none', fontWeight: 'bold' }}>
@@ -121,13 +107,7 @@ class HomePage extends Component {
 
       case 'Purchase Orders':
         return (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              padding: '10% 0% 10% 0%',
-            }}
-          >
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
             <div style={{ borderLeft: '3px solid black' }}></div>
 
             <Link to='/Home/PODetail' style={{ textDecoration: 'none' }}>
@@ -148,13 +128,7 @@ class HomePage extends Component {
 
       case 'costchange':
         return (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              padding: '10% 0% 10% 0%',
-            }}
-          >
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
             <div style={{ borderLeft: '3px solid black' }}></div>
 
             <Link style={{ textDecoration: 'none' }}>
@@ -177,13 +151,7 @@ class HomePage extends Component {
 
       case 'Promotions':
         return (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              padding: '10% 0% 10% 0%',
-            }}
-          >
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
             <div style={{ borderLeft: '3px solid black' }}></div>
 
             <Link style={{ textDecoration: 'none' }}>
@@ -206,13 +174,7 @@ class HomePage extends Component {
 
       case 'Invoices':
         return (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              padding: '10% 0% 10% 0%',
-            }}
-          >
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
             <div style={{ borderLeft: '3px solid black' }}></div>
 
             <Link style={{ textDecoration: 'none' }}>
@@ -245,13 +207,7 @@ class HomePage extends Component {
 
       case 'configuration':
         return (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              padding: '10% 0% 10% 0%',
-            }}
-          >
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
             <div style={{ borderLeft: '3px solid black' }}></div>
             <Link to='/Home/Supplier' style={{ textDecoration: 'none' }}>
               <Button style={{ textTransform: 'none', fontWeight: 'bold' }}>
@@ -299,16 +255,11 @@ class HomePage extends Component {
           </Container>
         </AppBar>
 
-        <Container maxWidth='md' style={{ padding: '3%', marginTop: '3%' }}>
-          <Grid
-            container
-            spacing={12}
-            alignContent='center'
-            style={{ padding: '2%', textAlign: 'center' }}
-          >
-            <Grid item xs={3} className={classes.removeFlex}>
+        <Container maxWidth='md' style={{ marginTop: '9%', paddingLeft: '6%' }}>
+          <Grid container justify='center' alignItems='center'>
+            <Grid item xs={3}>
               <div className={classes.avtarbox}>
-                <Avatar alt='Remy Sharp' className={classes.large}>
+                <Avatar borderRadius='50%' className={classes.large}>
                   <img
                     src={require('../Icons/stock.svg')}
                     className={classes.icons}
@@ -318,7 +269,7 @@ class HomePage extends Component {
                 <b>Stock</b>
               </div>
             </Grid>
-            <Grid item xs={3} className={classes.removeFlex}>
+            <Grid item xs={3}>
               <div className={classes.avtarbox}>
                 <Avatar alt='Remy Sharp' className={classes.large}>
                   <img
@@ -330,7 +281,7 @@ class HomePage extends Component {
                 <b>Sales</b>
               </div>
             </Grid>
-            <Grid item xs={3} className={classes.removeFlex}>
+            <Grid item xs={3}>
               <div className={classes.avtarbox2}>
                 <Avatar alt='Remy Sharp' className={classes.large}>
                   <img
@@ -344,7 +295,7 @@ class HomePage extends Component {
                 <b>Purchase Orders</b>
               </div>
             </Grid>
-            <Grid item xs={3} className={classes.removeFlex}>
+            <Grid item xs={3}>
               <div className={classes.avtarbox2}>
                 <Avatar alt='Remy Sharp' className={classes.large}>
                   <img
@@ -360,24 +311,16 @@ class HomePage extends Component {
             </Grid>
           </Grid>
 
-          <Grid
-            container
-            style={{ textAlign: 'center', justifyContent: 'center' }}
-          >
-            <Grid item>
+          <Grid container justify='center' alignItems='center'>
+            <Grid item style={{ paddingTop: '12%' }}>
               <div className={classes.paper} style={{ width: '500px' }}>
                 {this.pageView(this.state.clickedButton)}
               </div>
             </Grid>
           </Grid>
 
-          <Grid
-            container
-            spacing={12}
-            alignContent='center'
-            style={{ padding: '2%', textAlign: 'center' }}
-          >
-            <Grid item xs={3} className={classes.removeFlex}>
+          <Grid container justify='center' alignItems='center'>
+            <Grid item xs={3}>
               <div className={classes.avtarbox2}>
                 <Avatar alt='Remy Sharp' className={classes.large}>
                   <img
@@ -391,7 +334,7 @@ class HomePage extends Component {
                 <b>Cost Changes</b>
               </div>
             </Grid>
-            <Grid item xs={3} className={classes.removeFlex}>
+            <Grid item xs={3}>
               <div className={classes.avtarbox}>
                 <Avatar alt='Remy Sharp' className={classes.large}>
                   <img
@@ -405,7 +348,7 @@ class HomePage extends Component {
                 <b>Promotions</b>
               </div>
             </Grid>
-            <Grid item xs={3} className={classes.removeFlex}>
+            <Grid item xs={3}>
               <div className={classes.avtarbox}>
                 <Avatar alt='Remy Sharp' className={classes.large}>
                   <img
@@ -417,7 +360,7 @@ class HomePage extends Component {
                 <b>Invoices</b>
               </div>
             </Grid>
-            <Grid item xs={3} className={classes.removeFlex}>
+            <Grid item xs={3}>
               <div className={classes.avtarbox2}>
                 <Avatar alt='Remy Sharp' className={classes.large}>
                   <img
