@@ -137,13 +137,15 @@ class NavigationBar extends Component {
         >
           <Toolbar>
             <Typography className={classes.title}>
-              <img
-                src={
-                  'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg'
-                }
-                alt='Bosch Logo'
-                width='8%'
-              />
+              <Link to={`/Home`}>
+                <img
+                  src={
+                    'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg'
+                  }
+                  alt='Bosch Logo'
+                  width='5%'
+                />
+              </Link>
             </Typography>
 
             <div className={classes.search}>

@@ -152,13 +152,15 @@ class LoginPage extends Component {
                 alignItems='center'
               >
                 <Grid item xs={4}>
-                  <img
-                    className={classes.siteLogo}
-                    src={
-                      'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg'
-                    }
-                    alt='Bosch Logo'
-                  />
+                  <Link to={`/`}>
+                    <img
+                      className={classes.siteLogo}
+                      src={
+                        'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg'
+                      }
+                      alt='Bosch Logo'
+                    />
+                  </Link>
                 </Grid>
                 <Grid item xs={5}>
                   <Typography variant='h1' className={clsx(classes.title)}>

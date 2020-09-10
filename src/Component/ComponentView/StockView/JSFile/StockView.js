@@ -300,9 +300,8 @@ class StockView extends Component {
       <Container component='main' maxWidth='lg'>
         <Grid container spacing={3} direction='row' alignItems='center'>
           <Grid item xs={6}>
-            <Typography style={{ fontWeight: 800 }} variant='body2'>
-              Search Criteria
-            </Typography>
+            <Typography variant='body2'>
+              Specify Search Criteria</Typography>
           </Grid>
           <Grid item xs={6} style={{ textAlign: 'end' }}>
             <FormControlLabel
