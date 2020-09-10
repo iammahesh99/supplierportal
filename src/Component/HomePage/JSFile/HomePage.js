@@ -344,7 +344,7 @@ class HomePage extends Component {
                 <b>Purchase Orders</b>
               </div>
             </Grid>
-            <Grid item xs={3} className={classes.removeFlex}>
+            {/* <Grid item xs={3} className={classes.removeFlex}>
               <div className={classes.avtarbox2}>
                 <Avatar alt='Remy Sharp' className={classes.large}>
                   <img
@@ -357,7 +357,7 @@ class HomePage extends Component {
                 </Avatar>
                 <b>Purchase Orders</b>
               </div>
-            </Grid>
+            </Grid> */}
           </Grid>
 
           <Grid

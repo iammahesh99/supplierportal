@@ -19,7 +19,7 @@ const styles = (theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
   paper: {
-    marginTop: '50%',
+    marginTop: '40%',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',

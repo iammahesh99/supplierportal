@@ -56,27 +56,29 @@ const styles = (theme) => ({
   },
   tables: {
     marginTop: theme.spacing(4),
-
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
     border: '1px solid red',
-    maxHeight: 390,
+    height: 400,
   },
-
   paper: {
     paddingTop: theme.spacing(3),
     paddingLeft: theme.spacing(2),
   },
   buttons: {
-    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
     marginLeft: theme.spacing(1),
+    height: '30px',
+    fontSize: '10px',
   },
   buttons2: {
     marginRight: theme.spacing(1),
+    height: '30px',
+    fontSize: '10px',
   },
   slide: {
-    marginTop: 42,
+    marginTop: 10,
     width: '100%',
     height: '10%',
     textAlign: 'center',
@@ -94,6 +96,10 @@ const styles = (theme) => ({
   },
   table_main: {
     padding: 'none',
+  },
+  dialogPaper: {
+    minHeight: '80vh',
+    maxHeight: '80vh',
   },
   table_row_bordertd: {
     borderTop: '1px solid #d7d6d6',
@@ -168,19 +174,24 @@ class SalesView extends Component {
     this.setState({ item: event.target.value });
     console.log(this.state.item);
   };
+
   descChange = (event) => {
     this.setState({ Desc: event.target.value });
     console.log(this.state.Desc);
   };
+
   locationChange = (event) => {
     this.setState({ location: event.target.value });
   };
+
   barChange = (event) => {
     this.setState({ bar: event.target.value });
   };
+
   startDate = (event) => {
     this.setState({ startDate: event.target.value });
   };
+
   endDate = (event) => {
     this.setState({ endDate: event.target.value });
   };
@@ -297,17 +308,23 @@ class SalesView extends Component {
 
     return (
       <Container component='main' maxWidth='lg'>
-        <div className={classes.slide}>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={this.state.checked}
-                onChange={this.handleChange}
-              />
-            }
-            label='Search Sales'
-          />
-        </div>
+        <Grid container spacing={3} direction='row' alignItems='center'>
+          <Grid item xs={6}>
+            <Typography variant='body2'>
+              Specify Search Criteria</Typography>
+          </Grid>
+          <Grid item xs={6} style={{ textAlign: 'end' }}>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={this.state.checked}
+                  onChange={this.handleChange}
+                />
+              }
+              label='Search Sales'
+            />
+          </Grid>
+        </Grid>
 
         {this.state.checked ? (
           <Box
@@ -477,7 +494,7 @@ class SalesView extends Component {
                       flexDirection: 'column',
                     }}
                   >
-                    <div style={{ marginRight: '4.5%', marginBottom: '8px' }}>
+                    <div style={{ marginRight: '1%', marginTop: '1%' }}>
                       <Button
                         variant='contained'
                         color='primary'
@@ -505,12 +522,10 @@ class SalesView extends Component {
         <div className={classes.tables}>
           <div
             style={{
-              flexGrow: 1,
               alignItems: 'flex-end',
               display: 'flex',
               flexDirection: 'column',
               backgroundColor: 'red',
-              /* position: "relative",*/
               bottom: '-10px',
               padding: '5px',
             }}
