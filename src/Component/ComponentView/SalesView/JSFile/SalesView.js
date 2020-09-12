@@ -129,7 +129,7 @@ const styles = (theme) => ({
   },
   cssOutlinedInput: {
     borderColor: `red !important`,
-    height: '40px',
+    height: '40px !important',
   },
   textBoxInputLabel: {
     fontWeight: 'bolder',
@@ -310,8 +310,7 @@ class SalesView extends Component {
       <Container component='main' maxWidth='lg'>
         <Grid container spacing={3} direction='row' alignItems='center'>
           <Grid item xs={6}>
-            <Typography variant='body2'>
-              Specify Search Criteria</Typography>
+            <Typography variant='body2'>Specify Search Criteria</Typography>
           </Grid>
           <Grid item xs={6} style={{ textAlign: 'end' }}>
             <FormControlLabel
@@ -356,7 +355,6 @@ class SalesView extends Component {
                         classes: {
                           root: classes.cssOutlinedInput,
                         },
-                        width: '12px',
                       }}
                       InputLabelProps={{
                         classes: {
@@ -366,9 +364,8 @@ class SalesView extends Component {
                       }}
                       variant='outlined'
                       style={{
-                        width: 270,
+                        width: 300,
                         borderColor: 'Red',
-                        height: '0.1876em',
                       }}
                       onBlur={this.itemChange}
                     />
@@ -391,7 +388,10 @@ class SalesView extends Component {
                         shrink: true,
                       }}
                       variant='outlined'
-                      style={{ width: 270, borderColor: 'Red' }}
+                      style={{
+                        width: 300,
+                        borderColor: 'Red',
+                      }}
                       onBlur={this.descChange}
                     />
                   </Grid>
@@ -413,11 +413,15 @@ class SalesView extends Component {
                         shrink: true,
                       }}
                       variant='outlined'
-                      style={{ width: 270, borderColor: 'Red' }}
+                      style={{
+                        width: 300,
+                        borderColor: 'Red',
+                      }}
                       onChange={this.startDate}
                     />
                   </Grid>
                 </Grid>
+
                 <Grid container item xs={12}>
                   <Grid item xs={4} className={classes.paper}>
                     <TextField
@@ -436,7 +440,10 @@ class SalesView extends Component {
                         shrink: true,
                       }}
                       variant='outlined'
-                      style={{ width: 270, borderColor: 'Red' }}
+                      style={{
+                        width: 300,
+                        borderColor: 'Red',
+                      }}
                       onBlur={this.barChange}
                     />
                   </Grid>
@@ -458,7 +465,10 @@ class SalesView extends Component {
                         shrink: true,
                       }}
                       variant='outlined'
-                      style={{ width: 270, borderColor: 'Red' }}
+                      style={{
+                        width: 300,
+                        borderColor: 'Red',
+                      }}
                       onBlur={this.locationChange}
                     />
                   </Grid>
@@ -480,7 +490,10 @@ class SalesView extends Component {
                         shrink: true,
                       }}
                       variant='outlined'
-                      style={{ width: 270, borderColor: 'Red' }}
+                      style={{
+                        width: 300,
+                        borderColor: 'Red',
+                      }}
                       onChange={this.endDate}
                     />
                   </Grid>

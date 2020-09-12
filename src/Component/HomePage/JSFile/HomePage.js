@@ -64,6 +64,11 @@ const styles = (theme) => ({
     flexBasis: 'unset',
     padding: '0% 5% 0% 5%',
   },
+  bottonRightBorder: {
+    padding: '6px 20px 6px 20px',
+    textTransform: 'none',
+    fontWeight: 'bold',
+  },
 });
 
 class HomePage extends Component {
@@ -89,12 +94,13 @@ class HomePage extends Component {
               padding: '10% 0% 10% 0%',
             }}
           >
-            <div
-              style={{ borderLeft: '3px solid black', marginRight: '3%' }}
-            ></div>
+            <div style={{ borderLeft: '3px solid black' }}></div>
             <Link to='/Home/Stock' style={{ textDecoration: 'none' }}>
-              <Button style={{ textTransform: 'none', fontWeight: 'bold' }}>
-                {' '}
+              <Button
+                classes={{
+                  text: this.props.classes.bottonRightBorder,
+                }}
+              >
                 View Stock
               </Button>
             </Link>
@@ -112,7 +118,11 @@ class HomePage extends Component {
           >
             <div style={{ borderLeft: '3px solid black' }}></div>
             <Link to='/Home/Sales' style={{ textDecoration: 'none' }}>
-              <Button style={{ textTransform: 'none', fontWeight: 'bold' }}>
+              <Button
+                classes={{
+                  text: this.props.classes.bottonRightBorder,
+                }}
+              >
                 View Sales
               </Button>
             </Link>
@@ -131,7 +141,11 @@ class HomePage extends Component {
             <div style={{ borderLeft: '3px solid black' }}></div>
 
             <Link to='/Home/PODetail' style={{ textDecoration: 'none' }}>
-              <Button style={{ textTransform: 'none', fontWeight: 'bold' }}>
+              <Button
+                classes={{
+                  text: this.props.classes.bottonRightBorder,
+                }}
+              >
                 View Orders
               </Button>
             </Link>
@@ -139,7 +153,11 @@ class HomePage extends Component {
             <div style={{ borderLeft: '3px solid black' }}></div>
 
             <Link style={{ textDecoration: 'none' }}>
-              <Button style={{ textTransform: 'none', fontWeight: 'bold' }}>
+              <Button
+                classes={{
+                  text: this.props.classes.bottonRightBorder,
+                }}
+              >
                 Create Orders
               </Button>
             </Link>
@@ -158,17 +176,23 @@ class HomePage extends Component {
             <div style={{ borderLeft: '3px solid black' }}></div>
 
             <Link style={{ textDecoration: 'none' }}>
-              <Button style={{ textTransform: 'none', fontWeight: 'bold' }}>
+              <Button
+                classes={{
+                  text: this.props.classes.bottonRightBorder,
+                }}
+              >
                 Create Cost Change
               </Button>
             </Link>
 
-            <div
-              style={{ borderLeft: '3px solid black', marginRight: '3%' }}
-            ></div>
+            <div style={{ borderLeft: '3px solid black' }}></div>
 
             <Link style={{ textDecoration: 'none' }}>
-              <Button style={{ textTransform: 'none', fontWeight: 'bold' }}>
+              <Button
+                classes={{
+                  text: this.props.classes.bottonRightBorder,
+                }}
+              >
                 View Cost Change
               </Button>
             </Link>
@@ -187,17 +211,23 @@ class HomePage extends Component {
             <div style={{ borderLeft: '3px solid black' }}></div>
 
             <Link style={{ textDecoration: 'none' }}>
-              <Button style={{ textTransform: 'none', fontWeight: 'bold' }}>
+              <Button
+                classes={{
+                  text: this.props.classes.bottonRightBorder,
+                }}
+              >
                 Create Promotions
               </Button>
             </Link>
 
-            <div
-              style={{ borderLeft: '3px solid black', marginRight: '3%' }}
-            ></div>
+            <div style={{ borderLeft: '3px solid black' }}></div>
 
             <Link style={{ textDecoration: 'none' }}>
-              <Button style={{ textTransform: 'none', fontWeight: 'bold' }}>
+              <Button
+                classes={{
+                  text: this.props.classes.bottonRightBorder,
+                }}
+              >
                 View Promotions
               </Button>
             </Link>
@@ -216,27 +246,35 @@ class HomePage extends Component {
             <div style={{ borderLeft: '3px solid black' }}></div>
 
             <Link style={{ textDecoration: 'none' }}>
-              <Button style={{ textTransform: 'none', fontWeight: 'bold' }}>
+              <Button
+                classes={{
+                  text: this.props.classes.bottonRightBorder,
+                }}
+              >
                 Create Invoices
               </Button>
             </Link>
 
-            <div
-              style={{ borderLeft: '3px solid black', marginRight: '3%' }}
-            ></div>
+            <div style={{ borderLeft: '3px solid black' }}></div>
 
             <Link style={{ textDecoration: 'none' }}>
-              <Button style={{ textTransform: 'none', fontWeight: 'bold' }}>
+              <Button
+                classes={{
+                  text: this.props.classes.bottonRightBorder,
+                }}
+              >
                 View Invoices
               </Button>
             </Link>
 
-            <div
-              style={{ borderLeft: '3px solid black', marginRight: '3%' }}
-            ></div>
+            <div style={{ borderLeft: '3px solid black' }}></div>
 
             <Link style={{ textDecoration: 'none' }}>
-              <Button style={{ textTransform: 'none', fontWeight: 'bold' }}>
+              <Button
+                classes={{
+                  text: this.props.classes.bottonRightBorder,
+                }}
+              >
                 View Balances
               </Button>
             </Link>
@@ -254,7 +292,11 @@ class HomePage extends Component {
           >
             <div style={{ borderLeft: '3px solid black' }}></div>
             <Link to='/Home/Supplier' style={{ textDecoration: 'none' }}>
-              <Button style={{ textTransform: 'none', fontWeight: 'bold' }}>
+              <Button
+                classes={{
+                  text: this.props.classes.bottonRightBorder,
+                }}
+              >
                 Configure Supplier
               </Button>
             </Link>
@@ -421,7 +463,7 @@ class HomePage extends Component {
               <div className={classes.avtarbox2}>
                 <Avatar alt='Remy Sharp' className={classes.large}>
                   <img
-                    src={require('../Icons/supplier.svg')}
+                    src={require('../Icons/configuration.svg')}
                     className={classes.icons}
                     onClick={(event) =>
                       this._onButtonClick(event, 'configuration')

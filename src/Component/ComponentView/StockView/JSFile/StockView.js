@@ -300,8 +300,7 @@ class StockView extends Component {
       <Container component='main' maxWidth='lg'>
         <Grid container spacing={3} direction='row' alignItems='center'>
           <Grid item xs={6}>
-            <Typography variant='body2'>
-              Specify Search Criteria</Typography>
+            <Typography variant='body2'>Specify Search Criteria</Typography>
           </Grid>
           <Grid item xs={6} style={{ textAlign: 'end' }}>
             <FormControlLabel
@@ -357,7 +356,6 @@ class StockView extends Component {
                       style={{
                         width: 300,
                         borderColor: 'Red',
-                        height: '0.1876em',
                       }}
                       onBlur={this.itemChange}
                     />
@@ -407,6 +405,7 @@ class StockView extends Component {
                     />
                   </Grid>
                 </Grid>
+
                 <Grid container item xs={12}>
                   <Grid item xs={4} className={classes.paper}>
                     <TextField
