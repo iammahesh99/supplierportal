@@ -66,7 +66,7 @@ const styles = (theme) => ({
     flex: 1,
     flexDirection: 'column',
     border: '1px solid red',
-    height: 400,
+    height: 310,
   },
   paper: {
     paddingTop: theme.spacing(3),
@@ -174,7 +174,7 @@ class POView extends Component {
       page: 0,
       totalrecords: 0,
       detail: false,
-      openDetailModel: false,
+      openDetailModel: true,
     };
   }
 

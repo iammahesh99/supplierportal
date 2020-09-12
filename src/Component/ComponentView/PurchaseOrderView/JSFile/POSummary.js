@@ -63,6 +63,7 @@ const styles = (theme) => ({
   table_row_bordertd: {
     borderTop: '1px solid #d7d6d6',
     borderBottom: '1px solid #d7d6d6',
+    fontSize: '10px',
   },
   table_row_bordertd1: {
     borderTop: '1px solid #d7d6d6',
@@ -71,6 +72,7 @@ const styles = (theme) => ({
     borderTopLeftRadius: ' 10px',
     borderBottomLeftRadius: '10px',
     padding: '10px',
+    fontSize: '10px',
   },
   table_row_bordertdL: {
     borderTop: '1px solid #d7d6d6',
@@ -78,6 +80,7 @@ const styles = (theme) => ({
     borderRight: '1px solid #d7d6d6',
     borderTopRightRadius: ' 10px',
     borderBottomRightRadius: '10px',
+    fontSize: '10px',
   },
   main_table: {
     borderCollapse: 'separate',
@@ -94,6 +97,12 @@ const styles = (theme) => ({
     fontWeight: 'bolder',
     fontSize: '18px',
     color: '#000000',
+  },
+  summeryPTag: {
+    margin: '5px 0px 3px 6px !important',
+  },
+  summeryPValue: {
+    margin: '5px 0px 3px 6px !important',
   },
 });
 
@@ -136,41 +145,41 @@ class POSummary extends Component {
 
           <Grid container>
             <Grid container item xs={12} spacing={1}>
-              <Grid item xs={2}>
-                <p style={{ fontWeight: 'bold' }}>#PR</p>
-                <p>100637121</p>
+              <Grid item xs={1}>
+                <p className={classes.summeryPTag}>#PR</p>
+                <p className={classes.summeryPValue}>100637121</p>
               </Grid>
-              <Grid item xs={2}>
-                <p style={{ fontWeight: 'bold' }}>#PO</p>
-                <p>112212</p>
+              <Grid item xs={1}>
+                <p className={classes.summeryPTag}>#PO</p>
+                <p className={classes.summeryPValue}>112212</p>
               </Grid>
-              <Grid item xs={2}>
-                <p style={{ fontWeight: 'bold' }}>CREATE DATE</p>
-                <p>12/09/2019</p>
+              <Grid item xs={1}>
+                <p className={classes.summeryPTag}>CREATE DATE</p>
+                <p className={classes.summeryPValue}>12/09/2019</p>
               </Grid>
-              <Grid item xs={2}>
-                <p style={{ fontWeight: 'bold' }}>LOCATION</p>
-                <p>CO-12342</p>
+              <Grid item xs={1}>
+                <p className={classes.summeryPTag}>LOCATION</p>
+                <p className={classes.summeryPValue}>CO-12342</p>
               </Grid>
-              <Grid item xs={2}>
-                <p style={{ fontWeight: 'bold' }}>TOTAL ITEMS</p>
-                <p>21</p>
+              <Grid item xs={1}>
+                <p className={classes.summeryPTag}>TOTAL ITEMS</p>
+                <p className={classes.summeryPValue}>21</p>
               </Grid>
-              <Grid item xs={2}>
-                <p style={{ fontWeight: 'bold' }}> TOTAL QTY</p>
-                <p>400</p>
+              <Grid item xs={1}>
+                <p className={classes.summeryPTag}> TOTAL QTY</p>
+                <p className={classes.summeryPValue}>400</p>
               </Grid>
-              <Grid item xs={2}>
-                <p style={{ fontWeight: 'bold' }}>TOTAL COST</p>
-                <p>100</p>
+              <Grid item xs={1}>
+                <p className={classes.summeryPTag}>TOTAL COST</p>
+                <p className={classes.summeryPValue}>100</p>
               </Grid>
-              <Grid item xs={2}>
-                <p style={{ fontWeight: 'bold' }}>SHORTAGE QTY</p>
-                <p>390</p>
+              <Grid item xs={1}>
+                <p className={classes.summeryPTag}>SHORTAGE QTY</p>
+                <p className={classes.summeryPValue}>390</p>
               </Grid>
-              <Grid item xs={2}>
-                <p style={{ fontWeight: 'bold' }}>EXCESS QTY</p>
-                <p>40</p>
+              <Grid item xs={1}>
+                <p className={classes.summeryPTag}>EXCESS QTY</p>
+                <p className={classes.summeryPValue}>40</p>
               </Grid>
             </Grid>
           </Grid>
