@@ -27,6 +27,8 @@ import {
 import Toast from 'light-toast';
 import XLSX from 'xlsx';
 import POSummary from '../JSFile/POSummary.js';
+import POShipment from '../JSFile/POShipment.js';
+import PORevision from '../JSFile/PORevision.js';
 import { Link } from 'react-router-dom';
 import PO from '../JSFile/JSON/PO.json';
 import '../CSSFile/POView.css';
@@ -146,7 +148,7 @@ const styles = (theme) => ({
     borderLeft: '1px solid #d7d6d6',
     borderTopLeftRadius: ' 10px',
     borderBottomLeftRadius: '10px',
-    padding: '5px',
+    padding: '0px',
     fontSize: '12px',
   },
   table_row_bordertdL: {
@@ -207,6 +209,8 @@ class POView extends Component {
       totalrecords: 0,
       detail: false,
       openDetailModel: false,
+      openShipmentModel: false,
+      openRevisionModel: false,
     };
   }
 
@@ -281,7 +285,6 @@ class POView extends Component {
       this.setState({ detail: false });
     }
   };
-
   handleExport = () => {
     this.setState({ checkedItems: [] });
     this.state.options.map((data) => {
@@ -299,10 +302,19 @@ class POView extends Component {
     XLSX.utils.book_append_sheet(workbook, sheet, 'Sheet 1');
     XLSX.writeFile(workbook, ans + `.xls`);
   };
-
   openDetailModel = () => {
     this.setState((prevState) => ({
       openDetailModel: !prevState.openDetailModel,
+    }));
+  };
+  openShipmentModel = () => {
+    this.setState((prevState) => ({
+      openShipmentModel: !prevState.openShipmentModel,
+    }));
+  };
+  openRevisionModel = () => {
+    this.setState((prevState) => ({
+      openRevisionModel: !prevState.openRevisionModel,
     }));
   };
 
@@ -622,21 +634,53 @@ class POView extends Component {
           >
             <div>
               {this.state.detail ? (
-                <Button
-                  variant='contained'
-                  color='default'
-                  className={classes.buttons2}
-                  startIcon={<CallToActionIcon />}
-                  onClick={this.openDetailModel}
-                  style={{
-                    border: 'none',
-                    background: 'white',
-                    padding: '5px 18px',
-                    borderRadius: '5px',
-                  }}
-                >
-                  DETAIL
-                </Button>
+                <>
+                  <Button
+                    variant='contained'
+                    color='default'
+                    className={classes.buttons2}
+                    startIcon={<CallToActionIcon />}
+                    onClick={this.openRevisionModel}
+                    style={{
+                      border: 'none',
+                      background: 'white',
+                      padding: '5px 18px',
+                      borderRadius: '5px',
+                    }}
+                  >
+                    REVISION
+                  </Button>
+                  <Button
+                    variant='contained'
+                    color='default'
+                    className={classes.buttons2}
+                    startIcon={<CallToActionIcon />}
+                    onClick={this.openDetailModel}
+                    style={{
+                      border: 'none',
+                      background: 'white',
+                      padding: '5px 18px',
+                      borderRadius: '5px',
+                    }}
+                  >
+                    DETAIL
+                  </Button>
+                  <Button
+                    variant='contained'
+                    color='default'
+                    className={classes.buttons2}
+                    startIcon={<CallToActionIcon />}
+                    onClick={this.openShipmentModel}
+                    style={{
+                      border: 'none',
+                      background: 'white',
+                      padding: '5px 18px',
+                      borderRadius: '5px',
+                    }}
+                  >
+                    SHIPMENTS
+                  </Button>
+                </>
               ) : null}
               <Button
                 variant='contained'
@@ -832,6 +876,26 @@ class POView extends Component {
           aria-describedby='alert-dialog-description'
         >
           <POSummary handleClose={this.openDetailModel} />
+        </Dialog>
+        <Dialog
+          fullWidth
+          open={this.state.openShipmentModel}
+          maxWidth='lg'
+          classes={{ paper: classes.dialogPaper }}
+          aria-labelledby='alert-dialog-title'
+          aria-describedby='alert-dialog-description'
+        >
+          <POShipment handleClose={this.openShipmentModel} />
+        </Dialog>
+        <Dialog
+          fullWidth
+          open={this.state.openRevisionModel}
+          maxWidth='lg'
+          classes={{ paper: classes.dialogPaper }}
+          aria-labelledby='alert-dialog-title'
+          aria-describedby='alert-dialog-description'
+        >
+          <PORevision handleClose={this.openRevisionModel} />
         </Dialog>
       </Container>
     );

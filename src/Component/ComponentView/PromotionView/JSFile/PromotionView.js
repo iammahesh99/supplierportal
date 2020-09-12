@@ -19,11 +19,15 @@ import {
   CssBaseline,
   TableContainer,
   Checkbox,
+  Dialog,
+  Toolbar,
+  IconButton,
   Box,
   Radio,
 } from '@material-ui/core';
 import Toast from 'light-toast';
 import XLSX from 'xlsx';
+import CloseIcon from '@material-ui/icons/Close';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import { properties } from '../../../../Properties.js';
 
@@ -161,7 +165,7 @@ const styles = (theme) => ({
   },
   cssOutlinedInput: {
     borderColor: `red !important`,
-    height: '40px !important',
+    height: '40px',
   },
   textBoxInputLabel: {
     fontWeight: 'bolder',
@@ -170,31 +174,23 @@ const styles = (theme) => ({
   },
 });
 
-class SalesView extends Component {
+class PromotionView extends Component {
   constructor(props) {
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth() + 1;
-    if (dd < 10) {
-      dd = '0' + dd;
-    }
-    if (mm < 10) {
-      mm = '0' + mm;
-    }
-    var date = today.getFullYear() + '-' + mm + '-' + dd;
     super(props);
     this.state = {
       checked: true,
-      currentDate: date,
+      ischecked: '',
       searchResult: [],
       item: '',
       Desc: '',
       location: '',
       bar: '',
-      startDate: '',
-      endDate: '',
+      vpn: '',
       checkedItems: [],
       options: [],
+      // map:false,
+      // enable:false,
+      // listOfHeader:[]
     };
   }
 
@@ -206,26 +202,18 @@ class SalesView extends Component {
     this.setState({ item: event.target.value });
     console.log(this.state.item);
   };
-
   descChange = (event) => {
     this.setState({ Desc: event.target.value });
     console.log(this.state.Desc);
   };
-
   locationChange = (event) => {
     this.setState({ location: event.target.value });
   };
-
   barChange = (event) => {
     this.setState({ bar: event.target.value });
   };
-
-  startDate = (event) => {
-    this.setState({ startDate: event.target.value });
-  };
-
-  endDate = (event) => {
-    this.setState({ endDate: event.target.value });
+  vpnChange = (event) => {
+    this.setState({ vpn: event.target.value });
   };
 
   handleSearchItem = () => {
@@ -236,8 +224,7 @@ class SalesView extends Component {
     var desc = '';
     var location = '';
     var bar = '';
-    var startDate = '';
-    var endDate = '';
+    var vpn = '';
     if (this.state.item != '') {
       item = ('item=' + this.state.item + '&').replace(/ /g, '');
     }
@@ -250,13 +237,10 @@ class SalesView extends Component {
     if (this.state.bar != '') {
       bar = ('upc=' + this.state.bar + '&').replace(/ /g, '');
     }
-    if (this.state.startDate != '') {
-      startDate = ('startDate=' + this.state.startDate + '&').replace(/ /g, '');
+    if (this.state.vpn != '') {
+      vpn = ('vpn=' + this.state.vpn + '&').replace(/ /g, '');
     }
-    if (this.state.endDate != '') {
-      endDate = ('endDate=' + this.state.endDate + '&').replace(/ /g, '');
-    }
-    var finalstring = item + desc + location + bar + startDate + endDate;
+    var finalstring = item + desc + location + bar + vpn;
     const query = finalstring.substring(0, finalstring.length - 1);
     console.log(query);
 
@@ -266,7 +250,7 @@ class SalesView extends Component {
     }, 4000);
     const proxyurl = 'https://cors-anywhere.herokuapp.com/';
     const endUrl = properties.endUrl;
-    const baseuri = endUrl + 'api/v1/salesdetail?';
+    const baseuri = endUrl + 'api/v1/stockdetail?';
     const itemsearch = query;
 
     var myHeaders = new Headers();
@@ -287,8 +271,15 @@ class SalesView extends Component {
         this.setState({ searchResult: result.result });
       })
       .catch((error) => console.log('error', error));
-  };
 
+    // fetch(baseuri+itemsearch,{
+    //   method: 'GET',
+    //   })
+    // .then(response =>  response.json())
+    // .then(resData => {
+    // this.setState({searchResult:resData.result})
+    // })
+  };
   handleReset = () => {
     this.setState({ searchResult: [] });
     this.setState({ item: '' });
@@ -297,7 +288,6 @@ class SalesView extends Component {
     this.setState({ bar: '' });
     this.setState({ vpn: '' });
   };
-
   handleCheck = (event, row) => {
     const options = this.state.options;
     let index;
@@ -315,13 +305,12 @@ class SalesView extends Component {
     // update the state with the new array of options
     this.setState({ options: options });
   };
-
   handleExport = () => {
     this.setState({ checkedItems: [] });
     this.state.options.map((data) => {
       this.state.checkedItems.push(JSON.parse(data));
     });
-    var ans = 'Sales';
+    var ans = 'Stock';
     var arr = '0123456789qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM';
     var len = 5;
     for (var i = len; i > 0; i--) {
@@ -337,6 +326,7 @@ class SalesView extends Component {
   render() {
     const { classes } = this.props;
     const open = Boolean(this.state.ischecked);
+    var set = '';
 
     return (
       <Container component='main' maxWidth='lg'>
@@ -381,7 +371,7 @@ class SalesView extends Component {
                   <Grid item xs={4} className={classes.paper}>
                     <TextField
                       id='outlined-number'
-                      label='Item Id'
+                      label='REQUEST ID'
                       type='text'
                       InputProps={{
                         classes: {
@@ -406,7 +396,7 @@ class SalesView extends Component {
                   <Grid item xs={4} className={classes.paper}>
                     <TextField
                       id='outlined-number'
-                      label='Item Desc'
+                      label='ITEM ID'
                       type='text'
                       InputProps={{
                         classes: {
@@ -420,10 +410,7 @@ class SalesView extends Component {
                         shrink: true,
                       }}
                       variant='outlined'
-                      style={{
-                        width: 300,
-                        borderColor: 'Red',
-                      }}
+                      style={{ width: 300, borderColor: 'Red' }}
                       onBlur={this.descChange}
                     />
                   </Grid>
@@ -431,34 +418,7 @@ class SalesView extends Component {
                   <Grid item xs={4} className={classes.paper}>
                     <TextField
                       id='outlined-number'
-                      label='Start Date'
-                      type='date'
-                      InputProps={{
-                        classes: {
-                          root: classes.cssOutlinedInput,
-                        },
-                      }}
-                      InputLabelProps={{
-                        classes: {
-                          root: classes.textBoxInputLabel,
-                        },
-                        shrink: true,
-                      }}
-                      variant='outlined'
-                      style={{
-                        width: 300,
-                        borderColor: 'Red',
-                      }}
-                      onChange={this.startDate}
-                    />
-                  </Grid>
-                </Grid>
-
-                <Grid container item xs={12}>
-                  <Grid item xs={4} className={classes.paper}>
-                    <TextField
-                      id='outlined-number'
-                      label='Barcode'
+                      label='START DATE'
                       type='text'
                       InputProps={{
                         classes: {
@@ -472,10 +432,30 @@ class SalesView extends Component {
                         shrink: true,
                       }}
                       variant='outlined'
-                      style={{
-                        width: 300,
-                        borderColor: 'Red',
+                      style={{ width: 300, borderColor: 'Red' }}
+                      onBlur={this.locationChange}
+                    />
+                  </Grid>
+                </Grid>
+                <Grid container item xs={12}>
+                  <Grid item xs={4} className={classes.paper}>
+                    <TextField
+                      id='outlined-number'
+                      label='PROMOTION ID'
+                      type='text'
+                      InputProps={{
+                        classes: {
+                          root: classes.cssOutlinedInput,
+                        },
                       }}
+                      InputLabelProps={{
+                        classes: {
+                          root: classes.textBoxInputLabel,
+                        },
+                        shrink: true,
+                      }}
+                      variant='outlined'
+                      style={{ width: 300, borderColor: 'Red' }}
                       onBlur={this.barChange}
                     />
                   </Grid>
@@ -483,7 +463,7 @@ class SalesView extends Component {
                   <Grid item xs={4} className={classes.paper}>
                     <TextField
                       id='outlined-number'
-                      label='Location'
+                      label='BARCODE'
                       type='text'
                       InputProps={{
                         classes: {
@@ -497,19 +477,16 @@ class SalesView extends Component {
                         shrink: true,
                       }}
                       variant='outlined'
-                      style={{
-                        width: 300,
-                        borderColor: 'Red',
-                      }}
-                      onBlur={this.locationChange}
+                      style={{ width: 300, borderColor: 'Red' }}
+                      onBlur={this.vpnChange}
                     />
                   </Grid>
 
                   <Grid item xs={4} className={classes.paper}>
                     <TextField
                       id='outlined-number'
-                      label='End Date'
-                      type='date'
+                      label='END DATE'
+                      type='text'
                       InputProps={{
                         classes: {
                           root: classes.cssOutlinedInput,
@@ -522,14 +499,79 @@ class SalesView extends Component {
                         shrink: true,
                       }}
                       variant='outlined'
-                      style={{
-                        width: 300,
-                        borderColor: 'Red',
-                      }}
-                      onChange={this.endDate}
+                      style={{ width: 300, borderColor: 'Red' }}
+                      onBlur={this.vpnChange}
                     />
                   </Grid>
                 </Grid>
+                <Grid container item xs={12}>
+                  <Grid item xs={4} className={classes.paper}>
+                    <TextField
+                      id='outlined-number'
+                      label='ITEM DESC'
+                      type='text'
+                      InputProps={{
+                        classes: {
+                          root: classes.cssOutlinedInput,
+                        },
+                      }}
+                      InputLabelProps={{
+                        classes: {
+                          root: classes.textBoxInputLabel,
+                        },
+                        shrink: true,
+                      }}
+                      variant='outlined'
+                      style={{ width: 300, borderColor: 'Red' }}
+                      onBlur={this.barChange}
+                    />
+                  </Grid>
+
+                  <Grid item xs={4} className={classes.paper}>
+                    <TextField
+                      id='outlined-number'
+                      label='VPN'
+                      type='text'
+                      InputProps={{
+                        classes: {
+                          root: classes.cssOutlinedInput,
+                        },
+                      }}
+                      InputLabelProps={{
+                        classes: {
+                          root: classes.textBoxInputLabel,
+                        },
+                        shrink: true,
+                      }}
+                      variant='outlined'
+                      style={{ width: 300, borderColor: 'Red' }}
+                      onBlur={this.vpnChange}
+                    />
+                  </Grid>
+
+                  <Grid item xs={4} className={classes.paper}>
+                    <TextField
+                      id='outlined-number'
+                      label='LOCATION'
+                      type='text'
+                      InputProps={{
+                        classes: {
+                          root: classes.cssOutlinedInput,
+                        },
+                      }}
+                      InputLabelProps={{
+                        classes: {
+                          root: classes.textBoxInputLabel,
+                        },
+                        shrink: true,
+                      }}
+                      variant='outlined'
+                      style={{ width: 300, borderColor: 'Red' }}
+                      onBlur={this.vpnChange}
+                    />
+                  </Grid>
+                </Grid>
+
                 <Grid container item xs={12}>
                   <div
                     style={{
@@ -537,9 +579,10 @@ class SalesView extends Component {
                       alignItems: 'flex-end',
                       display: 'flex',
                       flexDirection: 'column',
+                      marginTop: '1%',
                     }}
                   >
-                    <div style={{ marginTop: '1%' }}>
+                    <div>
                       <Button
                         variant='contained'
                         color='primary'
@@ -618,6 +661,27 @@ class SalesView extends Component {
                     sortDirection='asc'
                     className={classes.table_head_bordertd}
                   >
+                    REQUEST ID
+                  </TableCell>
+                  <TableCell
+                    padding='default'
+                    sortDirection='asc'
+                    className={classes.table_head_bordertd}
+                  >
+                    PROMOTION ID
+                  </TableCell>
+                  <TableCell
+                    padding='default'
+                    sortDirection='asc'
+                    className={classes.table_head_bordertd}
+                  >
+                    CREATED DATE
+                  </TableCell>
+                  <TableCell
+                    padding='default'
+                    sortDirection='asc'
+                    className={classes.table_head_bordertd}
+                  >
                     ITEM ID
                   </TableCell>
                   <TableCell
@@ -625,56 +689,21 @@ class SalesView extends Component {
                     sortDirection='asc'
                     className={classes.table_head_bordertd}
                   >
-                    ITEM DESCRIPTION
+                    CHANGE TYPE
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
                     className={classes.table_head_bordertd}
                   >
-                    BARCODE
-                  </TableCell>
-                  <TableCell
-                    padding='default'
-                    sortDirection='asc'
-                    className={classes.table_head_bordertd}
-                  >
-                    VPN
-                  </TableCell>
-                  <TableCell
-                    padding='default'
-                    sortDirection='asc'
-                    className={classes.table_head_bordertd}
-                  >
-                    LOCATION
-                  </TableCell>
-                  <TableCell
-                    padding='default'
-                    sortDirection='asc'
-                    className={classes.table_head_bordertd}
-                  >
-                    TOTAL SALES
-                  </TableCell>
-                  <TableCell
-                    padding='default'
-                    sortDirection='asc'
-                    className={classes.table_head_bordertd}
-                  >
-                    RETURN
-                  </TableCell>
-                  <TableCell
-                    padding='default'
-                    sortDirection='asc'
-                    className={classes.table_head_bordertd}
-                  >
-                    NET SALES
+                    CHARGE AMOUNT
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
                     className={classes.table_head_bordertdL}
                   >
-                    PROMO SALES
+                    STATUS
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -704,16 +733,10 @@ class SalesView extends Component {
                       {row.locationName}
                     </TableCell>
                     <TableCell className={classes.table_row_bordertd}>
-                      {row.totalSale}
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      {row.returns}
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      {row.netSale}
+                      {row.totalStock}
                     </TableCell>
                     <TableCell className={classes.table_row_bordertdL}>
-                      {row.promoSale}
+                      {row.availableStock}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -735,7 +758,7 @@ class SalesView extends Component {
     );
   }
 }
-SalesView.propTypes = {
+PromotionView.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-export default withStyles(styles)(SalesView);
+export default withStyles(styles)(PromotionView);

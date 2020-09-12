@@ -141,9 +141,16 @@ const styles = (theme) => ({
     flexBasis: '11%',
     maxWidth: 'unset',
   },
+  sInfoBorder: {
+    border: '1px solid red',
+    padding: '2%',
+  },
+  sInsideBorder: {
+    padding: '2%',
+  },
 });
 
-class POSummary extends Component {
+class InSummary extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -153,7 +160,7 @@ class POSummary extends Component {
     const { classes } = this.props;
 
     return (
-      <Container>
+      <Container style={{ marginBottom: '2%' }}>
         <Toolbar
           disableGutters={true}
           className={classes.close}
@@ -176,48 +183,77 @@ class POSummary extends Component {
         </Toolbar>
 
         <div className={classes.poDetail} style={{ marginTop: '-1%' }}>
-          <Typography>PO SUMMARY</Typography>
-
-          <div className={classes.smallSummery}></div>
-
-          <Grid container>
-            <Grid container item xs={12} spacing={1}>
-              <Grid item xs={1} className={classes.topDivInfo} zeroMinWidth>
-                <p className={classes.summeryPTag}>#PR</p>
-                <p className={classes.summeryPValue}>100637121</p>
-              </Grid>
-              <Grid item xs={1} className={classes.topDivInfo} zeroMinWidth>
-                <p className={classes.summeryPTag}>#PO</p>
-                <p className={classes.summeryPValue}>112212</p>
-              </Grid>
-              <Grid item xs={1} className={classes.topDivInfo} zeroMinWidth>
-                <p className={classes.summeryPTag}>CREATE DATE</p>
-                <p className={classes.summeryPValue}>12/09/2019</p>
-              </Grid>
-              <Grid item xs={1} className={classes.topDivInfo} zeroMinWidth>
-                <p className={classes.summeryPTag}>LOCATION</p>
-                <p className={classes.summeryPValue}>CO-12342</p>
-              </Grid>
-              <Grid item xs={1} className={classes.topDivInfo} zeroMinWidth>
-                <p className={classes.summeryPTag}>TOTAL ITEMS</p>
-                <p className={classes.summeryPValue}>21</p>
-              </Grid>
-              <Grid item xs={1} className={classes.topDivInfo} zeroMinWidth>
-                <p className={classes.summeryPTag}> TOTAL QTY</p>
-                <p className={classes.summeryPValue}>400</p>
-              </Grid>
-              <Grid item xs={1} className={classes.topDivInfo} zeroMinWidth>
-                <p className={classes.summeryPTag}>TOTAL COST</p>
-                <p className={classes.summeryPValue}>100</p>
-              </Grid>
-              <Grid item xs={1} className={classes.topDivInfo} zeroMinWidth>
-                <p className={classes.summeryPTag}>SHORTAGE QTY</p>
-                <p className={classes.summeryPValue}>390</p>
-              </Grid>
-              <Grid item xs={1} className={classes.topDivInfo} zeroMinWidth>
-                <p className={classes.summeryPTag}>EXCESS QTY</p>
-                <p className={classes.summeryPValue}>40</p>
-              </Grid>
+          <Grid container spacing={1}>
+            <Grid item xs={4} spacing={3}>
+              <b> ORDER SUMMARY </b>
+            </Grid>
+            <Grid item xs={4} spacing={3}>
+              <b>INVOICE SUMMARY </b>
+            </Grid>
+            <Grid item xs={4} spacing={3}>
+              <b>DISCREPANCIES</b>
+            </Grid>
+          </Grid>
+          <Grid container spacing={1}>
+            <Grid item xs={4} spacing={3}>
+              <div className={classes.sInfoBorder}>
+                <div className={classes.sInsideBorder}>
+                  <div>Total PO QTY</div>
+                  <div></div>
+                </div>
+                <div className={classes.sInsideBorder}>
+                  <div>Total PO COST</div>
+                  <div></div>
+                </div>
+                <div className={classes.sInsideBorder}>
+                  <div>Total TAX</div>
+                  <div></div>
+                </div>
+                <div className={classes.sInsideBorder}>
+                  <div>Total</div>
+                  <div></div>
+                </div>
+              </div>
+            </Grid>
+            <Grid item xs={4} spacing={3}>
+              <div className={classes.sInfoBorder}>
+                <div className={classes.sInsideBorder}>
+                  <div>Total Invoice QTY</div>
+                  <div></div>
+                </div>
+                <div className={classes.sInsideBorder}>
+                  <div>Total Invoice COST</div>
+                  <div></div>
+                </div>
+                <div className={classes.sInsideBorder}>
+                  <div>Total TAX</div>
+                  <div></div>
+                </div>
+                <div className={classes.sInsideBorder}>
+                  <div>Total</div>
+                  <div></div>
+                </div>
+              </div>
+            </Grid>
+            <Grid item xs={4} spacing={3}>
+              <div className={classes.sInfoBorder}>
+                <div className={classes.sInsideBorder}>
+                  <div>Quantity</div>
+                  <div></div>
+                </div>
+                <div className={classes.sInsideBorder}>
+                  <div>Cost</div>
+                  <div></div>
+                </div>
+                <div className={classes.sInsideBorder}>
+                  <div>Total Amount</div>
+                  <div></div>
+                </div>
+                <div className={classes.sInsideBorder}>
+                  <div>Total</div>
+                  <div></div>
+                </div>
+              </div>
             </Grid>
           </Grid>
         </div>
@@ -352,7 +388,7 @@ class POSummary extends Component {
     );
   }
 }
-POSummary.propTypes = {
+InSummary.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-export default withStyles(styles)(POSummary);
+export default withStyles(styles)(InSummary);

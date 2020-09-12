@@ -6,6 +6,9 @@ import AdminPanel from '../JSFile/AdminPanel';
 import StockView from '../../ComponentView/StockView/JSFile/StockView.js';
 import SalesView from '../../ComponentView/SalesView/JSFile/SalesView.js';
 import POView from '../../ComponentView/PurchaseOrderView/JSFile/POView.js';
+import InvoiceView from '../../ComponentView/InvoiceView/JSFile/InvoiceView.js';
+import CostView from '../../ComponentView/CostView/JSFile/CostView.js';
+import PromotionView from '../../ComponentView/PromotionView/JSFile/PromotionView.js';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import SupplierConfig from '../../ComponentView/SupplierConfiguration/JSFile/SupplierConfig.js';
@@ -44,6 +47,15 @@ function HomeRouter() {
           </Route>
           <Route path='/Home/PODetail'>
             <POView />
+          </Route>
+          <Route path='/Home/InvoiceDetail'>
+            <InvoiceView />
+          </Route>
+          <Route path='/Home/CostDetail'>
+            <CostView />
+          </Route>
+          <Route path='/Home/PromotionDetail'>
+            <PromotionView />
           </Route>
           <Route path='/Home/AdminPanel'>
             <AdminPanel />
