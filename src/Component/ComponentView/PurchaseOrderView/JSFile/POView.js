@@ -111,7 +111,7 @@ const styles = (theme) => ({
     borderTop: '1px solid #d7d6d6',
     borderBottom: '1px solid #d7d6d6',
     fontSize: '12px',
-    padding: '10px',
+    padding: '5px',
     fontWeight: 'bold',
   },
   table_head_bordertd1: {
@@ -120,7 +120,7 @@ const styles = (theme) => ({
     borderLeft: '1px solid #d7d6d6',
     borderTopLeftRadius: ' 10px',
     borderBottomLeftRadius: '10px',
-    padding: '10px',
+    padding: '5px',
     fontSize: '12px',
     fontWeight: 'bold',
   },
@@ -131,14 +131,14 @@ const styles = (theme) => ({
     borderTopRightRadius: ' 10px',
     borderBottomRightRadius: '10px',
     fontSize: '12px',
-    padding: '10px',
+    padding: '5px',
     fontWeight: 'bold',
   },
   table_row_bordertd: {
     borderTop: '1px solid #d7d6d6',
     borderBottom: '1px solid #d7d6d6',
     fontSize: '12px',
-    padding: '10px',
+    padding: '5px',
   },
   table_row_bordertd1: {
     borderTop: '1px solid #d7d6d6',
@@ -146,7 +146,7 @@ const styles = (theme) => ({
     borderLeft: '1px solid #d7d6d6',
     borderTopLeftRadius: ' 10px',
     borderBottomLeftRadius: '10px',
-    padding: '10px',
+    padding: '5px',
     fontSize: '12px',
   },
   table_row_bordertdL: {
@@ -156,7 +156,7 @@ const styles = (theme) => ({
     borderTopRightRadius: ' 10px',
     borderBottomRightRadius: '10px',
     fontSize: '12px',
-    padding: '10px',
+    padding: '5px',
   },
   main_table: {
     borderCollapse: 'separate',
@@ -206,7 +206,7 @@ class POView extends Component {
       page: 0,
       totalrecords: 0,
       detail: false,
-      openDetailModel: true,
+      openDetailModel: false,
     };
   }
 

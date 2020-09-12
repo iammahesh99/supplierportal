@@ -92,7 +92,7 @@ const styles = (theme) => ({
     borderTop: '1px solid #d7d6d6',
     borderBottom: '1px solid #d7d6d6',
     fontSize: '12px',
-    padding: '0px',
+    padding: '5px',
   },
   table_row_bordertd1: {
     borderTop: '1px solid #d7d6d6',
@@ -100,7 +100,7 @@ const styles = (theme) => ({
     borderLeft: '1px solid #d7d6d6',
     borderTopLeftRadius: ' 10px',
     borderBottomLeftRadius: '10px',
-    padding: '0px',
+    padding: '5px',
     fontSize: '12px',
   },
   table_row_bordertdL: {
@@ -110,7 +110,7 @@ const styles = (theme) => ({
     borderTopRightRadius: ' 10px',
     borderBottomRightRadius: '10px',
     fontSize: '12px',
-    padding: '0px',
+    padding: '5px',
   },
   main_table: {
     borderCollapse: 'separate',
