@@ -266,7 +266,7 @@ class SalesView extends Component {
     this.setState({ vpn: '' });
   };
 
-  handleCheck = (event) => {
+  handleCheck = (event, row) => {
     const options = this.state.options;
     let index;
 
@@ -320,7 +320,7 @@ class SalesView extends Component {
                   onChange={this.handleChange}
                 />
               }
-              label='Search Sales'
+              label='Hide Pane'
             />
           </Grid>
         </Grid>
@@ -507,7 +507,7 @@ class SalesView extends Component {
                       flexDirection: 'column',
                     }}
                   >
-                    <div style={{ marginRight: '1%', marginTop: '1%' }}>
+                    <div style={{ marginTop: '1%' }}>
                       <Button
                         variant='contained'
                         color='primary'
@@ -651,9 +651,8 @@ class SalesView extends Component {
                 {this.state.searchResult.map((row, index) => (
                   <TableRow>
                     <TableCell className={classes.table_row_bordertd1}>
-                      <Radio
-                        value={JSON.stringify(row)}
-                        onChange={this.handleCheck}
+                      <Checkbox
+                        onChange={(event) => this.handleCheck(event, row)}
                         name='radio-button-demo'
                       />
                     </TableCell>
