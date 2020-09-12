@@ -256,7 +256,7 @@ class StockView extends Component {
     this.setState({ bar: '' });
     this.setState({ vpn: '' });
   };
-  handleCheck = (event) => {
+  handleCheck = (event, row) => {
     const options = this.state.options;
     let index;
 
@@ -310,7 +310,7 @@ class StockView extends Component {
                   onChange={this.handleChange}
                 />
               }
-              label='Search Stock'
+              label='Hide Pane'
             />
           </Grid>
         </Grid>
@@ -460,7 +460,7 @@ class StockView extends Component {
                       flexDirection: 'column',
                     }}
                   >
-                    <div style={{ marginRight: '3%' }}>
+                    <div>
                       <Button
                         variant='contained'
                         color='primary'
@@ -590,9 +590,8 @@ class StockView extends Component {
                 {this.state.searchResult.map((row, index) => (
                   <TableRow>
                     <TableCell className={classes.table_row_bordertd1}>
-                      <Radio
-                        value={JSON.stringify(row)}
-                        onChange={this.handleCheck}
+                      <Checkbox
+                        onChange={(event) => this.handleCheck(event, row)}
                         name='radio-button-demo'
                       />
                     </TableCell>

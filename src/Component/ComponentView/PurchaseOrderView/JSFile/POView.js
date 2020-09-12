@@ -293,7 +293,7 @@ class POView extends Component {
                   onChange={this.handleChange}
                 />
               }
-              label='Search Stock'
+              label='Hide Pane'
             />
           </Grid>
         </Grid>
@@ -552,7 +552,7 @@ class POView extends Component {
                       flexDirection: 'column',
                     }}
                   >
-                    <div style={{ marginRight: '3%', marginTop: '1%' }}>
+                    <div style={{ marginTop: '1%' }}>
                       <Button
                         variant='contained'
                         color='primary'
