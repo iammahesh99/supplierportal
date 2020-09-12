@@ -31,6 +31,7 @@ import { Link } from 'react-router-dom';
 import PO from '../JSFile/JSON/PO.json';
 import '../CSSFile/POView.css';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
+import CallToActionIcon from '@material-ui/icons/CallToAction';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -145,6 +146,7 @@ const styles = (theme) => ({
 
 class POView extends Component {
   constructor(props) {
+    super(props);
     var today = new Date();
     var dd = today.getDate();
     var mm = today.getMonth() + 1;
@@ -155,7 +157,7 @@ class POView extends Component {
       mm = '0' + mm;
     }
     var date = today.getFullYear() + '-' + mm + '-' + dd;
-    super(props);
+
     this.state = {
       checked: true,
       currentDate: date,
@@ -172,6 +174,7 @@ class POView extends Component {
       page: 0,
       totalrecords: 0,
       detail: false,
+      openDetailModel: false,
     };
   }
 
@@ -213,71 +216,6 @@ class POView extends Component {
   handleSearchItem = () => {
     this.setState({ searchResult: PO.results });
     this.setState({ totalrecords: PO.totalRecordCount });
-
-    // this.setState({options:[]});
-    // this.setState({checkedItems:[]});
-    // this.setState({searchResult:[]});
-    // var item='';
-    // var desc='';
-    // var location='';
-    // var bar='';
-    // var startDate='';
-    // var endDate='';
-    // if(this.state.item!=''){
-    // 	item=("item="+this.state.item+'&').replace(/ /g,'');
-
-    // }
-    // if(this.state.Desc!='')
-    // {
-    // 	desc=("desc="+this.state.Desc+'&').replace(/ /g, '%20');;
-
-    // }
-    // if(this.state.location!='')
-    // {
-    //     location=("location="+this.state.location+'&').replace(/ /g, '%20');;
-    // }
-    // if(this.state.bar!='')
-    // {
-    //     bar=("upc="+this.state.bar+'&').replace(/ /g,'');
-    // }
-    // if(this.state.startDate!='')
-    // {
-    //     startDate=("startDate="+this.state.startDate+'&').replace(/ /g,'');
-    // }
-    // if(this.state.endDate!='')
-    // {
-    //     endDate=("endDate="+this.state.endDate+'&').replace(/ /g,'');
-    // }
-    // var finalstring=item+desc+location+bar+startDate+endDate;
-    // const query=finalstring.substring(0, finalstring.length - 1);
-    // console.log(query);
-
-    // Toast.loading('Searching');
-    //        setTimeout(() => {
-    //          Toast.hide();
-    //        }, 2000);
-
-    //  const uri='/PurchaseOrders/recent/purchaseOrderSearch?statuses=A';
-    //  //console.log(uri);
-
-    //    fetch(uri,{
-    //      method: 'GET',
-
-    //      headers: {
-    //      'Authorization':'Basic ' + btoa('RMS_ADMIN'+ ':' +'Retek_123'),
-    //      'Content-Type':'application/xml',
-    //      'Accept':'application/json',
-    //      'Accept-Versioning':'false',
-    //      'Accept-Language':'en-US,en;q=0.8'
-    //      }})
-    //  .then(response =>  response.json())
-    //  .then(resData => {
-    //  	console.log(resData);
-    //  	this.setState({searchResult:resData.results})
-    //  	this.setState({totalrecords:resData.totalRecordCount})
-
-    //  })
-    //  .catch(error => console.log('error', error));
   };
   handleReset = () => {
     this.setState({ searchResult: [] });
@@ -287,28 +225,31 @@ class POView extends Component {
     this.setState({ bar: '' });
     this.setState({ vpn: '' });
   };
-  handleCheck = (event) => {
+  handleCheck = (event, row) => {
     const options = this.state.options;
-    let index;
 
-    // check if the check box is checked or unchecked
+    console.log(row, '=====>>>>row');
+    console.log(event.target.checked, '=====>>>>row');
+
+    let index;
     if (event.target.checked) {
-      // add the numerical value of the checkbox to options array
-      options.push(event.target.value);
+      options.push(row.PO);
     } else {
-      // or remove the value from the unchecked checkbox from the array
-      index = options.indexOf(event.target.value);
+      index = options.indexOf(row.PO);
       options.splice(index, 1);
     }
 
-    // update the state with the new array of options
-    this.setState({ options: options });
-    if (this.state.options.length == 1) {
+    this.setState({ options: options }, () => {
+      console.log(options, '===>>>options');
+    });
+
+    if (options.length === 1) {
       this.setState({ detail: true });
     } else {
       this.setState({ detail: false });
     }
   };
+
   handleExport = () => {
     this.setState({ checkedItems: [] });
     this.state.options.map((data) => {
@@ -327,17 +268,22 @@ class POView extends Component {
     XLSX.writeFile(workbook, ans + `.xls`);
   };
 
+  openDetailModel = () => {
+    this.setState((prevState) => ({
+      openDetailModel: !prevState.openDetailModel,
+    }));
+  };
+
   render() {
     const { classes } = this.props;
     const open = Boolean(this.state.ischecked);
     console.log(this.state.searchResult);
 
     return (
-      <Container component='main' maxWidth='lg'>
+      <Container maxWidth='lg'>
         <Grid container spacing={3} direction='row' alignItems='center'>
           <Grid item xs={6}>
-            <Typography variant='body2'>
-              Specify Search Criteria</Typography>
+            <Typography variant='body2'>Specify Search Criteria</Typography>
           </Grid>
           <Grid item xs={6} style={{ textAlign: 'end' }}>
             <FormControlLabel
@@ -392,7 +338,7 @@ class POView extends Component {
                       variant='outlined'
                       style={{
                         width: 300,
-                        borderColor: 'Red'
+                        borderColor: 'Red',
                       }}
                       onBlur={this.itemChange}
                     />
@@ -416,7 +362,7 @@ class POView extends Component {
                       variant='outlined'
                       style={{
                         width: 300,
-                        borderColor: 'Red'
+                        borderColor: 'Red',
                       }}
                       onBlur={this.descChange}
                     />
@@ -440,7 +386,7 @@ class POView extends Component {
                       variant='outlined'
                       style={{
                         width: 300,
-                        borderColor: 'Red'
+                        borderColor: 'Red',
                       }}
                       onBlur={this.descChange}
                     />
@@ -467,7 +413,7 @@ class POView extends Component {
                       variant='outlined'
                       style={{
                         width: 300,
-                        borderColor: 'Red'
+                        borderColor: 'Red',
                       }}
                       onBlur={this.barChange}
                     />
@@ -491,7 +437,7 @@ class POView extends Component {
                       variant='outlined'
                       style={{
                         width: 300,
-                        borderColor: 'Red'
+                        borderColor: 'Red',
                       }}
                       onBlur={this.locationChange}
                     />
@@ -499,8 +445,8 @@ class POView extends Component {
                   <Grid item xs={4} className={classes.paper}>
                     <TextField
                       id='outlined-number'
-                      label='Start Date#'
-                      type='text'
+                      label='Start Date'
+                      type='date'
                       InputProps={{
                         classes: {
                           root: classes.cssOutlinedInput,
@@ -515,9 +461,9 @@ class POView extends Component {
                       variant='outlined'
                       style={{
                         width: 300,
-                        borderColor: 'Red'
+                        borderColor: 'Red',
                       }}
-                      onBlur={this.locationChange}
+                      onChange={this.startDate}
                     />
                   </Grid>
                 </Grid>
@@ -542,7 +488,7 @@ class POView extends Component {
                       variant='outlined'
                       style={{
                         width: 300,
-                        borderColor: 'Red'
+                        borderColor: 'Red',
                       }}
                       onBlur={this.barChange}
                     />
@@ -566,7 +512,7 @@ class POView extends Component {
                       variant='outlined'
                       style={{
                         width: 300,
-                        borderColor: 'Red'
+                        borderColor: 'Red',
                       }}
                       onBlur={this.barChange}
                     />
@@ -574,8 +520,8 @@ class POView extends Component {
                   <Grid item xs={4} className={classes.paper}>
                     <TextField
                       id='outlined-number'
-                      label='End Date#'
-                      type='text'
+                      label='End Date'
+                      type='date'
                       InputProps={{
                         classes: {
                           root: classes.cssOutlinedInput,
@@ -590,9 +536,9 @@ class POView extends Component {
                       variant='outlined'
                       style={{
                         width: 300,
-                        borderColor: 'Red'
+                        borderColor: 'Red',
                       }}
-                      onBlur={this.barChange}
+                      onChange={this.startDate}
                     />
                   </Grid>
                 </Grid>
@@ -643,6 +589,23 @@ class POView extends Component {
             }}
           >
             <div>
+              {this.state.detail ? (
+                <Button
+                  variant='contained'
+                  color='default'
+                  className={classes.buttons2}
+                  startIcon={<CallToActionIcon />}
+                  onClick={this.openDetailModel}
+                  style={{
+                    border: 'none',
+                    background: 'white',
+                    padding: '5px 18px',
+                    borderRadius: '5px',
+                  }}
+                >
+                  DETAIL
+                </Button>
+              ) : null}
               <Button
                 variant='contained'
                 color='default'
@@ -746,7 +709,7 @@ class POView extends Component {
                   <TableCell
                     padding='default'
                     sortDirection='asc'
-                    className={classes.table_row_bordertd}
+                    className={classes.table_row_bordertdL}
                   >
                     STATUS
                   </TableCell>
@@ -759,21 +722,19 @@ class POView extends Component {
                   .map((row) => {
                     let bordercolor = '';
                     if (row.status == 'APPROVED') {
-                      bordercolor = '2px solid #008000';
+                      // bordercolor = '2px solid #008000';
                     }
                     if (row.status == 'REJECTED') {
-                      bordercolor = '2px solid red';
+                      // bordercolor = '2px solid red';
                     }
                     if (row.status == 'SUBMITTED') {
-                      bordercolor = '2px solid #FFFF00';
+                      // bordercolor = '2px solid #FFFF00';
                     }
                     return (
                       <TableRow>
                         <TableCell className={classes.table_row_bordertd1}>
-
-                          <Radio
-                            value={JSON.stringify(row)}
-                            onChange={this.handleCheck}
+                          <Checkbox
+                            onChange={(event) => this.handleCheck(event, row)}
                             name='radio-button-demo'
                           />
                         </TableCell>
@@ -807,7 +768,7 @@ class POView extends Component {
                         <TableCell className={classes.table_row_bordertd}>
                           {row.excessQTY}
                         </TableCell>
-                        <TableCell className={classes.table_row_bordertd}>
+                        <TableCell className={classes.table_row_bordertdL}>
                           <div style={{ border: bordercolor }}>
                             {row.status}
                           </div>
@@ -818,7 +779,7 @@ class POView extends Component {
               </TableBody>
             </Table>
           </TableContainer>
-          <TablePagination
+          {/* <TablePagination
             style={{ paddingBottom: '2%' }}
             component='Paper'
             count={this.state.totalrecords}
@@ -827,18 +788,18 @@ class POView extends Component {
             rowsPerPageOptions={[]}
             page={this.state.page}
             onChangePage={this.handleChangePage}
-          />
+          /> */}
         </div>
 
         <Dialog
           fullWidth
-          open={this.state.open}
-          maxWidth='md'
+          open={this.state.openDetailModel}
+          maxWidth='lg'
           classes={{ paper: classes.dialogPaper }}
           aria-labelledby='alert-dialog-title'
           aria-describedby='alert-dialog-description'
         >
-          <POSummary handleClose={this.handleClose} />
+          <POSummary handleClose={this.openDetailModel} />
         </Dialog>
       </Container>
     );
