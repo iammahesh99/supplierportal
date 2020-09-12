@@ -187,7 +187,7 @@ class HomePage extends Component {
 
             <div style={{ borderLeft: '3px solid black' }}></div>
 
-            <Link style={{ textDecoration: 'none' }}>
+            <Link to='/Home/CostDetail' style={{ textDecoration: 'none' }}>
               <Button
                 classes={{
                   text: this.props.classes.bottonRightBorder,
@@ -222,7 +222,7 @@ class HomePage extends Component {
 
             <div style={{ borderLeft: '3px solid black' }}></div>
 
-            <Link style={{ textDecoration: 'none' }}>
+            <Link to='/Home/PromotionDetail' style={{ textDecoration: 'none' }}>
               <Button
                 classes={{
                   text: this.props.classes.bottonRightBorder,
@@ -257,7 +257,7 @@ class HomePage extends Component {
 
             <div style={{ borderLeft: '3px solid black' }}></div>
 
-            <Link style={{ textDecoration: 'none' }}>
+            <Link to='/Home/InvoiceDetail' style={{ textDecoration: 'none' }}>
               <Button
                 classes={{
                   text: this.props.classes.bottonRightBorder,

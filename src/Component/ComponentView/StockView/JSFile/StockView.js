@@ -144,7 +144,7 @@ const styles = (theme) => ({
     borderLeft: '1px solid #d7d6d6',
     borderTopLeftRadius: ' 10px',
     borderBottomLeftRadius: '10px',
-    padding: '5px',
+    padding: '0px',
     fontSize: '12px',
   },
   table_row_bordertdL: {

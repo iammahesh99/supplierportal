@@ -17,15 +17,21 @@ import {
   TableHead,
   TableRow,
   CssBaseline,
-  TableContainer,
   Checkbox,
-  Box,
+  Dialog,
+  TablePagination,
+  TableContainer,
   Radio,
+  Box,
 } from '@material-ui/core';
 import Toast from 'light-toast';
 import XLSX from 'xlsx';
+import InSummary from '../JSFile/InSummary.js';
+import { Link } from 'react-router-dom';
+import PO from '../JSFile/JSON/PO.json';
+import '../CSSFile/POView.css';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
-import { properties } from '../../../../Properties.js';
+import CallToActionIcon from '@material-ui/icons/CallToAction';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -60,7 +66,7 @@ const styles = (theme) => ({
     flex: 1,
     flexDirection: 'column',
     border: '1px solid red',
-    height: 380,
+    height: 300,
   },
   paper: {
     paddingTop: theme.spacing(3),
@@ -161,7 +167,7 @@ const styles = (theme) => ({
   },
   cssOutlinedInput: {
     borderColor: `red !important`,
-    height: '40px !important',
+    height: '40px',
   },
   textBoxInputLabel: {
     fontWeight: 'bolder',
@@ -170,8 +176,9 @@ const styles = (theme) => ({
   },
 });
 
-class SalesView extends Component {
+class InvoiceView extends Component {
   constructor(props) {
+    super(props);
     var today = new Date();
     var dd = today.getDate();
     var mm = today.getMonth() + 1;
@@ -182,7 +189,7 @@ class SalesView extends Component {
       mm = '0' + mm;
     }
     var date = today.getFullYear() + '-' + mm + '-' + dd;
-    super(props);
+
     this.state = {
       checked: true,
       currentDate: date,
@@ -195,8 +202,23 @@ class SalesView extends Component {
       endDate: '',
       checkedItems: [],
       options: [],
+      open: false,
+      page: 0,
+      totalrecords: 0,
+      detail: false,
+      openDetailModel: false,
     };
   }
+
+  handleChangePage = (event, newPage) => {
+    this.setState({ page: newPage });
+  };
+  handleClickOpen = () => {
+    this.setState({ open: true });
+  };
+  handleClose = () => {
+    this.setState({ open: false });
+  };
 
   handleChange = () => {
     this.setState({ checked: !this.state.checked });
@@ -206,89 +228,27 @@ class SalesView extends Component {
     this.setState({ item: event.target.value });
     console.log(this.state.item);
   };
-
   descChange = (event) => {
     this.setState({ Desc: event.target.value });
     console.log(this.state.Desc);
   };
-
   locationChange = (event) => {
     this.setState({ location: event.target.value });
   };
-
   barChange = (event) => {
     this.setState({ bar: event.target.value });
   };
-
   startDate = (event) => {
     this.setState({ startDate: event.target.value });
   };
-
   endDate = (event) => {
     this.setState({ endDate: event.target.value });
   };
 
   handleSearchItem = () => {
-    this.setState({ options: [] });
-    this.setState({ checkedItems: [] });
-    this.setState({ searchResult: [] });
-    var item = '';
-    var desc = '';
-    var location = '';
-    var bar = '';
-    var startDate = '';
-    var endDate = '';
-    if (this.state.item != '') {
-      item = ('item=' + this.state.item + '&').replace(/ /g, '');
-    }
-    if (this.state.Desc != '') {
-      desc = ('desc=' + this.state.Desc + '&').replace(/ /g, '%20');
-    }
-    if (this.state.location != '') {
-      location = ('location=' + this.state.location + '&').replace(/ /g, '%20');
-    }
-    if (this.state.bar != '') {
-      bar = ('upc=' + this.state.bar + '&').replace(/ /g, '');
-    }
-    if (this.state.startDate != '') {
-      startDate = ('startDate=' + this.state.startDate + '&').replace(/ /g, '');
-    }
-    if (this.state.endDate != '') {
-      endDate = ('endDate=' + this.state.endDate + '&').replace(/ /g, '');
-    }
-    var finalstring = item + desc + location + bar + startDate + endDate;
-    const query = finalstring.substring(0, finalstring.length - 1);
-    console.log(query);
-
-    Toast.loading('Searching');
-    setTimeout(() => {
-      Toast.hide();
-    }, 4000);
-    const proxyurl = 'https://cors-anywhere.herokuapp.com/';
-    const endUrl = properties.endUrl;
-    const baseuri = endUrl + 'api/v1/salesdetail?';
-    const itemsearch = query;
-
-    var myHeaders = new Headers();
-    myHeaders.append(
-      'Authorization',
-      'Bearer ' + ' ' + localStorage.getItem('dataToken')
-    );
-
-    var requestOptions = {
-      method: 'GET',
-      headers: myHeaders,
-      redirect: 'follow',
-    };
-
-    fetch(proxyurl + baseuri + itemsearch, requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        this.setState({ searchResult: result.result });
-      })
-      .catch((error) => console.log('error', error));
+    this.setState({ searchResult: PO.results });
+    this.setState({ totalrecords: PO.totalRecordCount });
   };
-
   handleReset = () => {
     this.setState({ searchResult: [] });
     this.setState({ item: '' });
@@ -297,25 +257,30 @@ class SalesView extends Component {
     this.setState({ bar: '' });
     this.setState({ vpn: '' });
   };
-
   handleCheck = (event, row) => {
     const options = this.state.options;
-    let index;
 
-    // check if the check box is checked or unchecked
+    console.log(row, '=====>>>>row');
+    console.log(event.target.checked, '=====>>>>row');
+
+    let index;
     if (event.target.checked) {
-      // add the numerical value of the checkbox to options array
-      options.push(event.target.value);
+      options.push(row.PO);
     } else {
-      // or remove the value from the unchecked checkbox from the array
-      index = options.indexOf(event.target.value);
+      index = options.indexOf(row.PO);
       options.splice(index, 1);
     }
 
-    // update the state with the new array of options
-    this.setState({ options: options });
-  };
+    this.setState({ options: options }, () => {
+      console.log(options, '===>>>options');
+    });
 
+    if (options.length === 1) {
+      this.setState({ detail: true });
+    } else {
+      this.setState({ detail: false });
+    }
+  };
   handleExport = () => {
     this.setState({ checkedItems: [] });
     this.state.options.map((data) => {
@@ -333,13 +298,19 @@ class SalesView extends Component {
     XLSX.utils.book_append_sheet(workbook, sheet, 'Sheet 1');
     XLSX.writeFile(workbook, ans + `.xls`);
   };
+  openDetailModel = () => {
+    this.setState((prevState) => ({
+      openDetailModel: !prevState.openDetailModel,
+    }));
+  };
 
   render() {
     const { classes } = this.props;
     const open = Boolean(this.state.ischecked);
+    console.log(this.state.searchResult);
 
     return (
-      <Container component='main' maxWidth='lg'>
+      <Container maxWidth='lg'>
         <Grid container spacing={3} direction='row' alignItems='center'>
           <Grid item xs={6}>
             <Typography variant='body2'>Specify Search Criteria</Typography>
@@ -381,7 +352,7 @@ class SalesView extends Component {
                   <Grid item xs={4} className={classes.paper}>
                     <TextField
                       id='outlined-number'
-                      label='Item Id'
+                      label='VENDOR INVOICE NO'
                       type='text'
                       InputProps={{
                         classes: {
@@ -402,11 +373,10 @@ class SalesView extends Component {
                       onBlur={this.itemChange}
                     />
                   </Grid>
-
                   <Grid item xs={4} className={classes.paper}>
                     <TextField
                       id='outlined-number'
-                      label='Item Desc'
+                      label='ITEM ID'
                       type='text'
                       InputProps={{
                         classes: {
@@ -427,12 +397,86 @@ class SalesView extends Component {
                       onBlur={this.descChange}
                     />
                   </Grid>
-
                   <Grid item xs={4} className={classes.paper}>
                     <TextField
                       id='outlined-number'
-                      label='Start Date'
-                      type='date'
+                      label='CREATED DATE'
+                      type='text'
+                      InputProps={{
+                        classes: {
+                          root: classes.cssOutlinedInput,
+                        },
+                      }}
+                      InputLabelProps={{
+                        classes: {
+                          root: classes.textBoxInputLabel,
+                        },
+                        shrink: true,
+                      }}
+                      variant='outlined'
+                      style={{
+                        width: 300,
+                        borderColor: 'Red',
+                      }}
+                      onBlur={this.descChange}
+                    />
+                  </Grid>
+                </Grid>
+
+                <Grid container item xs={12}>
+                  <Grid item xs={4} className={classes.paper}>
+                    <TextField
+                      id='outlined-number'
+                      label='RETAILER INVOICE'
+                      type='text'
+                      InputProps={{
+                        classes: {
+                          root: classes.cssOutlinedInput,
+                        },
+                      }}
+                      InputLabelProps={{
+                        classes: {
+                          root: classes.textBoxInputLabel,
+                        },
+                        shrink: true,
+                      }}
+                      variant='outlined'
+                      style={{
+                        width: 300,
+                        borderColor: 'Red',
+                      }}
+                      onBlur={this.barChange}
+                    />
+                  </Grid>
+                  <Grid item xs={4} className={classes.paper}>
+                    <TextField
+                      id='outlined-number'
+                      label='BARCODE'
+                      type='text'
+                      InputProps={{
+                        classes: {
+                          root: classes.cssOutlinedInput,
+                        },
+                      }}
+                      InputLabelProps={{
+                        classes: {
+                          root: classes.textBoxInputLabel,
+                        },
+                        shrink: true,
+                      }}
+                      variant='outlined'
+                      style={{
+                        width: 300,
+                        borderColor: 'Red',
+                      }}
+                      onBlur={this.locationChange}
+                    />
+                  </Grid>
+                  <Grid item xs={4} className={classes.paper}>
+                    <TextField
+                      id='outlined-number'
+                      label='LOCATION'
+                      type='text'
                       InputProps={{
                         classes: {
                           root: classes.cssOutlinedInput,
@@ -458,7 +502,7 @@ class SalesView extends Component {
                   <Grid item xs={4} className={classes.paper}>
                     <TextField
                       id='outlined-number'
-                      label='Barcode'
+                      label='ORDER'
                       type='text'
                       InputProps={{
                         classes: {
@@ -479,11 +523,10 @@ class SalesView extends Component {
                       onBlur={this.barChange}
                     />
                   </Grid>
-
                   <Grid item xs={4} className={classes.paper}>
                     <TextField
                       id='outlined-number'
-                      label='Location'
+                      label='VPN'
                       type='text'
                       InputProps={{
                         classes: {
@@ -501,15 +544,14 @@ class SalesView extends Component {
                         width: 300,
                         borderColor: 'Red',
                       }}
-                      onBlur={this.locationChange}
+                      onBlur={this.barChange}
                     />
                   </Grid>
-
                   <Grid item xs={4} className={classes.paper}>
                     <TextField
                       id='outlined-number'
-                      label='End Date'
-                      type='date'
+                      label='STATUS'
+                      type='text'
                       InputProps={{
                         classes: {
                           root: classes.cssOutlinedInput,
@@ -526,10 +568,11 @@ class SalesView extends Component {
                         width: 300,
                         borderColor: 'Red',
                       }}
-                      onChange={this.endDate}
+                      onChange={this.startDate}
                     />
                   </Grid>
                 </Grid>
+
                 <Grid container item xs={12}>
                   <div
                     style={{
@@ -576,6 +619,25 @@ class SalesView extends Component {
             }}
           >
             <div>
+              {this.state.detail ? (
+                <>
+                  <Button
+                    variant='contained'
+                    color='default'
+                    className={classes.buttons2}
+                    startIcon={<CallToActionIcon />}
+                    onClick={this.openDetailModel}
+                    style={{
+                      border: 'none',
+                      background: 'white',
+                      padding: '5px 18px',
+                      borderRadius: '5px',
+                    }}
+                  >
+                    DETAIL
+                  </Button>
+                </>
+              ) : null}
               <Button
                 variant='contained'
                 color='default'
@@ -618,28 +680,21 @@ class SalesView extends Component {
                     sortDirection='asc'
                     className={classes.table_head_bordertd}
                   >
-                    ITEM ID
+                    VENDOR INV#
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
                     className={classes.table_head_bordertd}
                   >
-                    ITEM DESCRIPTION
+                    RETAILER INV#
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
                     className={classes.table_head_bordertd}
                   >
-                    BARCODE
-                  </TableCell>
-                  <TableCell
-                    padding='default'
-                    sortDirection='asc'
-                    className={classes.table_head_bordertd}
-                  >
-                    VPN
+                    CREATE DATE
                   </TableCell>
                   <TableCell
                     padding='default'
@@ -653,89 +708,124 @@ class SalesView extends Component {
                     sortDirection='asc'
                     className={classes.table_head_bordertd}
                   >
-                    TOTAL SALES
+                    TOTAL QTY
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
                     className={classes.table_head_bordertd}
                   >
-                    RETURN
+                    TOTAL COST
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
                     className={classes.table_head_bordertd}
                   >
-                    NET SALES
+                    TAX AMOUNT
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
-                    className={classes.table_head_bordertdL}
+                    className={classes.table_head_bordertd}
                   >
-                    PROMO SALES
+                    TOTAL AMOUNT
+                  </TableCell>
+                  <TableCell
+                    padding='default'
+                    sortDirection='asc'
+                    className={classes.table_head_bordertd}
+                  >
+                    STATUS
                   </TableCell>
                 </TableRow>
               </TableHead>
 
               <TableBody>
-                {this.state.searchResult.map((row, index) => (
-                  <TableRow>
-                    <TableCell className={classes.table_row_bordertd1}>
-                      <Checkbox
-                        onChange={(event) => this.handleCheck(event, row)}
-                        name='radio-button-demo'
-                      />
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      {row.item}
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      {row.itemDesc}
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      {row.itemUpc}
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      {row.vpn}
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      {row.locationName}
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      {row.totalSale}
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      {row.returns}
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      {row.netSale}
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertdL}>
-                      {row.promoSale}
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {this.state.searchResult
+                  .slice(this.state.page * 20, this.state.page * 20 + 20)
+                  .map((row) => {
+                    let bordercolor = '';
+                    if (row.status == 'APPROVED') {
+                      // bordercolor = '2px solid #008000';
+                    }
+                    if (row.status == 'REJECTED') {
+                      // bordercolor = '2px solid red';
+                    }
+                    if (row.status == 'SUBMITTED') {
+                      // bordercolor = '2px solid #FFFF00';
+                    }
+                    return (
+                      <TableRow>
+                        <TableCell className={classes.table_row_bordertd1}>
+                          <Checkbox
+                            onChange={(event) => this.handleCheck(event, row)}
+                            name='radio-button-demo'
+                          />
+                        </TableCell>
+                        <TableCell className={classes.table_row_bordertd}>
+                          <Link style={{ color: 'black' }}>
+                            {' '}
+                            {row.orderNumber}
+                          </Link>
+                        </TableCell>
+                        <TableCell className={classes.table_row_bordertd}>
+                          {row.PO}
+                        </TableCell>
+                        <TableCell className={classes.table_row_bordertd}>
+                          {row.createDate}
+                        </TableCell>
+                        <TableCell className={classes.table_row_bordertd}>
+                          {row.location}
+                        </TableCell>
+                        <TableCell className={classes.table_row_bordertd}>
+                          {row.totalItem}
+                        </TableCell>
+                        <TableCell className={classes.table_row_bordertd}>
+                          {row.totalQTY}
+                        </TableCell>
+                        <TableCell className={classes.table_row_bordertd}>
+                          {row.totalCost}
+                        </TableCell>
+                        <TableCell className={classes.table_row_bordertd}>
+                          {row.shortQty}
+                        </TableCell>
+                        <TableCell className={classes.table_row_bordertd}>
+                          {row.status}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
               </TableBody>
             </Table>
           </TableContainer>
-
-          <div
-            style={{
-              flexGrow: 1,
-              display: 'flex',
-              flexDirection: 'column',
-              backgroundColor: 'white',
-              padding: '10px',
-            }}
-          ></div>
+          {/* <TablePagination
+            style={{ paddingBottom: '2%' }}
+            component='Paper'
+            count={this.state.totalrecords}
+            rowsPerPage={20}
+            labelRowsPerPage=''
+            rowsPerPageOptions={[]}
+            page={this.state.page}
+            onChangePage={this.handleChangePage}
+          /> */}
         </div>
+
+        <Dialog
+          fullWidth
+          open={this.state.openDetailModel}
+          maxWidth='lg'
+          classes={{ paper: classes.dialogPaper }}
+          aria-labelledby='alert-dialog-title'
+          aria-describedby='alert-dialog-description'
+        >
+          <InSummary handleClose={this.openDetailModel} />
+        </Dialog>
       </Container>
     );
   }
 }
-SalesView.propTypes = {
+InvoiceView.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-export default withStyles(styles)(SalesView);
+export default withStyles(styles)(InvoiceView);
