@@ -66,7 +66,7 @@ const styles = (theme) => ({
     flex: 1,
     flexDirection: 'column',
     border: '1px solid red',
-    height: 310,
+    height: 300,
   },
   paper: {
     paddingTop: theme.spacing(3),
@@ -107,9 +107,38 @@ const styles = (theme) => ({
     minHeight: '80vh',
     maxHeight: '80vh',
   },
+  table_head_bordertd: {
+    borderTop: '1px solid #d7d6d6',
+    borderBottom: '1px solid #d7d6d6',
+    fontSize: '12px',
+    padding: '5px',
+    fontWeight: 'bold',
+  },
+  table_head_bordertd1: {
+    borderTop: '1px solid #d7d6d6',
+    borderBottom: '1px solid #d7d6d6',
+    borderLeft: '1px solid #d7d6d6',
+    borderTopLeftRadius: ' 10px',
+    borderBottomLeftRadius: '10px',
+    padding: '5px',
+    fontSize: '12px',
+    fontWeight: 'bold',
+  },
+  table_head_bordertdL: {
+    borderTop: '1px solid #d7d6d6',
+    borderBottom: '1px solid #d7d6d6',
+    borderRight: '1px solid #d7d6d6',
+    borderTopRightRadius: ' 10px',
+    borderBottomRightRadius: '10px',
+    fontSize: '12px',
+    padding: '5px',
+    fontWeight: 'bold',
+  },
   table_row_bordertd: {
     borderTop: '1px solid #d7d6d6',
     borderBottom: '1px solid #d7d6d6',
+    fontSize: '12px',
+    padding: '5px',
   },
   table_row_bordertd1: {
     borderTop: '1px solid #d7d6d6',
@@ -117,7 +146,8 @@ const styles = (theme) => ({
     borderLeft: '1px solid #d7d6d6',
     borderTopLeftRadius: ' 10px',
     borderBottomLeftRadius: '10px',
-    padding: '10px',
+    padding: '5px',
+    fontSize: '12px',
   },
   table_row_bordertdL: {
     borderTop: '1px solid #d7d6d6',
@@ -125,6 +155,8 @@ const styles = (theme) => ({
     borderRight: '1px solid #d7d6d6',
     borderTopRightRadius: ' 10px',
     borderBottomRightRadius: '10px',
+    fontSize: '12px',
+    padding: '5px',
   },
   main_table: {
     borderCollapse: 'separate',
@@ -174,7 +206,7 @@ class POView extends Component {
       page: 0,
       totalrecords: 0,
       detail: false,
-      openDetailModel: true,
+      openDetailModel: false,
     };
   }
 
@@ -639,77 +671,77 @@ class POView extends Component {
                   <TableCell
                     padding='default'
                     sortDirection='asc'
-                    className={classes.table_row_bordertd1}
+                    className={classes.table_head_bordertd1}
                   >
                     SELECT
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
-                    className={classes.table_row_bordertd}
+                    className={classes.table_head_bordertd}
                   >
                     PR#
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
-                    className={classes.table_row_bordertd}
+                    className={classes.table_head_bordertd}
                   >
                     PO#
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
-                    className={classes.table_row_bordertd}
+                    className={classes.table_head_bordertd}
                   >
                     CREATE DATE
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
-                    className={classes.table_row_bordertd}
+                    className={classes.table_head_bordertd}
                   >
                     LOCATION
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
-                    className={classes.table_row_bordertd}
+                    className={classes.table_head_bordertd}
                   >
                     TOTAL ITEMS
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
-                    className={classes.table_row_bordertd}
+                    className={classes.table_head_bordertd}
                   >
                     TOTAL QTY
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
-                    className={classes.table_row_bordertd}
+                    className={classes.table_head_bordertd}
                   >
                     TOTAL COST
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
-                    className={classes.table_row_bordertd}
+                    className={classes.table_head_bordertd}
                   >
                     SHORT QTY
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
-                    className={classes.table_row_bordertd}
+                    className={classes.table_head_bordertd}
                   >
                     EXCESS QTY
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
-                    className={classes.table_row_bordertdL}
+                    className={classes.table_head_bordertdL}
                   >
                     STATUS
                   </TableCell>
