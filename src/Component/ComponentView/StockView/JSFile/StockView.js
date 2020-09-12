@@ -64,7 +64,7 @@ const styles = (theme) => ({
     flex: 1,
     flexDirection: 'column',
     border: '1px solid red',
-    height: 400,
+    height: 380,
   },
   paper: {
     paddingTop: theme.spacing(3),
@@ -105,9 +105,38 @@ const styles = (theme) => ({
     minHeight: '80vh',
     maxHeight: '80vh',
   },
+  table_head_bordertd: {
+    borderTop: '1px solid #d7d6d6',
+    borderBottom: '1px solid #d7d6d6',
+    fontSize: '12px',
+    padding: '10px',
+    fontWeight: 'bold',
+  },
+  table_head_bordertd1: {
+    borderTop: '1px solid #d7d6d6',
+    borderBottom: '1px solid #d7d6d6',
+    borderLeft: '1px solid #d7d6d6',
+    borderTopLeftRadius: ' 10px',
+    borderBottomLeftRadius: '10px',
+    padding: '10px',
+    fontSize: '12px',
+    fontWeight: 'bold',
+  },
+  table_head_bordertdL: {
+    borderTop: '1px solid #d7d6d6',
+    borderBottom: '1px solid #d7d6d6',
+    borderRight: '1px solid #d7d6d6',
+    borderTopRightRadius: ' 10px',
+    borderBottomRightRadius: '10px',
+    fontSize: '12px',
+    padding: '10px',
+    fontWeight: 'bold',
+  },
   table_row_bordertd: {
     borderTop: '1px solid #d7d6d6',
     borderBottom: '1px solid #d7d6d6',
+    fontSize: '12px',
+    padding: '10px',
   },
   table_row_bordertd1: {
     borderTop: '1px solid #d7d6d6',
@@ -116,6 +145,7 @@ const styles = (theme) => ({
     borderTopLeftRadius: ' 10px',
     borderBottomLeftRadius: '10px',
     padding: '10px',
+    fontSize: '12px',
   },
   table_row_bordertdL: {
     borderTop: '1px solid #d7d6d6',
@@ -123,6 +153,8 @@ const styles = (theme) => ({
     borderRight: '1px solid #d7d6d6',
     borderTopRightRadius: ' 10px',
     borderBottomRightRadius: '10px',
+    fontSize: '12px',
+    padding: '10px',
   },
   main_table: {
     borderCollapse: 'separate',
@@ -530,56 +562,56 @@ class StockView extends Component {
                   <TableCell
                     padding='default'
                     sortDirection='asc'
-                    className={classes.table_row_bordertd1}
+                    className={classes.table_head_bordertd1}
                   >
                     SELECT
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
-                    className={classes.table_row_bordertd}
+                    className={classes.table_head_bordertd}
                   >
                     ITEM ID
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
-                    className={classes.table_row_bordertd}
+                    className={classes.table_head_bordertd}
                   >
                     ITEM DESCRIPTION
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
-                    className={classes.table_row_bordertd}
+                    className={classes.table_head_bordertd}
                   >
                     BARCODE
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
-                    className={classes.table_row_bordertd}
+                    className={classes.table_head_bordertd}
                   >
                     VPN
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
-                    className={classes.table_row_bordertd}
+                    className={classes.table_head_bordertd}
                   >
                     LOCATION
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
-                    className={classes.table_row_bordertd}
+                    className={classes.table_head_bordertd}
                   >
                     TOTAL STOCK
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
-                    className={classes.table_row_bordertdL}
+                    className={classes.table_head_bordertdL}
                   >
                     AVAILABLE STOCK
                   </TableCell>
