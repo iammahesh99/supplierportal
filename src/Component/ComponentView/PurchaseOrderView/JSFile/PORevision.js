@@ -189,7 +189,9 @@ class POShipment extends Component {
             }}
           >
             <div className={classes.poDetail} style={{ marginTop: '-1%' }}>
-              <Typography>FINALIZED ORDER</Typography>
+              <Typography>
+                <b>FINALIZED ORDER</b>
+              </Typography>
               <div className={classes.fmaindiv}>
                 <div className={classes.fchiddiv}>
                   <div>Total PO Qty</div>
@@ -210,6 +212,63 @@ class POShipment extends Component {
               </div>
             </div>
             <div className={classes.smallSummery}></div>
+            <TableContainer component={Paper} style={{ boxShadow: 'none' }}>
+              <Table stickyHeader aria-label='sticky table'>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Item Id</TableCell>
+                    <TableCell>Item Desc</TableCell>
+                    <TableCell>Barcode</TableCell>
+                    <TableCell>Qty</TableCell>
+                    <TableCell>Unit Cost</TableCell>
+                    <TableCell>Total Cost</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow hover role='checkbox'>
+                    <TableCell>0001234</TableCell>
+                    <TableCell>Stock</TableCell>
+                    <TableCell>123597</TableCell>
+                    <TableCell>100</TableCell>
+                    <TableCell>30000</TableCell>
+                    <TableCell>500000</TableCell>
+                  </TableRow>
+                  <TableRow hover role='checkbox'>
+                    <TableCell>0001234</TableCell>
+                    <TableCell>Stock</TableCell>
+                    <TableCell>123597</TableCell>
+                    <TableCell>100</TableCell>
+                    <TableCell>30000</TableCell>
+                    <TableCell>500000</TableCell>
+                  </TableRow>
+                  <TableRow hover role='checkbox'>
+                    <TableCell>0001234</TableCell>
+                    <TableCell>Stock</TableCell>
+                    <TableCell>123597</TableCell>
+                    <TableCell>100</TableCell>
+                    <TableCell>30000</TableCell>
+                    <TableCell>500000</TableCell>
+                  </TableRow>
+                  <TableRow hover role='checkbox'>
+                    <TableCell>0001234</TableCell>
+                    <TableCell>Stock</TableCell>
+                    <TableCell>123597</TableCell>
+                    <TableCell>100</TableCell>
+                    <TableCell>30000</TableCell>
+                    <TableCell>500000</TableCell>
+                  </TableRow>
+                  <TableRow hover role='checkbox'>
+                    <TableCell>0001234</TableCell>
+                    <TableCell>Stock</TableCell>
+                    <TableCell>123597</TableCell>
+                    <TableCell>100</TableCell>
+                    <TableCell>30000</TableCell>
+                    <TableCell>500000</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
+            {/*
             <TableContainer component={Paper} style={{ boxShadow: 'none' }}>
               <Table
                 stickyHeader
@@ -367,6 +426,7 @@ class POShipment extends Component {
                 </TableBody>
               </Table>
             </TableContainer>
+            */}
           </div>
 
           <div
@@ -377,7 +437,9 @@ class POShipment extends Component {
             }}
           >
             <div className={classes.poDetail} style={{ marginTop: '-1%' }}>
-              <Typography>REVISION</Typography>
+              <Typography>
+                <b>REVISION</b>
+              </Typography>
               <div className={classes.fmaindiv}>
                 <div className={classes.fchiddiv}>
                   <div>Total PO Qty</div>
@@ -398,6 +460,64 @@ class POShipment extends Component {
               </div>
             </div>
             <div className={classes.smallSummery}></div>
+            <TableContainer component={Paper} style={{ boxShadow: 'none' }}>
+              <Table stickyHeader aria-label='sticky table'>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Item Id</TableCell>
+                    <TableCell>Item Desc</TableCell>
+                    <TableCell>Barcode</TableCell>
+                    <TableCell>Qty</TableCell>
+                    <TableCell>Unit Cost</TableCell>
+                    <TableCell>Total Cost</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow hover role='checkbox'>
+                    <TableCell>0001234</TableCell>
+                    <TableCell>Stock</TableCell>
+                    <TableCell>123597</TableCell>
+                    <TableCell>100</TableCell>
+                    <TableCell>30000</TableCell>
+                    <TableCell>500000</TableCell>
+                  </TableRow>
+                  <TableRow hover role='checkbox'>
+                    <TableCell>0001234</TableCell>
+                    <TableCell>Stock</TableCell>
+                    <TableCell>123597</TableCell>
+                    <TableCell>100</TableCell>
+                    <TableCell>30000</TableCell>
+                    <TableCell>500000</TableCell>
+                  </TableRow>
+                  <TableRow hover role='checkbox'>
+                    <TableCell>0001234</TableCell>
+                    <TableCell>Stock</TableCell>
+                    <TableCell>123597</TableCell>
+                    <TableCell>100</TableCell>
+                    <TableCell>30000</TableCell>
+                    <TableCell>500000</TableCell>
+                  </TableRow>
+                  <TableRow hover role='checkbox'>
+                    <TableCell>0001234</TableCell>
+                    <TableCell>Stock</TableCell>
+                    <TableCell>123597</TableCell>
+                    <TableCell>100</TableCell>
+                    <TableCell>30000</TableCell>
+                    <TableCell>500000</TableCell>
+                  </TableRow>
+                  <TableRow hover role='checkbox'>
+                    <TableCell>0001234</TableCell>
+                    <TableCell>Stock</TableCell>
+                    <TableCell>123597</TableCell>
+                    <TableCell>100</TableCell>
+                    <TableCell>30000</TableCell>
+                    <TableCell>500000</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
+
+            {/*             
             <TableContainer component={Paper} style={{ boxShadow: 'none' }}>
               <Table
                 stickyHeader
@@ -555,6 +675,7 @@ class POShipment extends Component {
                 </TableBody>
               </Table>
             </TableContainer>
+           */}
           </div>
         </div>
       </Container>
