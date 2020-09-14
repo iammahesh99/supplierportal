@@ -212,7 +212,10 @@ class POShipment extends Component {
               </div>
             </div>
             <div className={classes.smallSummery}></div>
-            <TableContainer component={Paper} style={{ boxShadow: 'none' }}>
+            <TableContainer
+              component={Paper}
+              style={{ boxShadow: 'none', height: '350px' }}
+            >
               <Table stickyHeader aria-label='sticky table'>
                 <TableHead>
                   <TableRow>
@@ -265,168 +268,17 @@ class POShipment extends Component {
                     <TableCell>30000</TableCell>
                     <TableCell>500000</TableCell>
                   </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-            {/*
-            <TableContainer component={Paper} style={{ boxShadow: 'none' }}>
-              <Table
-                stickyHeader
-                aria-label='sticky table'
-                padding='default'
-                size='medium'
-                hover={true}
-                classes={{ root: classes.main_table_root }}
-                className={classes.main_table}
-              >
-                <TableHead>
-                  <TableRow>
-                    <TableCell className={classes.table_head_bordertd1}>
-                      SELECT
-                    </TableCell>
-                    <TableCell className={classes.table_head_bordertd}>
-                      PR#
-                    </TableCell>
-                    <TableCell className={classes.table_head_bordertd}>
-                      ITEM ID
-                    </TableCell>
-                    <TableCell className={classes.table_head_bordertd}>
-                      VPN
-                    </TableCell>
-                    <TableCell className={classes.table_head_bordertd}>
-                      BARCODE
-                    </TableCell>
-                    <TableCell className={classes.table_head_bordertd}>
-                      ITEM DESC
-                    </TableCell>
-                    <TableCell className={classes.table_head_bordertd}>
-                      TOTAL QTY
-                    </TableCell>
-                    <TableCell className={classes.table_head_bordertd}>
-                      RCVD QTY
-                    </TableCell>
-                    <TableCell className={classes.table_head_bordertd}>
-                      SHORTAGE
-                    </TableCell>
-                    <TableCell className={classes.table_head_bordertdL}>
-                      EXCESS{' '}
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-
-                <TableBody>
-                  <TableRow>
-                    <TableCell className={classes.table_row_bordertd1}>
-                      <Checkbox
-                        checked={true}
-                        // onChange={(event) => this.handleCheck(event, 1)}
-                        name='radio-button-demo'
-                      />
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      100637121
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      12314
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      124343543
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      CO-12342
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      1001-DUBAI
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      400
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      10
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      390
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertdL}>
-                      40
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className={classes.table_row_bordertd1}>
-                      <Checkbox
-                        checked={true}
-                        // onChange={(event) => this.handleCheck(event, 1)}
-                        name='radio-button-demo'
-                      />
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      100637121
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      12314
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      124343543
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      CO-12342
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      1001-DUBAI
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      400
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      10
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      390
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertdL}>
-                      40
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className={classes.table_row_bordertd1}>
-                      <Checkbox
-                        checked={true}
-                        // onChange={(event) => this.handleCheck(event, 1)}
-                        name='radio-button-demo'
-                      />
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      100637121
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      12314
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      124343543
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      CO-12342
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      1001-DUBAI
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      400
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      10
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      390
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertdL}>
-                      40
-                    </TableCell>
+                  <TableRow hover role='checkbox'>
+                    <TableCell>0001234</TableCell>
+                    <TableCell>Stock</TableCell>
+                    <TableCell>123597</TableCell>
+                    <TableCell>100</TableCell>
+                    <TableCell>30000</TableCell>
+                    <TableCell>500000</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
             </TableContainer>
-            */}
           </div>
 
           <div
@@ -460,7 +312,10 @@ class POShipment extends Component {
               </div>
             </div>
             <div className={classes.smallSummery}></div>
-            <TableContainer component={Paper} style={{ boxShadow: 'none' }}>
+            <TableContainer
+              component={Paper}
+              style={{ boxShadow: 'none', height: '350px' }}
+            >
               <Table stickyHeader aria-label='sticky table'>
                 <TableHead>
                   <TableRow>
@@ -513,169 +368,17 @@ class POShipment extends Component {
                     <TableCell>30000</TableCell>
                     <TableCell>500000</TableCell>
                   </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-
-            {/*             
-            <TableContainer component={Paper} style={{ boxShadow: 'none' }}>
-              <Table
-                stickyHeader
-                aria-label='sticky table'
-                padding='default'
-                size='medium'
-                hover={true}
-                classes={{ root: classes.main_table_root }}
-                className={classes.main_table}
-              >
-                <TableHead>
-                  <TableRow>
-                    <TableCell className={classes.table_head_bordertd1}>
-                      SELECT
-                    </TableCell>
-                    <TableCell className={classes.table_head_bordertd}>
-                      PR#
-                    </TableCell>
-                    <TableCell className={classes.table_head_bordertd}>
-                      ITEM ID
-                    </TableCell>
-                    <TableCell className={classes.table_head_bordertd}>
-                      VPN
-                    </TableCell>
-                    <TableCell className={classes.table_head_bordertd}>
-                      BARCODE
-                    </TableCell>
-                    <TableCell className={classes.table_head_bordertd}>
-                      ITEM DESC
-                    </TableCell>
-                    <TableCell className={classes.table_head_bordertd}>
-                      TOTAL QTY
-                    </TableCell>
-                    <TableCell className={classes.table_head_bordertd}>
-                      RCVD QTY
-                    </TableCell>
-                    <TableCell className={classes.table_head_bordertd}>
-                      SHORTAGE
-                    </TableCell>
-                    <TableCell className={classes.table_head_bordertdL}>
-                      EXCESS{' '}
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-
-                <TableBody>
-                  <TableRow>
-                    <TableCell className={classes.table_row_bordertd1}>
-                      <Checkbox
-                        checked={true}
-                        // onChange={(event) => this.handleCheck(event, 1)}
-                        name='radio-button-demo'
-                      />
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      100637121
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      12314
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      124343543
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      CO-12342
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      1001-DUBAI
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      400
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      10
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      390
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertdL}>
-                      40
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className={classes.table_row_bordertd1}>
-                      <Checkbox
-                        checked={true}
-                        // onChange={(event) => this.handleCheck(event, 1)}
-                        name='radio-button-demo'
-                      />
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      100637121
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      12314
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      124343543
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      CO-12342
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      1001-DUBAI
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      400
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      10
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      390
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertdL}>
-                      40
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className={classes.table_row_bordertd1}>
-                      <Checkbox
-                        checked={true}
-                        // onChange={(event) => this.handleCheck(event, 1)}
-                        name='radio-button-demo'
-                      />
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      100637121
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      12314
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      124343543
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      CO-12342
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      1001-DUBAI
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      400
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      10
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      390
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertdL}>
-                      40
-                    </TableCell>
+                  <TableRow hover role='checkbox'>
+                    <TableCell>0001234</TableCell>
+                    <TableCell>Stock</TableCell>
+                    <TableCell>123597</TableCell>
+                    <TableCell>100</TableCell>
+                    <TableCell>30000</TableCell>
+                    <TableCell>500000</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
             </TableContainer>
-           */}
           </div>
         </div>
       </Container>
