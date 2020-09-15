@@ -196,8 +196,9 @@ class POShipment extends Component {
     this.state = {
       selectedValue: 'a',
       settings: {
+        initialSlide: 2,
         dots: false,
-        infinite: false,
+        infinite: true,
         speed: 300,
         slidesToShow: 4,
         slidesToScroll: 2,

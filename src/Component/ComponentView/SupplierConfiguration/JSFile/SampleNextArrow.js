@@ -7,6 +7,8 @@ export default function SampleNextArrow(props) {
     border: '1px solid red',
     color: 'red',
     marginRight: '-5%',
+    display: 'block',
+    height: '102%',
   };
   const { className, style, onClick } = props;
   return (
@@ -15,8 +17,6 @@ export default function SampleNextArrow(props) {
       style={{
         ...style,
         ...nextArrow,
-        display: 'block',
-        height: '100%',
       }}
       onClick={onClick}
     />

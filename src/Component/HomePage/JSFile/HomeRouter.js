@@ -6,6 +6,7 @@ import AdminPanel from '../JSFile/AdminPanel';
 import StockView from '../../ComponentView/StockView/JSFile/StockView.js';
 import SalesView from '../../ComponentView/SalesView/JSFile/SalesView.js';
 import POView from '../../ComponentView/PurchaseOrderView/JSFile/POView.js';
+import ASNView from '../../ComponentView/AsnView/JSFile/ASNView.js';
 import InvoiceView from '../../ComponentView/InvoiceView/JSFile/InvoiceView.js';
 import CostView from '../../ComponentView/CostView/JSFile/CostView.js';
 import PromotionView from '../../ComponentView/PromotionView/JSFile/PromotionView.js';
@@ -62,6 +63,9 @@ function HomeRouter() {
           </Route>
           <Route path='/Home/Supplier'>
             <SupplierConfig />
+          </Route>
+          <Route path='/Home/ASNDetail'>
+            <ASNView />
           </Route>
         </Switch>
       </div>
