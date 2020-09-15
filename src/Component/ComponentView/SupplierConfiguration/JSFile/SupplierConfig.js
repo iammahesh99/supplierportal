@@ -525,31 +525,6 @@ class SupplierConfig extends Component {
             </div>
           </div>
 
-          {/* <div className={classes.tables}>
-          <div
-            style={{
-              flexGrow: 1,
-              alignItems: 'flex-end',
-              display: 'flex',
-              flexDirection: 'column',
-              backgroundColor: 'red',
-            }}
-          >
-            <div>
-              <button
-                size='small'
-                className={classes.buttons2}
-                onClick={this.handleExport}
-              >
-                EXCEL
-              </button>
-
-              <button size='small' className={classes.buttons2}>
-                CONFIGUE CSV
-              </button>
-            </div>
-          </div> */}
-
           <TableContainer component={Paper} style={{ boxShadow: 'none' }}>
             <Table
               stickyHeader
