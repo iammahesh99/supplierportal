@@ -164,6 +164,29 @@ class HomePage extends Component {
           </div>
         );
 
+      case 'ASN':
+        return (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              padding: '10% 0% 10% 0%',
+            }}
+          >
+            <div style={{ borderLeft: '3px solid black' }}></div>
+
+            <Link to='/Home/ASNDetail' style={{ textDecoration: 'none' }}>
+              <Button
+                classes={{
+                  text: this.props.classes.bottonRightBorder,
+                }}
+              >
+                View ASN
+              </Button>
+            </Link>
+          </div>
+        );
+
       case 'costchange':
         return (
           <div
@@ -386,20 +409,18 @@ class HomePage extends Component {
                 <b>Purchase Orders</b>
               </div>
             </Grid>
-            {/* <Grid item xs={3} className={classes.removeFlex}>
+            <Grid item xs={3} className={classes.removeFlex}>
               <div className={classes.avtarbox2}>
                 <Avatar alt='Remy Sharp' className={classes.large}>
                   <img
-                    src={require('../Icons/PO.svg')}
+                    src={require('../Icons/asn.svg')}
                     className={classes.icons}
-                    onClick={(event) =>
-                      this._onButtonClick(event, 'Purchase Orders')
-                    }
+                    onClick={(event) => this._onButtonClick(event, 'ASN')}
                   />
                 </Avatar>
-                <b>Purchase Orders</b>
+                <b>ASN</b>
               </div>
-            </Grid> */}
+            </Grid>
           </Grid>
 
           <Grid

@@ -7,6 +7,8 @@ export default function SamplePrevArrow(props) {
     border: '1px solid red',
     color: 'red',
     marginLeft: '-5%',
+    display: 'block',
+    height: '102%',
   };
 
   const { className, style, onClick } = props;
@@ -16,8 +18,6 @@ export default function SamplePrevArrow(props) {
       style={{
         ...style,
         ...prevArrow,
-        display: 'block',
-        height: '100%',
       }}
       onClick={onClick}
     />
