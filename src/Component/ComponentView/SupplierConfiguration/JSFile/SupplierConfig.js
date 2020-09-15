@@ -1,34 +1,38 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import Button from '@material-ui/core/Button';
-import Container from '@material-ui/core/Container';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
-//import CollapsibleTable from '../JSFile/table.js'
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TableContainer from '@material-ui/core/TableContainer';
-import Checkbox from '@material-ui/core/Checkbox';
+import {
+  Paper,
+  Grid,
+  TextField,
+  Typography,
+  TextareaAutosize,
+  Button,
+  Container,
+  FormControlLabel,
+  Switch,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  CssBaseline,
+  Checkbox,
+  Dialog,
+  Avatar,
+  Toolbar,
+  IconButton,
+  TableContainer,
+  Box,
+} from '@material-ui/core';
 import Toast from 'light-toast';
 import XLSX from 'xlsx';
-import Dialog from '@material-ui/core/Dialog';
-import Avatar from '@material-ui/core/Avatar';
 import CloseIcon from '@material-ui/icons/Close';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
 import { properties } from '../../../../Properties.js';
 import supplierConfig from '../JSON/supplierconfig.json';
 import CheckIcon from '@material-ui/icons/Check';
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
+import ConfigureCsv from './ConfigureCsv';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -53,31 +57,32 @@ const styles = (theme) => ({
   search: {
     display: 'flex',
     flexDirection: 'column',
-    justify: 'center',
+    justifyContent: 'center',
     border: 'solid 1px ',
     borderColor: 'red',
   },
   tables: {
     marginTop: theme.spacing(4),
-
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
     border: '1px solid red',
-    maxHeight: 390,
+    height: 380,
   },
-
   paper: {
     paddingTop: theme.spacing(3),
-    paddingLeft: theme.spacing(1),
+    paddingLeft: theme.spacing(2),
   },
   buttons: {
     marginBottom: theme.spacing(1),
-    marginTop: theme.spacing(1),
     marginLeft: theme.spacing(1),
+    height: '30px',
+    fontSize: '10px',
   },
   buttons2: {
     marginRight: theme.spacing(1),
+    height: '30px',
+    fontSize: '10px',
   },
   slide: {
     marginTop: 42,
@@ -89,6 +94,14 @@ const styles = (theme) => ({
     flex: 1,
     flexDirection: 'column',
     display: 'flex',
+  },
+  dialogPaper: {
+    minHeight: '80vh',
+    maxHeight: '80vh',
+  },
+  small: {
+    width: theme.spacing(3),
+    height: theme.spacing(3),
   },
   table_head: {
     padding: 'none',
@@ -103,9 +116,72 @@ const styles = (theme) => ({
     minHeight: '80vh',
     maxHeight: '80vh',
   },
-  small: {
-    width: theme.spacing(5),
-    height: theme.spacing(5),
+  table_head_bordertd: {
+    borderTop: '1px solid #d7d6d6',
+    borderBottom: '1px solid #d7d6d6',
+    fontSize: '12px',
+    padding: '5px',
+    fontWeight: 'bold',
+  },
+  table_head_bordertd1: {
+    borderTop: '1px solid #d7d6d6',
+    borderBottom: '1px solid #d7d6d6',
+    borderLeft: '1px solid #d7d6d6',
+    borderTopLeftRadius: ' 10px',
+    borderBottomLeftRadius: '10px',
+    padding: '5px',
+    fontSize: '12px',
+    fontWeight: 'bold',
+  },
+  table_head_bordertdL: {
+    borderTop: '1px solid #d7d6d6',
+    borderBottom: '1px solid #d7d6d6',
+    borderRight: '1px solid #d7d6d6',
+    borderTopRightRadius: ' 10px',
+    borderBottomRightRadius: '10px',
+    fontSize: '12px',
+    padding: '5px',
+    fontWeight: 'bold',
+  },
+  table_row_bordertd: {
+    borderTop: '1px solid #d7d6d6',
+    borderBottom: '1px solid #d7d6d6',
+    fontSize: '12px',
+    padding: '5px',
+  },
+  table_row_bordertd1: {
+    borderTop: '1px solid #d7d6d6',
+    borderBottom: '1px solid #d7d6d6',
+    borderLeft: '1px solid #d7d6d6',
+    borderTopLeftRadius: ' 10px',
+    borderBottomLeftRadius: '10px',
+    padding: '0px',
+    fontSize: '12px',
+  },
+  table_row_bordertdL: {
+    borderTop: '1px solid #d7d6d6',
+    borderBottom: '1px solid #d7d6d6',
+    borderRight: '1px solid #d7d6d6',
+    borderTopRightRadius: ' 10px',
+    borderBottomRightRadius: '10px',
+    fontSize: '12px',
+    padding: '5px',
+  },
+  main_table: {
+    borderCollapse: 'separate',
+    borderSpacing: '0 5px',
+  },
+  main_table_root: {
+    padding: '0% 1% 0% 1%',
+  },
+  cssOutlinedInput: {
+    borderColor: `red !important`,
+    height: '40px',
+  },
+  textBoxInputLabel: {
+    fontWeight: 'bolder',
+    fontSize: '18px',
+    color: '#000000',
   },
 });
 
@@ -123,9 +199,8 @@ class SupplierConfig extends Component {
       vpn: '',
       checkedItems: [],
       options: [],
-      // map:false,
-      // enable:false,
-      // listOfHeader:[]
+      detail: false,
+      openConfigModel: false,
     };
   }
 
@@ -162,22 +237,29 @@ class SupplierConfig extends Component {
     this.setState({ bar: '' });
     this.setState({ vpn: '' });
   };
-  handleCheck = (event) => {
+  handleCheck = (event, row) => {
     const options = this.state.options;
-    let index;
 
-    // check if the check box is checked or unchecked
+    console.log(row, '=====>>>>row');
+    console.log(event.target.checked, '=====>>>>row');
+
+    let index;
     if (event.target.checked) {
-      // add the numerical value of the checkbox to options array
-      options.push(event.target.value);
+      options.push(row.supplierId);
     } else {
-      // or remove the value from the unchecked checkbox from the array
-      index = options.indexOf(event.target.value);
+      index = options.indexOf(row.supplierId);
       options.splice(index, 1);
     }
 
-    // update the state with the new array of options
-    this.setState({ options: options });
+    this.setState({ options: options }, () => {
+      console.log(options, '===>>>options');
+    });
+
+    if (options.length === 1) {
+      this.setState({ detail: true });
+    } else {
+      this.setState({ detail: false });
+    }
   };
   handleExport = () => {
     this.setState({ checkedItems: [] });
@@ -196,150 +278,168 @@ class SupplierConfig extends Component {
     XLSX.utils.book_append_sheet(workbook, sheet, 'Sheet 1');
     XLSX.writeFile(workbook, ans + `.xls`);
   };
-  // handleMapping=()=>{
-
-  // 	var list=[]
-  // 	 this.state.searchResult.slice(0,1).map(data=>(
-
-  //                       Object.entries(data).map(([make, type]) => (
-  //                          list.push(make)
-  //                       ))
-
-  //                      ))
-  // 	 this.setState({listOfHeader:list})
-  // 	 this.setState({map:true});
-
-  // }
-  // handleClose=()=>{
-  // 	this.setState({map:false});
-  // }
+  openConfigModel = () => {
+    this.setState((prevState) => ({
+      openConfigModel: !prevState.openConfigModel,
+    }));
+  };
 
   render() {
     const { classes } = this.props;
     const open = Boolean(this.state.ischecked);
     var set = '';
-    console.log('render');
 
     return (
-      <Container component='main' maxWidth='md'>
-        <div className={classes.slide}>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={this.state.checked}
-                onChange={this.handleChange}
-              />
-            }
-            label='Hide Pane'
-          />
-        </div>
+      <Container component='main' maxWidth='lg'>
+        <Grid container spacing={3} direction='row' alignItems='center'>
+          <Grid item xs={6}>
+            <Typography variant='body2'>Specify Search Criteria</Typography>
+          </Grid>
+          <Grid item xs={6} style={{ textAlign: 'end' }}>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={this.state.checked}
+                  onChange={this.handleChange}
+                />
+              }
+              label='Hide Pane'
+            />
+          </Grid>
+        </Grid>
 
         {this.state.checked ? (
-          <div className={classes.search}>
-            <Container component='main' maxWidth='md'>
-              <Grid container>
+          <Box
+            border={1}
+            borderRadius={5}
+            borderColor='red'
+            display='flex'
+            flexWrap='nowrap'
+            className={classes.search}
+          >
+            <Container
+              fixed={true}
+              maxWidth='lg'
+              style={{ textAlign: 'center' }}
+            >
+              <Grid
+                container
+                spacing={0}
+                alignContent='center'
+                alignItems='center'
+              >
                 <Grid container item xs={12}>
-                  <Grid
-                    item
-                    xs={4}
-                    container
-                    direction='row'
-                    justify='space-between'
-                    alignItems='center'
-                    className={classes.paper}
-                  >
-                    <label style={{ marginRight: '10px' }}>Supplier #: </label>
-                    <input
+                  <Grid item xs={4} className={classes.paper}>
+                    <TextField
+                      id='outlined-number'
+                      label='Supplier'
                       type='text'
-                      className='input'
-                      style={{ border: '1px solid red' }}
+                      InputProps={{
+                        classes: {
+                          root: classes.cssOutlinedInput,
+                        },
+                      }}
+                      InputLabelProps={{
+                        classes: {
+                          root: classes.textBoxInputLabel,
+                        },
+                        shrink: true,
+                      }}
+                      variant='outlined'
+                      style={{
+                        width: 300,
+                        borderColor: 'Red',
+                      }}
                       onBlur={this.itemChange}
                     />
                   </Grid>
-                  <Grid
-                    item
-                    xs={4}
-                    container
-                    direction='row'
-                    justify='space-between'
-                    alignItems='center'
-                    className={classes.paper}
-                  >
-                    <label>Supplier Name </label>
-                    <input
+
+                  <Grid item xs={4} className={classes.paper}>
+                    <TextField
+                      id='outlined-number'
+                      label='Supplier Name'
                       type='text'
-                      className='input'
-                      style={{ border: '1px solid red' }}
+                      InputProps={{
+                        classes: {
+                          root: classes.cssOutlinedInput,
+                        },
+                      }}
+                      InputLabelProps={{
+                        classes: {
+                          root: classes.textBoxInputLabel,
+                        },
+                        shrink: true,
+                      }}
+                      variant='outlined'
+                      style={{ width: 300, borderColor: 'Red' }}
                       onBlur={this.descChange}
                     />
                   </Grid>
-                  <Grid
-                    item
-                    xs={4}
-                    container
-                    direction='row'
-                    justify='space-between'
-                    alignItems='center'
-                    className={classes.paper}
-                  >
-                    <label style={{ marginRight: '10px' }}>Status </label>
-                    <input
+
+                  <Grid item xs={4} className={classes.paper}>
+                    <TextField
+                      id='outlined-number'
+                      label='Status'
                       type='text'
-                      className='input'
-                      style={{ border: '1px solid red' }}
+                      InputProps={{
+                        classes: {
+                          root: classes.cssOutlinedInput,
+                        },
+                      }}
+                      InputLabelProps={{
+                        classes: {
+                          root: classes.textBoxInputLabel,
+                        },
+                        shrink: true,
+                      }}
+                      variant='outlined'
+                      style={{ width: 300, borderColor: 'Red' }}
                       onBlur={this.locationChange}
                     />
                   </Grid>
                 </Grid>
+
                 <Grid container item xs={12}>
-                  <Grid
-                    item
-                    xs={4}
-                    container
-                    direction='row'
-                    justify='space-between'
-                    alignItems='center'
-                    className={classes.paper}
-                  >
-                    <label>Stock Config </label>
-                    <input
+                  <Grid item xs={4} className={classes.paper}>
+                    <TextField
+                      id='outlined-number'
+                      label='Stock Config'
                       type='text'
-                      className='input'
-                      style={{ border: '1px solid red' }}
+                      InputProps={{
+                        classes: {
+                          root: classes.cssOutlinedInput,
+                        },
+                      }}
+                      InputLabelProps={{
+                        classes: {
+                          root: classes.textBoxInputLabel,
+                        },
+                        shrink: true,
+                      }}
+                      variant='outlined'
+                      style={{ width: 300, borderColor: 'Red' }}
                       onBlur={this.barChange}
                     />
                   </Grid>
-                  <Grid
-                    item
-                    xs={4}
-                    container
-                    direction='row'
-                    justify='space-between'
-                    alignItems='center'
-                    className={classes.paper}
-                  >
-                    <label>Order Config</label>
-                    <input
+
+                  <Grid item xs={4} className={classes.paper}>
+                    <TextField
+                      id='outlined-number'
+                      label='Order Config'
                       type='text'
-                      className='input'
-                      style={{ border: '1px solid red' }}
-                      onBlur={this.vpnChange}
-                    />
-                  </Grid>
-                  <Grid
-                    item
-                    xs={4}
-                    container
-                    direction='row'
-                    justify='space-between'
-                    alignItems='center'
-                    className={classes.paper}
-                  >
-                    <label>Invoice Config</label>
-                    <input
-                      type='text'
-                      className='input'
-                      style={{ border: '1px solid red' }}
+                      InputProps={{
+                        classes: {
+                          root: classes.cssOutlinedInput,
+                        },
+                      }}
+                      InputLabelProps={{
+                        classes: {
+                          root: classes.textBoxInputLabel,
+                        },
+                        shrink: true,
+                      }}
+                      variant='outlined'
+                      style={{ width: 300, borderColor: 'Red' }}
                       onBlur={this.vpnChange}
                     />
                   </Grid>
@@ -354,30 +454,78 @@ class SupplierConfig extends Component {
                     }}
                   >
                     <div>
-                      <button
-                        size='small'
+                      <Button
+                        variant='contained'
+                        color='primary'
                         className={classes.buttons}
                         onClick={this.handleSearchItem}
-                        style={{ backgroundColor: 'red', color: 'white' }}
                       >
                         SEARCH
-                      </button>
-                      <button
-                        size='small'
+                      </Button>
+                      <Button
+                        variant='contained'
+                        color='primary'
                         className={classes.buttons}
-                        style={{ backgroundColor: 'red', color: 'white' }}
                         onClick={this.handleReset}
                       >
                         RESET
-                      </button>
+                      </Button>
                     </div>
                   </div>
                 </Grid>
               </Grid>
             </Container>
-          </div>
+          </Box>
         ) : null}
+
         <div className={classes.tables}>
+          <div
+            style={{
+              alignItems: 'flex-end',
+              display: 'flex',
+              flexDirection: 'column',
+              backgroundColor: 'red',
+              bottom: '-10px',
+              padding: '5px',
+            }}
+          >
+            <div>
+              {this.state.detail ? (
+                <Button
+                  variant='contained'
+                  color='default'
+                  className={classes.buttons2}
+                  startIcon={<CloudDownloadIcon />}
+                  onClick={this.handleExport}
+                  style={{
+                    border: 'none',
+                    background: 'white',
+                    padding: '5px 18px',
+                    borderRadius: '5px',
+                  }}
+                >
+                  EXCEL
+                </Button>
+              ) : null}
+              <Button
+                variant='contained'
+                color='default'
+                className={classes.buttons2}
+                startIcon={<CloudDownloadIcon />}
+                onClick={this.openConfigModel}
+                style={{
+                  border: 'none',
+                  background: 'white',
+                  padding: '5px 18px',
+                  borderRadius: '5px',
+                }}
+              >
+                CONFIGUE CSV
+              </Button>
+            </div>
+          </div>
+
+          {/* <div className={classes.tables}>
           <div
             style={{
               flexGrow: 1,
@@ -400,209 +548,194 @@ class SupplierConfig extends Component {
                 CONFIGUE CSV
               </button>
             </div>
-          </div>
+          </div> */}
 
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} style={{ boxShadow: 'none' }}>
             <Table
               stickyHeader
               aria-label='sticky table'
-              size='small'
-              className={classes.table_main}
+              padding='default'
+              size='medium'
+              hover={true}
+              classes={{ root: classes.main_table_root }}
+              className={classes.main_table}
             >
               <TableHead>
                 <TableRow>
-                  <StyledTableCell
-                    padding='none'
-                    align='center'
-                    className={classes.table_head}
+                  <TableCell
+                    padding='default'
+                    sortDirection='asc'
+                    className={classes.table_head_bordertd1}
                   >
                     SELECT
-                  </StyledTableCell>
-                  <StyledTableCell
-                    padding='none'
-                    align='center'
-                    className={classes.table_head}
+                  </TableCell>
+                  <TableCell
+                    padding='default'
+                    sortDirection='asc'
+                    className={classes.table_head_bordertd}
                   >
                     SUPPLIER ID
-                  </StyledTableCell>
-                  <StyledTableCell
-                    padding='none'
-                    align='center'
-                    className={classes.table_head}
+                  </TableCell>
+                  <TableCell
+                    padding='default'
+                    sortDirection='asc'
+                    className={classes.table_head_bordertd}
                   >
                     SUPPLIER NAME
-                  </StyledTableCell>
-                  <StyledTableCell
-                    padding='none'
-                    align='center'
-                    className={classes.table_head}
+                  </TableCell>
+                  <TableCell
+                    padding='default'
+                    sortDirection='asc'
+                    className={classes.table_head_bordertd}
                   >
                     STATUS
-                  </StyledTableCell>
-                  <StyledTableCell
-                    padding='none'
-                    align='center'
-                    className={classes.table_head}
+                  </TableCell>
+                  <TableCell
+                    padding='default'
+                    sortDirection='asc'
+                    className={classes.table_head_bordertd}
                   >
                     SALES CONFIGURED
-                  </StyledTableCell>
-                  <StyledTableCell
-                    padding='none'
-                    align='center'
-                    className={classes.table_head}
+                  </TableCell>
+                  <TableCell
+                    padding='default'
+                    sortDirection='asc'
+                    className={classes.table_head_bordertd}
                   >
                     STOCK CONFIGURED
-                  </StyledTableCell>
-                  <StyledTableCell
-                    padding='none'
-                    align='center'
-                    className={classes.table_head}
+                  </TableCell>
+                  <TableCell
+                    padding='default'
+                    sortDirection='asc'
+                    className={classes.table_head_bordertd}
                   >
                     ORDER CONFIGURED
-                  </StyledTableCell>
-                  <StyledTableCell
-                    padding='none'
-                    align='center'
-                    className={classes.table_head}
+                  </TableCell>
+                  <TableCell
+                    padding='default'
+                    sortDirection='asc'
+                    className={classes.table_head_bordertdL}
                   >
                     INVOICES CONFIGURED
-                  </StyledTableCell>
+                  </TableCell>
                 </TableRow>
               </TableHead>
 
               <TableBody>
-                {this.state.searchResult.map((row, index) => {
-                  return (
-                    <StyledTableRow>
-                      <StyledTableCell
-                        align='center'
-                        className={classes.table_column}
-                      >
-                        <input
-                          type='checkbox'
-                          value={JSON.stringify(row)}
-                          onChange={this.handleCheck}
-                          inputProps={{ 'aria-label': 'primary checkbox' }}
-                        />
-                      </StyledTableCell>
-                      <StyledTableCell
-                        align='center'
-                        className={classes.table_column}
-                      >
-                        {row.supplierId}
-                      </StyledTableCell>
-                      <StyledTableCell
-                        align='center'
-                        className={classes.table_column}
-                      >
-                        {row.supplierName}
-                      </StyledTableCell>
-                      <StyledTableCell
-                        align='center'
-                        className={classes.table_column}
-                      >
-                        {row.status}
-                      </StyledTableCell>
-                      <StyledTableCell
-                        align='center'
-                        className={classes.table_column}
-                      >
-                        {row.salesConfigured == 'true' ? (
-                          <Avatar
-                            className={classes.small}
-                            alt='Remy Sharp'
-                            style={{ backgroundColor: '#00FF00' }}
-                          >
-                            {' '}
-                            <CheckIcon />
-                          </Avatar>
-                        ) : (
-                          <Avatar
-                            className={classes.small}
-                            alt='Remy Sharp'
-                            style={{ backgroundColor: 'red' }}
-                          >
-                            {' '}
-                            <CloseIcon />
-                          </Avatar>
-                        )}
-                      </StyledTableCell>
-                      <StyledTableCell
-                        align='center'
-                        className={classes.table_column}
-                      >
-                        {row.stockConfigured == 'true' ? (
-                          <Avatar
-                            className={classes.small}
-                            alt='Remy Sharp'
-                            style={{ backgroundColor: '#00FF00' }}
-                          >
-                            {' '}
-                            <CheckIcon />
-                          </Avatar>
-                        ) : (
-                          <Avatar
-                            className={classes.small}
-                            alt='Remy Sharp'
-                            style={{ backgroundColor: 'red' }}
-                          >
-                            <CloseIcon />
-                          </Avatar>
-                        )}
-                      </StyledTableCell>
-                      <StyledTableCell
-                        align='center'
-                        className={classes.table_column}
-                      >
-                        {row.orderConfigured == 'true' ? (
-                          <Avatar
-                            className={classes.small}
-                            alt='Remy Sharp'
-                            style={{ backgroundColor: '#00FF00' }}
-                          >
-                            <CheckIcon />
-                          </Avatar>
-                        ) : (
-                          <Avatar
-                            className={classes.small}
-                            alt='Remy Sharp'
-                            style={{ backgroundColor: 'red' }}
-                          >
-                            {' '}
-                            <CloseIcon />
-                          </Avatar>
-                        )}
-                      </StyledTableCell>
-                      <StyledTableCell
-                        align='center'
-                        className={classes.table_column}
-                      >
-                        {row.invoicesConfigured == 'true' ? (
-                          <Avatar
-                            className={classes.small}
-                            alt='Remy Sharp'
-                            style={{ backgroundColor: '#00FF00' }}
-                          >
-                            <CheckIcon />
-                          </Avatar>
-                        ) : (
-                          <Avatar
-                            className={classes.small}
-                            alt='Remy Sharp'
-                            style={{ backgroundColor: 'red' }}
-                          >
-                            {' '}
-                            <CloseIcon />
-                          </Avatar>
-                        )}
-                      </StyledTableCell>
-                    </StyledTableRow>
-                  );
-                })}
+                {this.state.searchResult.map((row, index) => (
+                  <TableRow>
+                    <TableCell className={classes.table_row_bordertd1}>
+                      <Checkbox
+                        onChange={(event) => this.handleCheck(event, row)}
+                        name='radio-button-demo'
+                      />
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      {row.supplierId}
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      {row.supplierName}
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      {row.status}
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      {row.salesConfigured == 'true' ? (
+                        <Avatar
+                          className={classes.small}
+                          alt='Remy Sharp'
+                          style={{ backgroundColor: '#00FF00' }}
+                        >
+                          {' '}
+                          <CheckIcon />
+                        </Avatar>
+                      ) : (
+                        <Avatar
+                          className={classes.small}
+                          alt='Remy Sharp'
+                          style={{ backgroundColor: 'red' }}
+                        >
+                          {' '}
+                          <CloseIcon />
+                        </Avatar>
+                      )}
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      {row.stockConfigured == 'true' ? (
+                        <Avatar
+                          className={classes.small}
+                          alt='Remy Sharp'
+                          style={{ backgroundColor: '#00FF00' }}
+                        >
+                          {' '}
+                          <CheckIcon />
+                        </Avatar>
+                      ) : (
+                        <Avatar
+                          className={classes.small}
+                          alt='Remy Sharp'
+                          style={{ backgroundColor: 'red' }}
+                        >
+                          <CloseIcon />
+                        </Avatar>
+                      )}
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      {row.orderConfigured == 'true' ? (
+                        <Avatar
+                          className={classes.small}
+                          alt='Remy Sharp'
+                          style={{ backgroundColor: '#00FF00' }}
+                        >
+                          <CheckIcon />
+                        </Avatar>
+                      ) : (
+                        <Avatar
+                          className={classes.small}
+                          alt='Remy Sharp'
+                          style={{ backgroundColor: 'red' }}
+                        >
+                          {' '}
+                          <CloseIcon />
+                        </Avatar>
+                      )}
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertdL}>
+                      {row.invoicesConfigured == 'true' ? (
+                        <Avatar
+                          className={classes.small}
+                          alt='Remy Sharp'
+                          style={{ backgroundColor: '#00FF00' }}
+                        >
+                          <CheckIcon />
+                        </Avatar>
+                      ) : (
+                        <Avatar
+                          className={classes.small}
+                          alt='Remy Sharp'
+                          style={{ backgroundColor: 'red' }}
+                        >
+                          {' '}
+                          <CloseIcon />
+                        </Avatar>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
           </TableContainer>
         </div>
+        <Dialog
+          fullWidth
+          open={this.state.openConfigModel}
+          maxWidth='lg'
+          classes={{ paper: classes.dialogPaper }}
+          aria-labelledby='alert-dialog-title'
+          aria-describedby='alert-dialog-description'
+        >
+          <ConfigureCsv handleClose={this.openConfigModel} />
+        </Dialog>
       </Container>
     );
   }
