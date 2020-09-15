@@ -496,7 +496,7 @@ class SupplierConfig extends Component {
                   color='default'
                   className={classes.buttons2}
                   startIcon={<CloudDownloadIcon />}
-                  onClick={this.handleExport}
+                  onClick={this.openConfigModel}
                   style={{
                     border: 'none',
                     background: 'white',
@@ -504,7 +504,7 @@ class SupplierConfig extends Component {
                     borderRadius: '5px',
                   }}
                 >
-                  EXCEL
+                  CONFIGUE CSV
                 </Button>
               ) : null}
               <Button
@@ -512,7 +512,7 @@ class SupplierConfig extends Component {
                 color='default'
                 className={classes.buttons2}
                 startIcon={<CloudDownloadIcon />}
-                onClick={this.openConfigModel}
+                onClick={this.handleExport}
                 style={{
                   border: 'none',
                   background: 'white',
@@ -520,35 +520,10 @@ class SupplierConfig extends Component {
                   borderRadius: '5px',
                 }}
               >
-                CONFIGUE CSV
+                EXCEL
               </Button>
             </div>
           </div>
-
-          {/* <div className={classes.tables}>
-          <div
-            style={{
-              flexGrow: 1,
-              alignItems: 'flex-end',
-              display: 'flex',
-              flexDirection: 'column',
-              backgroundColor: 'red',
-            }}
-          >
-            <div>
-              <button
-                size='small'
-                className={classes.buttons2}
-                onClick={this.handleExport}
-              >
-                EXCEL
-              </button>
-
-              <button size='small' className={classes.buttons2}>
-                CONFIGUE CSV
-              </button>
-            </div>
-          </div> */}
 
           <TableContainer component={Paper} style={{ boxShadow: 'none' }}>
             <Table
@@ -639,7 +614,10 @@ class SupplierConfig extends Component {
                     <TableCell className={classes.table_row_bordertd}>
                       {row.status}
                     </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
+                    <TableCell
+                      style={{ paddingLeft: '5%' }}
+                      className={classes.table_row_bordertd}
+                    >
                       {row.salesConfigured == 'true' ? (
                         <Avatar
                           className={classes.small}
@@ -660,7 +638,10 @@ class SupplierConfig extends Component {
                         </Avatar>
                       )}
                     </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
+                    <TableCell
+                      style={{ paddingLeft: '5%' }}
+                      className={classes.table_row_bordertd}
+                    >
                       {row.stockConfigured == 'true' ? (
                         <Avatar
                           className={classes.small}
@@ -680,7 +661,10 @@ class SupplierConfig extends Component {
                         </Avatar>
                       )}
                     </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
+                    <TableCell
+                      style={{ paddingLeft: '5%' }}
+                      className={classes.table_row_bordertd}
+                    >
                       {row.orderConfigured == 'true' ? (
                         <Avatar
                           className={classes.small}
@@ -700,7 +684,10 @@ class SupplierConfig extends Component {
                         </Avatar>
                       )}
                     </TableCell>
-                    <TableCell className={classes.table_row_bordertdL}>
+                    <TableCell
+                      style={{ paddingLeft: '5%' }}
+                      className={classes.table_row_bordertdL}
+                    >
                       {row.invoicesConfigured == 'true' ? (
                         <Avatar
                           className={classes.small}
