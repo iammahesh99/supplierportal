@@ -17,22 +17,15 @@ import {
   TableHead,
   TableRow,
   CssBaseline,
-  Checkbox,
-  Dialog,
-  Avatar,
-  Toolbar,
-  IconButton,
   TableContainer,
+  Checkbox,
   Box,
+  Radio,
 } from '@material-ui/core';
 import Toast from 'light-toast';
 import XLSX from 'xlsx';
-import CloseIcon from '@material-ui/icons/Close';
-import { properties } from '../../../../Properties.js';
-import supplierConfig from '../JSON/supplierconfig.json';
-import CheckIcon from '@material-ui/icons/Check';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
-import ConfigureCsv from './ConfigureCsv';
+import { properties } from '../../../../Properties.js';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -85,7 +78,7 @@ const styles = (theme) => ({
     fontSize: '10px',
   },
   slide: {
-    marginTop: 42,
+    marginTop: 10,
     width: '100%',
     height: '10%',
     textAlign: 'center',
@@ -94,14 +87,6 @@ const styles = (theme) => ({
     flex: 1,
     flexDirection: 'column',
     display: 'flex',
-  },
-  dialogPaper: {
-    minHeight: '80vh',
-    maxHeight: '80vh',
-  },
-  small: {
-    width: theme.spacing(3),
-    height: theme.spacing(3),
   },
   table_head: {
     padding: 'none',
@@ -176,7 +161,7 @@ const styles = (theme) => ({
   },
   cssOutlinedInput: {
     borderColor: `red !important`,
-    height: '40px',
+    height: '40px !important',
   },
   textBoxInputLabel: {
     fontWeight: 'bolder',
@@ -185,22 +170,31 @@ const styles = (theme) => ({
   },
 });
 
-class SupplierConfig extends Component {
+class SalesView extends Component {
   constructor(props) {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1;
+    if (dd < 10) {
+      dd = '0' + dd;
+    }
+    if (mm < 10) {
+      mm = '0' + mm;
+    }
+    var date = today.getFullYear() + '-' + mm + '-' + dd;
     super(props);
     this.state = {
       checked: true,
-      ischecked: '',
+      currentDate: date,
       searchResult: [],
       item: '',
       Desc: '',
       location: '',
       bar: '',
-      vpn: '',
+      startDate: '',
+      endDate: '',
       checkedItems: [],
       options: [],
-      detail: false,
-      openConfigModel: true,
     };
   }
 
@@ -212,23 +206,89 @@ class SupplierConfig extends Component {
     this.setState({ item: event.target.value });
     console.log(this.state.item);
   };
+
   descChange = (event) => {
     this.setState({ Desc: event.target.value });
     console.log(this.state.Desc);
   };
+
   locationChange = (event) => {
     this.setState({ location: event.target.value });
   };
+
   barChange = (event) => {
     this.setState({ bar: event.target.value });
   };
-  vpnChange = (event) => {
-    this.setState({ vpn: event.target.value });
+
+  startDate = (event) => {
+    this.setState({ startDate: event.target.value });
+  };
+
+  endDate = (event) => {
+    this.setState({ endDate: event.target.value });
   };
 
   handleSearchItem = () => {
-    this.setState({ searchResult: supplierConfig.results });
+    this.setState({ options: [] });
+    this.setState({ checkedItems: [] });
+    this.setState({ searchResult: [] });
+    var item = '';
+    var desc = '';
+    var location = '';
+    var bar = '';
+    var startDate = '';
+    var endDate = '';
+    if (this.state.item != '') {
+      item = ('item=' + this.state.item + '&').replace(/ /g, '');
+    }
+    if (this.state.Desc != '') {
+      desc = ('desc=' + this.state.Desc + '&').replace(/ /g, '%20');
+    }
+    if (this.state.location != '') {
+      location = ('location=' + this.state.location + '&').replace(/ /g, '%20');
+    }
+    if (this.state.bar != '') {
+      bar = ('upc=' + this.state.bar + '&').replace(/ /g, '');
+    }
+    if (this.state.startDate != '') {
+      startDate = ('startDate=' + this.state.startDate + '&').replace(/ /g, '');
+    }
+    if (this.state.endDate != '') {
+      endDate = ('endDate=' + this.state.endDate + '&').replace(/ /g, '');
+    }
+    var finalstring = item + desc + location + bar + startDate + endDate;
+    const query = finalstring.substring(0, finalstring.length - 1);
+    console.log(query);
+
+    Toast.loading('Searching');
+    setTimeout(() => {
+      Toast.hide();
+    }, 4000);
+    const proxyurl = 'https://cors-anywhere.herokuapp.com/';
+    const endUrl = properties.endUrl;
+    const baseuri = endUrl + 'api/v1/salesdetail?';
+    const itemsearch = query;
+
+    var myHeaders = new Headers();
+    myHeaders.append(
+      'Authorization',
+      'Bearer ' + ' ' + localStorage.getItem('dataToken')
+    );
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow',
+    };
+
+    fetch(proxyurl + baseuri + itemsearch, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        this.setState({ searchResult: result.result });
+      })
+      .catch((error) => console.log('error', error));
   };
+
   handleReset = () => {
     this.setState({ searchResult: [] });
     this.setState({ item: '' });
@@ -237,36 +297,31 @@ class SupplierConfig extends Component {
     this.setState({ bar: '' });
     this.setState({ vpn: '' });
   };
+
   handleCheck = (event, row) => {
     const options = this.state.options;
-
-    console.log(row, '=====>>>>row');
-    console.log(event.target.checked, '=====>>>>row');
-
     let index;
+
+    // check if the check box is checked or unchecked
     if (event.target.checked) {
-      options.push(row.supplierId);
+      // add the numerical value of the checkbox to options array
+      options.push(event.target.value);
     } else {
-      index = options.indexOf(row.supplierId);
+      // or remove the value from the unchecked checkbox from the array
+      index = options.indexOf(event.target.value);
       options.splice(index, 1);
     }
 
-    this.setState({ options: options }, () => {
-      console.log(options, '===>>>options');
-    });
-
-    if (options.length === 1) {
-      this.setState({ detail: true });
-    } else {
-      this.setState({ detail: false });
-    }
+    // update the state with the new array of options
+    this.setState({ options: options });
   };
+
   handleExport = () => {
     this.setState({ checkedItems: [] });
     this.state.options.map((data) => {
       this.state.checkedItems.push(JSON.parse(data));
     });
-    var ans = 'Stock';
+    var ans = 'Sales';
     var arr = '0123456789qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM';
     var len = 5;
     for (var i = len; i > 0; i--) {
@@ -278,16 +333,10 @@ class SupplierConfig extends Component {
     XLSX.utils.book_append_sheet(workbook, sheet, 'Sheet 1');
     XLSX.writeFile(workbook, ans + `.xls`);
   };
-  openConfigModel = () => {
-    this.setState((prevState) => ({
-      openConfigModel: !prevState.openConfigModel,
-    }));
-  };
 
   render() {
     const { classes } = this.props;
     const open = Boolean(this.state.ischecked);
-    var set = '';
 
     return (
       <Container component='main' maxWidth='lg'>
@@ -332,7 +381,7 @@ class SupplierConfig extends Component {
                   <Grid item xs={4} className={classes.paper}>
                     <TextField
                       id='outlined-number'
-                      label='Supplier'
+                      label='Item Id'
                       type='text'
                       InputProps={{
                         classes: {
@@ -357,7 +406,7 @@ class SupplierConfig extends Component {
                   <Grid item xs={4} className={classes.paper}>
                     <TextField
                       id='outlined-number'
-                      label='Supplier Name'
+                      label='Item Desc'
                       type='text'
                       InputProps={{
                         classes: {
@@ -371,7 +420,10 @@ class SupplierConfig extends Component {
                         shrink: true,
                       }}
                       variant='outlined'
-                      style={{ width: 300, borderColor: 'Red' }}
+                      style={{
+                        width: 300,
+                        borderColor: 'Red',
+                      }}
                       onBlur={this.descChange}
                     />
                   </Grid>
@@ -379,8 +431,8 @@ class SupplierConfig extends Component {
                   <Grid item xs={4} className={classes.paper}>
                     <TextField
                       id='outlined-number'
-                      label='Status'
-                      type='text'
+                      label='Start Date'
+                      type='date'
                       InputProps={{
                         classes: {
                           root: classes.cssOutlinedInput,
@@ -393,8 +445,11 @@ class SupplierConfig extends Component {
                         shrink: true,
                       }}
                       variant='outlined'
-                      style={{ width: 300, borderColor: 'Red' }}
-                      onBlur={this.locationChange}
+                      style={{
+                        width: 300,
+                        borderColor: 'Red',
+                      }}
+                      onChange={this.startDate}
                     />
                   </Grid>
                 </Grid>
@@ -403,7 +458,7 @@ class SupplierConfig extends Component {
                   <Grid item xs={4} className={classes.paper}>
                     <TextField
                       id='outlined-number'
-                      label='Stock Config'
+                      label='Barcode'
                       type='text'
                       InputProps={{
                         classes: {
@@ -417,7 +472,10 @@ class SupplierConfig extends Component {
                         shrink: true,
                       }}
                       variant='outlined'
-                      style={{ width: 300, borderColor: 'Red' }}
+                      style={{
+                        width: 300,
+                        borderColor: 'Red',
+                      }}
                       onBlur={this.barChange}
                     />
                   </Grid>
@@ -425,7 +483,7 @@ class SupplierConfig extends Component {
                   <Grid item xs={4} className={classes.paper}>
                     <TextField
                       id='outlined-number'
-                      label='Order Config'
+                      label='Location'
                       type='text'
                       InputProps={{
                         classes: {
@@ -439,8 +497,36 @@ class SupplierConfig extends Component {
                         shrink: true,
                       }}
                       variant='outlined'
-                      style={{ width: 300, borderColor: 'Red' }}
-                      onBlur={this.vpnChange}
+                      style={{
+                        width: 300,
+                        borderColor: 'Red',
+                      }}
+                      onBlur={this.locationChange}
+                    />
+                  </Grid>
+
+                  <Grid item xs={4} className={classes.paper}>
+                    <TextField
+                      id='outlined-number'
+                      label='End Date'
+                      type='date'
+                      InputProps={{
+                        classes: {
+                          root: classes.cssOutlinedInput,
+                        },
+                      }}
+                      InputLabelProps={{
+                        classes: {
+                          root: classes.textBoxInputLabel,
+                        },
+                        shrink: true,
+                      }}
+                      variant='outlined'
+                      style={{
+                        width: 300,
+                        borderColor: 'Red',
+                      }}
+                      onChange={this.endDate}
                     />
                   </Grid>
                 </Grid>
@@ -453,7 +539,7 @@ class SupplierConfig extends Component {
                       flexDirection: 'column',
                     }}
                   >
-                    <div>
+                    <div style={{ marginTop: '1%' }}>
                       <Button
                         variant='contained'
                         color='primary'
@@ -490,23 +576,6 @@ class SupplierConfig extends Component {
             }}
           >
             <div>
-              {this.state.detail ? (
-                <Button
-                  variant='contained'
-                  color='default'
-                  className={classes.buttons2}
-                  startIcon={<CloudDownloadIcon />}
-                  onClick={this.openConfigModel}
-                  style={{
-                    border: 'none',
-                    background: 'white',
-                    padding: '5px 18px',
-                    borderRadius: '5px',
-                  }}
-                >
-                  CONFIGUE CSV
-                </Button>
-              ) : null}
               <Button
                 variant='contained'
                 color='default'
@@ -549,49 +618,63 @@ class SupplierConfig extends Component {
                     sortDirection='asc'
                     className={classes.table_head_bordertd}
                   >
-                    SUPPLIER ID
+                    ITEM ID
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
                     className={classes.table_head_bordertd}
                   >
-                    SUPPLIER NAME
+                    ITEM DESCRIPTION
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
                     className={classes.table_head_bordertd}
                   >
-                    STATUS
+                    BARCODE
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
                     className={classes.table_head_bordertd}
                   >
-                    SALES CONFIGURED
+                    VPN
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
                     className={classes.table_head_bordertd}
                   >
-                    STOCK CONFIGURED
+                    LOCATION
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
                     className={classes.table_head_bordertd}
                   >
-                    ORDER CONFIGURED
+                    TOTAL SALES
+                  </TableCell>
+                  <TableCell
+                    padding='default'
+                    sortDirection='asc'
+                    className={classes.table_head_bordertd}
+                  >
+                    RETURN
+                  </TableCell>
+                  <TableCell
+                    padding='default'
+                    sortDirection='asc'
+                    className={classes.table_head_bordertd}
+                  >
+                    NET SALES
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
                     className={classes.table_head_bordertdL}
                   >
-                    INVOICES CONFIGURED
+                    PROMO SALES
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -606,128 +689,53 @@ class SupplierConfig extends Component {
                       />
                     </TableCell>
                     <TableCell className={classes.table_row_bordertd}>
-                      {row.supplierId}
+                      {row.item}
                     </TableCell>
                     <TableCell className={classes.table_row_bordertd}>
-                      {row.supplierName}
+                      {row.itemDesc}
                     </TableCell>
                     <TableCell className={classes.table_row_bordertd}>
-                      {row.status}
+                      {row.itemUpc}
                     </TableCell>
-                    <TableCell
-                      style={{ paddingLeft: '5%' }}
-                      className={classes.table_row_bordertd}
-                    >
-                      {row.salesConfigured == 'true' ? (
-                        <Avatar
-                          className={classes.small}
-                          alt='Remy Sharp'
-                          style={{ backgroundColor: '#00FF00' }}
-                        >
-                          {' '}
-                          <CheckIcon />
-                        </Avatar>
-                      ) : (
-                        <Avatar
-                          className={classes.small}
-                          alt='Remy Sharp'
-                          style={{ backgroundColor: 'red' }}
-                        >
-                          {' '}
-                          <CloseIcon />
-                        </Avatar>
-                      )}
+                    <TableCell className={classes.table_row_bordertd}>
+                      {row.vpn}
                     </TableCell>
-                    <TableCell
-                      style={{ paddingLeft: '5%' }}
-                      className={classes.table_row_bordertd}
-                    >
-                      {row.stockConfigured == 'true' ? (
-                        <Avatar
-                          className={classes.small}
-                          alt='Remy Sharp'
-                          style={{ backgroundColor: '#00FF00' }}
-                        >
-                          {' '}
-                          <CheckIcon />
-                        </Avatar>
-                      ) : (
-                        <Avatar
-                          className={classes.small}
-                          alt='Remy Sharp'
-                          style={{ backgroundColor: 'red' }}
-                        >
-                          <CloseIcon />
-                        </Avatar>
-                      )}
+                    <TableCell className={classes.table_row_bordertd}>
+                      {row.locationName}
                     </TableCell>
-                    <TableCell
-                      style={{ paddingLeft: '5%' }}
-                      className={classes.table_row_bordertd}
-                    >
-                      {row.orderConfigured == 'true' ? (
-                        <Avatar
-                          className={classes.small}
-                          alt='Remy Sharp'
-                          style={{ backgroundColor: '#00FF00' }}
-                        >
-                          <CheckIcon />
-                        </Avatar>
-                      ) : (
-                        <Avatar
-                          className={classes.small}
-                          alt='Remy Sharp'
-                          style={{ backgroundColor: 'red' }}
-                        >
-                          {' '}
-                          <CloseIcon />
-                        </Avatar>
-                      )}
+                    <TableCell className={classes.table_row_bordertd}>
+                      {row.totalSale}
                     </TableCell>
-                    <TableCell
-                      style={{ paddingLeft: '5%' }}
-                      className={classes.table_row_bordertdL}
-                    >
-                      {row.invoicesConfigured == 'true' ? (
-                        <Avatar
-                          className={classes.small}
-                          alt='Remy Sharp'
-                          style={{ backgroundColor: '#00FF00' }}
-                        >
-                          <CheckIcon />
-                        </Avatar>
-                      ) : (
-                        <Avatar
-                          className={classes.small}
-                          alt='Remy Sharp'
-                          style={{ backgroundColor: 'red' }}
-                        >
-                          {' '}
-                          <CloseIcon />
-                        </Avatar>
-                      )}
+                    <TableCell className={classes.table_row_bordertd}>
+                      {row.returns}
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      {row.netSale}
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertdL}>
+                      {row.promoSale}
                     </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
+
+          <div
+            style={{
+              flexGrow: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              backgroundColor: 'white',
+              padding: '10px',
+            }}
+          ></div>
         </div>
-        <Dialog
-          fullWidth
-          open={this.state.openConfigModel}
-          maxWidth='lg'
-          classes={{ paper: classes.dialogPaper }}
-          aria-labelledby='alert-dialog-title'
-          aria-describedby='alert-dialog-description'
-        >
-          <ConfigureCsv handleClose={this.openConfigModel} />
-        </Dialog>
       </Container>
     );
   }
 }
-SupplierConfig.propTypes = {
+SalesView.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-export default withStyles(styles)(SupplierConfig);
+export default withStyles(styles)(SalesView);

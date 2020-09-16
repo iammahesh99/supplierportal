@@ -26,15 +26,17 @@ import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import SampleNextArrow from './SampleNextArrow';
 import SamplePrevArrow from './SamplePrevArrow';
 import Slider from 'react-slick';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import ReactDOM from 'react-dom';
 
 const styles = (theme) => ({
   large: {
-    width: theme.spacing(5),
-    height: theme.spacing(5),
+    width: '50px',
+    height: '50px',
     border: 'solid 1px ',
     borderColor: 'red',
     backgroundColor: 'white',
-    margin: '10px 30px 10px 30px',
+    margin: '10px 40px 10px 40px',
   },
   removeFlex: {
     flexBasis: 'unset',
@@ -43,10 +45,11 @@ const styles = (theme) => ({
   avtarbox2: {
     cursor: 'pointer',
     textAlign: 'center',
-    fontSize: '8px',
+    fontSize: '12px',
     width: 'auto !important',
   },
   tables: {
+    marginTop: theme.spacing(4),
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
@@ -190,13 +193,84 @@ const styles = (theme) => ({
   },
 });
 
+// fake data generator
+const getItems = (count) =>
+  Array.from({ length: count }, (v, k) => k).map((k) => ({
+    id: `item-${k}`,
+    TOTAL_SOH: `TOTAL_SOH-${k}`,
+    AVL_SOH: `AVL_SOH ${k}`,
+    TOTAL_SOH: `TOTAL_SOH ${k}`,
+  }));
+
+// a little function to help us with reordering the result
+const reorder = (list, startIndex, endIndex) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+
+  return result;
+};
+
+const getItemStyle = (isDragging, draggableStyle) => ({
+  // styles we need to apply on draggables
+  ...draggableStyle,
+
+  ...(isDragging && {
+    background: 'rgb(235,235,235)',
+  }),
+});
+
+const DraggableComponent = (id, index) => (props) => {
+  return (
+    <Draggable draggableId={id} index={index}>
+      {(provided, snapshot) => (
+        <TableRow
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          style={getItemStyle(
+            snapshot.isDragging,
+            provided.draggableProps.style
+          )}
+          {...props}
+        >
+          {props.children}
+        </TableRow>
+      )}
+    </Draggable>
+  );
+};
+
+const DroppableComponent = (onDragEnd: (result, provided) => void) => (
+  props
+) => {
+  return (
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Droppable droppableId={'1'} direction='vertical'>
+        {(provided) => {
+          return (
+            <TableBody
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              {...props}
+            >
+              {props.children}
+              {provided.placeholder}
+            </TableBody>
+          );
+        }}
+      </Droppable>
+    </DragDropContext>
+  );
+};
+
 class POShipment extends Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedValue: 'a',
       settings: {
-        initialSlide: 2,
+        initialSlide: 0,
         dots: false,
         infinite: true,
         speed: 300,
@@ -206,7 +280,29 @@ class POShipment extends Component {
         nextArrow: <SampleNextArrow />,
         prevArrow: <SamplePrevArrow />,
       },
+      items: getItems(10),
     };
+    this.onDragEnd = this.onDragEnd.bind(this);
+  }
+
+  onDragEnd(result) {
+    // dropped outside the list
+    if (!result.destination) {
+      return;
+    }
+
+    console.log(
+      `dragEnd ${result.source.index} to  ${result.destination.index}`
+    );
+    const items = reorder(
+      this.state.items,
+      result.source.index,
+      result.destination.index
+    );
+
+    this.setState({
+      items,
+    });
   }
 
   handleChange = (event) => {
@@ -441,42 +537,87 @@ class POShipment extends Component {
             component={Paper}
             style={{ boxShadow: 'none', height: '250px' }}
           >
-            <Table stickyHeader aria-label='sticky table' size='medium'>
+            <Table
+              stickyHeader
+              aria-label='sticky table'
+              padding='default'
+              size='medium'
+              hover={true}
+              classes={{ root: classes.main_table_root }}
+              className={classes.main_table}
+            >
               <TableHead>
                 <TableRow>
-                  <TableCell style={{ padding: '8px' }}>Column Name</TableCell>
-                  <TableCell style={{ padding: '8px' }}>
+                  <TableCell
+                    padding='default'
+                    sortDirection='asc'
+                    className={classes.table_head_bordertd1}
+                  >
+                    Column Name
+                  </TableCell>
+                  <TableCell
+                    padding='default'
+                    sortDirection='asc'
+                    className={classes.table_head_bordertd}
+                  >
                     Column Description
                   </TableCell>
-                  <TableCell style={{ padding: '8px' }}>
+                  <TableCell
+                    padding='default'
+                    sortDirection='asc'
+                    className={classes.table_head_bordertd}
+                  >
                     Alternate Name
                   </TableCell>
-                  <TableCell style={{ padding: '8px' }}>Status</TableCell>
+                  <TableCell
+                    padding='default'
+                    sortDirection='asc'
+                    className={classes.table_head_bordertdL}
+                  >
+                    Status
+                  </TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
-                <TableRow hover>
-                  <TableCell style={{ padding: '8px' }}>TOTAL_SOH</TableCell>
-                  <TableCell style={{ padding: '8px' }}>AVL_SOH</TableCell>
-                  <TableCell style={{ padding: '8px' }}>TOTAL_SOH</TableCell>
-                  <TableCell style={{ padding: '8px' }}>
-                    <Checkbox
-                      onChange={(event) => {}}
-                      name='radio-button-demo'
-                    />
-                  </TableCell>
-                </TableRow>
-                <TableRow hover role='checkbox'>
-                  <TableCell style={{ padding: '8px' }}>TOTAL_SOH</TableCell>
-                  <TableCell style={{ padding: '8px' }}>AVL_SOH</TableCell>
-                  <TableCell style={{ padding: '8px' }}>TOTAL_SOH</TableCell>
-                  <TableCell style={{ padding: '8px' }}>
-                    <Checkbox
-                      onChange={(event) => {}}
-                      name='radio-button-demo'
-                    />
-                  </TableCell>
-                </TableRow>
+              <TableBody component={DroppableComponent(this.onDragEnd)}>
+                {this.state.items.map((item, index) => (
+                  <TableRow
+                    component={DraggableComponent(item.id, index)}
+                    key={item.id}
+                  >
+                    <TableCell
+                      padding='default'
+                      sortDirection='asc'
+                      className={classes.table_row_bordertd1}
+                    >
+                      {item.TOTAL_SOH}
+                    </TableCell>
+                    <TableCell
+                      padding='default'
+                      sortDirection='asc'
+                      className={classes.table_row_bordertd}
+                    >
+                      {item.AVL_SOH}
+                    </TableCell>
+                    <TableCell
+                      padding='default'
+                      sortDirection='asc'
+                      className={classes.table_row_bordertd}
+                    >
+                      {' '}
+                      {item.TOTAL_SOH}
+                    </TableCell>
+                    <TableCell
+                      padding='default'
+                      sortDirection='asc'
+                      className={classes.table_row_bordertdL}
+                    >
+                      <Checkbox
+                        onChange={(event) => {}}
+                        name='radio-button-demo'
+                      />
+                    </TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
           </TableContainer>
@@ -490,7 +631,7 @@ class POShipment extends Component {
           alignItems='center'
           style={{ marginTop: '2%' }}
         >
-          <Grid item xs={4}>
+          <Grid item xs={5}>
             <div className={classes.sliderDiv}>
               <Slider {...settings}>
                 <div className={classes.avtarbox2}>
@@ -544,7 +685,7 @@ class POShipment extends Component {
                       onClick={(event) => {}}
                     />
                   </Avatar>
-                  <b>Purchase Orders</b>
+                  <b>ASN Config</b>
                 </div>
 
                 <div className={classes.avtarbox2}>
@@ -555,51 +696,7 @@ class POShipment extends Component {
                       onClick={(event) => {}}
                     />
                   </Avatar>
-                  <b>Purchase Orders</b>
-                </div>
-
-                <div className={classes.avtarbox2}>
-                  <Avatar alt='Remy Sharp' className={classes.large}>
-                    <img
-                      src={require('../../../HomePage/Icons/PO.svg')}
-                      className={classes.icons}
-                      onClick={(event) => {}}
-                    />
-                  </Avatar>
-                  <b>Purchase Orders</b>
-                </div>
-
-                <div className={classes.avtarbox2}>
-                  <Avatar alt='Remy Sharp' className={classes.large}>
-                    <img
-                      src={require('../../../HomePage/Icons/PO.svg')}
-                      className={classes.icons}
-                      onClick={(event) => {}}
-                    />
-                  </Avatar>
-                  <b>Purchase Orders</b>
-                </div>
-
-                <div className={classes.avtarbox2}>
-                  <Avatar alt='Remy Sharp' className={classes.large}>
-                    <img
-                      src={require('../../../HomePage/Icons/PO.svg')}
-                      className={classes.icons}
-                      onClick={(event) => {}}
-                    />
-                  </Avatar>
-                  <b>Purchase Orders</b>
-                </div>
-
-                <div className={classes.avtarbox2}>
-                  <Avatar alt='Remy Sharp' className={classes.large}>
-                    <img
-                      src={require('../../../HomePage/Icons/PO.svg')}
-                      className={classes.icons}
-                      onClick={(event) => {}}
-                    />
-                  </Avatar>
-                  <b>Purchase Orders</b>
+                  <b>CO Config</b>
                 </div>
               </Slider>
             </div>
@@ -612,4 +709,5 @@ class POShipment extends Component {
 POShipment.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+
 export default withStyles(styles)(POShipment);
