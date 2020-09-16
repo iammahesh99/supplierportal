@@ -10,6 +10,7 @@ import ASNView from '../../ComponentView/AsnView/JSFile/ASNView.js';
 import InvoiceView from '../../ComponentView/InvoiceView/JSFile/InvoiceView.js';
 import CostView from '../../ComponentView/CostView/JSFile/CostView.js';
 import PromotionView from '../../ComponentView/PromotionView/JSFile/PromotionView.js';
+import NotificationView from '../../ComponentView/NotificationView/JSFile/NotificationView.js';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import SupplierConfig from '../../ComponentView/SupplierConfiguration/JSFile/SupplierConfig.js';
@@ -66,6 +67,9 @@ function HomeRouter() {
           </Route>
           <Route path='/Home/ASNDetail'>
             <ASNView />
+          </Route>
+          <Route path='/Home/Notification/:id'>
+            <NotificationView />
           </Route>
         </Switch>
       </div>

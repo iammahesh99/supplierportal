@@ -345,20 +345,40 @@ class HomePage extends Component {
               style={{ padding: '2%', textAlign: 'center' }}
             >
               <Grid item xs={3}>
-                <span className={classes.circleNumber}>100</span>
-                <span>&nbsp;&nbsp;Purchase Orders</span>
+                <Link
+                  to={`/Home/Notification/PO`}
+                  style={{ textDecoration: 'none', color: '#FFF' }}
+                >
+                  <span className={classes.circleNumber}>100</span>
+                  <span>&nbsp;&nbsp;Purchase Orders</span>
+                </Link>
               </Grid>
               <Grid item xs={3}>
-                <span className={classes.circleNumber}>100</span>
-                <span>&nbsp;&nbsp;Cost Change</span>
+                <Link
+                  to={`/Home/Notification/CO`}
+                  style={{ textDecoration: 'none', color: '#FFF' }}
+                >
+                  <span className={classes.circleNumber}>100</span>
+                  <span>&nbsp;&nbsp;Cost Change</span>
+                </Link>
               </Grid>
               <Grid item xs={3}>
-                <span className={classes.circleNumber}>100</span>
-                <span>&nbsp;&nbsp;Promotions</span>
+                <Link
+                  to={`/Home/Notification/Promotion`}
+                  style={{ textDecoration: 'none', color: '#FFF' }}
+                >
+                  <span className={classes.circleNumber}>100</span>
+                  <span>&nbsp;&nbsp;Promotions</span>
+                </Link>
               </Grid>
               <Grid item xs={3}>
-                <span className={classes.circleNumber}>100</span>
-                <span>&nbsp;&nbsp;Invoices</span>
+                <Link
+                  to={`/Home/Notification/Invoices`}
+                  style={{ textDecoration: 'none', color: '#FFF' }}
+                >
+                  <span className={classes.circleNumber}>100</span>
+                  <span>&nbsp;&nbsp;Invoices</span>
+                </Link>
               </Grid>
             </Grid>
           </Container>
