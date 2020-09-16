@@ -214,7 +214,11 @@ class POShipment extends Component {
             <div className={classes.smallSummery}></div>
             <TableContainer
               component={Paper}
-              style={{ boxShadow: 'none', height: '350px' }}
+              style={{
+                boxShadow: 'none',
+                height: '320px',
+                border: '1px solid red',
+              }}
             >
               <Table
                 stickyHeader
@@ -510,7 +514,11 @@ class POShipment extends Component {
             <div className={classes.smallSummery}></div>
             <TableContainer
               component={Paper}
-              style={{ boxShadow: 'none', height: '350px' }}
+              style={{
+                boxShadow: 'none',
+                height: '320px',
+                border: '1px solid red',
+              }}
             >
               <Table
                 stickyHeader
