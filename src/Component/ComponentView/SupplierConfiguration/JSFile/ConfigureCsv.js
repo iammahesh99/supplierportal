@@ -281,6 +281,14 @@ class POShipment extends Component {
         prevArrow: <SamplePrevArrow />,
       },
       items: getItems(10),
+      header: [
+        {
+          name: `column_name___${'PO_CONFIG'}`,
+          desc: `column_desc___${'PO_CONFIG'}`,
+          alternate: `alternate___${'PO_CONFIG'}`,
+          status: `status___${'PO_CONFIG'}`,
+        },
+      ],
     };
     this.onDragEnd = this.onDragEnd.bind(this);
   }
@@ -309,9 +317,93 @@ class POShipment extends Component {
     this.setState({ selectedValue: event.target.value });
   };
 
+  updateView = (status) => {
+    console.log(status, '====>>>status');
+    switch (status) {
+      case 'PO_CONFIG':
+        this.setState({
+          header: [
+            {
+              name: `column_name___${status}`,
+              desc: `column_desc___${status}`,
+              alternate: `alternate___${status}`,
+              status: `status___${status}`,
+            },
+          ],
+        });
+        break;
+      case 'STOCK_CONFIG':
+        this.setState({
+          header: [
+            {
+              name: `column_name___${status}`,
+              desc: `column_desc___${status}`,
+              alternate: `alternate___${status}`,
+              status: `status___${status}`,
+            },
+          ],
+        });
+        break;
+      case 'SALES_CONFIG':
+        this.setState({
+          header: [
+            {
+              name: `column_name___${status}`,
+              desc: `column_desc___${status}`,
+              alternate: `alternate___${status}`,
+              status: `status___${status}`,
+            },
+          ],
+        });
+        break;
+      case 'INVOICE_CONFIG':
+        this.setState({
+          header: [
+            {
+              name: `column_name___${status}`,
+              desc: `column_desc___${status}`,
+              alternate: `alternate___${status}`,
+              status: `status___${status}`,
+            },
+          ],
+        });
+        break;
+      case 'ASN_CONFIG':
+        this.setState({
+          header: [
+            {
+              name: `column_name___${status}`,
+              desc: `column_desc___${status}`,
+              alternate: `alternate___${status}`,
+              status: `status___${status}`,
+            },
+          ],
+        });
+        break;
+      case 'COST_CONFIG':
+        this.setState({
+          header: [
+            {
+              name: `column_name___${status}`,
+              desc: `column_desc___${status}`,
+              alternate: `alternate___${status}`,
+              status: `status___${status}`,
+            },
+          ],
+        });
+        break;
+      default:
+        this.setState({
+          header: [],
+        });
+        break;
+    }
+  };
+
   render() {
     const { classes } = this.props;
-    const { settings, selectedValue } = this.state;
+    const { settings, selectedValue, items } = this.state;
+    console.log(items, '===>>>items');
     return (
       <Container>
         <Toolbar
@@ -556,36 +648,38 @@ class POShipment extends Component {
                 className={classes.main_table}
               >
                 <TableHead>
-                  <TableRow>
-                    <TableCell
-                      padding='default'
-                      sortDirection='asc'
-                      className={classes.table_head_bordertd1}
-                    >
-                      Column Name
-                    </TableCell>
-                    <TableCell
-                      padding='default'
-                      sortDirection='asc'
-                      className={classes.table_head_bordertd}
-                    >
-                      Column Description
-                    </TableCell>
-                    <TableCell
-                      padding='default'
-                      sortDirection='asc'
-                      className={classes.table_head_bordertd}
-                    >
-                      Alternate Name
-                    </TableCell>
-                    <TableCell
-                      padding='default'
-                      sortDirection='asc'
-                      className={classes.table_head_bordertdL}
-                    >
-                      Status
-                    </TableCell>
-                  </TableRow>
+                  {this.state.header.map((item, index) => (
+                    <TableRow>
+                      <TableCell
+                        padding='default'
+                        sortDirection='asc'
+                        className={classes.table_head_bordertd1}
+                      >
+                        {item.name}
+                      </TableCell>
+                      <TableCell
+                        padding='default'
+                        sortDirection='asc'
+                        className={classes.table_head_bordertd}
+                      >
+                        {item.desc}
+                      </TableCell>
+                      <TableCell
+                        padding='default'
+                        sortDirection='asc'
+                        className={classes.table_head_bordertd}
+                      >
+                        {item.alternate}
+                      </TableCell>
+                      <TableCell
+                        padding='default'
+                        sortDirection='asc'
+                        className={classes.table_head_bordertdL}
+                      >
+                        {item.status}
+                      </TableCell>
+                    </TableRow>
+                  ))}
                 </TableHead>
                 <TableBody component={DroppableComponent(this.onDragEnd)}>
                   {this.state.items.map((item, index) => (
@@ -646,66 +740,79 @@ class POShipment extends Component {
           <Grid item xs={7}>
             <div className={classes.sliderDiv}>
               <Slider {...settings}>
-                <div className={classes.avtarbox2}>
-                  <Avatar alt='Remy Sharp' className={classes.large}>
+                <div
+                  className={classes.avtarbox2}
+                  onClick={() => this.updateView('PO_CONFIG')}
+                >
+                  <Avatar className={classes.large}>
                     <img
                       src={require('../../../HomePage/Icons/PO.svg')}
                       className={classes.icons}
-                      onClick={(event) => {}}
                     />
                   </Avatar>
                   <b>PO Config</b>
                 </div>
-                <div className={classes.avtarbox2}>
-                  <Avatar alt='Remy Sharp' className={classes.large}>
+
+                <div
+                  className={classes.avtarbox2}
+                  onClick={() => this.updateView('STOCK_CONFIG')}
+                >
+                  <Avatar className={classes.large}>
                     <img
-                      src={require('../../../HomePage/Icons/PO.svg')}
+                      src={require('../../../HomePage/Icons/stock.svg')}
                       className={classes.icons}
-                      onClick={(event) => {}}
                     />
                   </Avatar>
                   <b>Stock Config</b>
                 </div>
 
-                <div className={classes.avtarbox2}>
-                  <Avatar alt='Remy Sharp' className={classes.large}>
+                <div
+                  className={classes.avtarbox2}
+                  onClick={() => this.updateView('SALES_CONFIG')}
+                >
+                  <Avatar className={classes.large}>
                     <img
-                      src={require('../../../HomePage/Icons/PO.svg')}
+                      src={require('../../../HomePage/Icons/sales.svg')}
                       className={classes.icons}
-                      onClick={(event) => {}}
                     />
                   </Avatar>
                   <b>Sales Config</b>
                 </div>
 
-                <div className={classes.avtarbox2}>
-                  <Avatar alt='Remy Sharp' className={classes.large}>
+                <div
+                  className={classes.avtarbox2}
+                  onClick={() => this.updateView('INVOICE_CONFIG')}
+                >
+                  <Avatar className={classes.large}>
                     <img
-                      src={require('../../../HomePage/Icons/PO.svg')}
+                      src={require('../../../HomePage/Icons/invoices.svg')}
                       className={classes.icons}
-                      onClick={(event) => {}}
                     />
                   </Avatar>
                   <b>Inv Config</b>
                 </div>
 
-                <div className={classes.avtarbox2}>
-                  <Avatar alt='Remy Sharp' className={classes.large}>
+                <div
+                  className={classes.avtarbox2}
+                  onClick={() => this.updateView('ASN_CONFIG')}
+                >
+                  <Avatar className={classes.large}>
                     <img
-                      src={require('../../../HomePage/Icons/PO.svg')}
+                      src={require('../../../HomePage/Icons/asn.svg')}
                       className={classes.icons}
-                      onClick={(event) => {}}
                     />
                   </Avatar>
                   <b>ASN Config</b>
                 </div>
 
-                <div className={classes.avtarbox2}>
-                  <Avatar alt='Remy Sharp' className={classes.large}>
+                <div
+                  className={classes.avtarbox2}
+                  onClick={() => this.updateView('COST_CONFIG')}
+                >
+                  <Avatar className={classes.large}>
                     <img
-                      src={require('../../../HomePage/Icons/PO.svg')}
+                      src={require('../../../HomePage/Icons/costchange.svg')}
                       className={classes.icons}
-                      onClick={(event) => {}}
                     />
                   </Avatar>
                   <b>CO Config</b>
