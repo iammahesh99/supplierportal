@@ -21,11 +21,17 @@ import {
   Checkbox,
   Box,
   Radio,
+  Avatar,
 } from '@material-ui/core';
 import Toast from 'light-toast';
 import XLSX from 'xlsx';
+import CheckIcon from '@material-ui/icons/Check';
+import CloseIcon from '@material-ui/icons/Close';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import { properties } from '../../../../Properties.js';
+import Slider from 'react-slick';
+import SampleNextArrow from './SampleNextArrow';
+import SamplePrevArrow from './SamplePrevArrow';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -47,12 +53,23 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 
 const styles = (theme) => ({
-  search: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
+  large: {
+    width: '50px',
+    height: '50px',
     border: 'solid 1px ',
     borderColor: 'red',
+    backgroundColor: 'white',
+    margin: '10px 45px 10px 45px',
+  },
+  removeFlex: {
+    flexBasis: 'unset',
+    padding: '0% 5% 0% 5%',
+  },
+  avtarbox2: {
+    cursor: 'pointer',
+    textAlign: 'center',
+    fontSize: '12px',
+    width: 'auto !important',
   },
   tables: {
     marginTop: theme.spacing(4),
@@ -60,33 +77,30 @@ const styles = (theme) => ({
     flex: 1,
     flexDirection: 'column',
     border: '1px solid red',
-    height: 380,
+    height: 200,
   },
-  paper: {
-    paddingTop: theme.spacing(3),
-    paddingLeft: theme.spacing(2),
-  },
-  buttons: {
-    marginBottom: theme.spacing(1),
-    marginLeft: theme.spacing(1),
-    height: '30px',
-    fontSize: '10px',
-  },
-  buttons2: {
-    marginRight: theme.spacing(1),
-    height: '30px',
-    fontSize: '10px',
-  },
-  slide: {
-    marginTop: 10,
-    width: '100%',
-    height: '10%',
-    textAlign: 'center',
-  },
-  mainscreen: {
+  poDetail: {
+    marginBottom: theme.spacing(2),
+    display: 'flex',
     flex: 1,
     flexDirection: 'column',
+  },
+  smallSummery: {
+    width: '100%',
+    height: '30px',
     display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'red',
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: '16px',
+  },
+  close: {
+    width: '100%',
+    justifyContent: 'flex-end',
+    display: 'flex',
+    minHeight: 20,
   },
   table_head: {
     padding: 'none',
@@ -140,7 +154,7 @@ const styles = (theme) => ({
     borderLeft: '1px solid #d7d6d6',
     borderTopLeftRadius: ' 10px',
     borderBottomLeftRadius: '10px',
-    padding: '0px',
+    padding: '12px',
     fontSize: '12px',
   },
   table_row_bordertdL: {
@@ -161,16 +175,48 @@ const styles = (theme) => ({
   },
   cssOutlinedInput: {
     borderColor: `red !important`,
-    height: '40px !important',
+    height: '40px',
   },
   textBoxInputLabel: {
     fontWeight: 'bolder',
     fontSize: '18px',
     color: '#000000',
   },
+  summeryPTag: {
+    margin: '5px 0px 3px 6px !important',
+    fontSize: '11px',
+    fontWeight: 'bold',
+  },
+  summeryPValue: {
+    margin: '5px 0px 3px 6px !important',
+    fontSize: '11px',
+  },
+  topDivInfo: {
+    flexBasis: '11%',
+    maxWidth: 'unset',
+  },
+  fmaindiv: {
+    border: '2px solid red',
+    padding: '2%',
+  },
+  fchiddiv: {
+    margin: '6px 0px 7px 0px',
+  },
+  sliderDiv: {
+    //border: '1px solid red',
+    borderTop: '1px solid red',
+    borderBottom: '1px solid red',
+  },
+  slickSlide: {
+    padding: '0 8px',
+  },
+  small: {
+    width: theme.spacing(3),
+    height: theme.spacing(3),
+  },
 });
 
-class SalesView extends Component {
+class NotificationView extends Component {
   constructor(props) {
     var today = new Date();
     var dd = today.getDate();
@@ -195,6 +241,17 @@ class SalesView extends Component {
       endDate: '',
       checkedItems: [],
       options: [],
+      settings: {
+        initialSlide: 0,
+        dots: false,
+        infinite: true,
+        speed: 300,
+        slidesToShow: 4,
+        slidesToScroll: 2,
+        centerMode: false,
+        nextArrow: <SampleNextArrow />,
+        prevArrow: <SamplePrevArrow />,
+      },
     };
   }
 
@@ -336,261 +393,23 @@ class SalesView extends Component {
 
   render() {
     const { classes } = this.props;
+    const { settings } = this.state;
     const open = Boolean(this.state.ischecked);
 
     return (
       <Container component='main' maxWidth='lg'>
-        <Grid container spacing={3} direction='row' alignItems='center'>
-          <Grid item xs={6}>
-            <Typography variant='body2'>Specify Search Criteria</Typography>
-          </Grid>
-          <Grid item xs={6} style={{ textAlign: 'end' }}>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={this.state.checked}
-                  onChange={this.handleChange}
-                />
-              }
-              label='Hide Pane'
-            />
-          </Grid>
-        </Grid>
-
-        {this.state.checked ? (
-          <Box
-            border={1}
-            borderRadius={5}
-            borderColor='red'
-            display='flex'
-            flexWrap='nowrap'
-            className={classes.search}
-          >
-            <Container
-              fixed={true}
-              maxWidth='lg'
-              style={{ textAlign: 'center' }}
-            >
-              <Grid
-                container
-                spacing={0}
-                alignContent='center'
-                alignItems='center'
-              >
-                <Grid container item xs={12}>
-                  <Grid item xs={4} className={classes.paper}>
-                    <TextField
-                      id='outlined-number'
-                      label='Item Id'
-                      type='text'
-                      InputProps={{
-                        classes: {
-                          root: classes.cssOutlinedInput,
-                        },
-                      }}
-                      InputLabelProps={{
-                        classes: {
-                          root: classes.textBoxInputLabel,
-                        },
-                        shrink: true,
-                      }}
-                      variant='outlined'
-                      style={{
-                        width: 300,
-                        borderColor: 'Red',
-                      }}
-                      onBlur={this.itemChange}
-                    />
-                  </Grid>
-
-                  <Grid item xs={4} className={classes.paper}>
-                    <TextField
-                      id='outlined-number'
-                      label='Item Desc'
-                      type='text'
-                      InputProps={{
-                        classes: {
-                          root: classes.cssOutlinedInput,
-                        },
-                      }}
-                      InputLabelProps={{
-                        classes: {
-                          root: classes.textBoxInputLabel,
-                        },
-                        shrink: true,
-                      }}
-                      variant='outlined'
-                      style={{
-                        width: 300,
-                        borderColor: 'Red',
-                      }}
-                      onBlur={this.descChange}
-                    />
-                  </Grid>
-
-                  <Grid item xs={4} className={classes.paper}>
-                    <TextField
-                      id='outlined-number'
-                      label='Start Date'
-                      type='date'
-                      InputProps={{
-                        classes: {
-                          root: classes.cssOutlinedInput,
-                        },
-                      }}
-                      InputLabelProps={{
-                        classes: {
-                          root: classes.textBoxInputLabel,
-                        },
-                        shrink: true,
-                      }}
-                      variant='outlined'
-                      style={{
-                        width: 300,
-                        borderColor: 'Red',
-                      }}
-                      onChange={this.startDate}
-                    />
-                  </Grid>
-                </Grid>
-
-                <Grid container item xs={12}>
-                  <Grid item xs={4} className={classes.paper}>
-                    <TextField
-                      id='outlined-number'
-                      label='Barcode'
-                      type='text'
-                      InputProps={{
-                        classes: {
-                          root: classes.cssOutlinedInput,
-                        },
-                      }}
-                      InputLabelProps={{
-                        classes: {
-                          root: classes.textBoxInputLabel,
-                        },
-                        shrink: true,
-                      }}
-                      variant='outlined'
-                      style={{
-                        width: 300,
-                        borderColor: 'Red',
-                      }}
-                      onBlur={this.barChange}
-                    />
-                  </Grid>
-
-                  <Grid item xs={4} className={classes.paper}>
-                    <TextField
-                      id='outlined-number'
-                      label='Location'
-                      type='text'
-                      InputProps={{
-                        classes: {
-                          root: classes.cssOutlinedInput,
-                        },
-                      }}
-                      InputLabelProps={{
-                        classes: {
-                          root: classes.textBoxInputLabel,
-                        },
-                        shrink: true,
-                      }}
-                      variant='outlined'
-                      style={{
-                        width: 300,
-                        borderColor: 'Red',
-                      }}
-                      onBlur={this.locationChange}
-                    />
-                  </Grid>
-
-                  <Grid item xs={4} className={classes.paper}>
-                    <TextField
-                      id='outlined-number'
-                      label='End Date'
-                      type='date'
-                      InputProps={{
-                        classes: {
-                          root: classes.cssOutlinedInput,
-                        },
-                      }}
-                      InputLabelProps={{
-                        classes: {
-                          root: classes.textBoxInputLabel,
-                        },
-                        shrink: true,
-                      }}
-                      variant='outlined'
-                      style={{
-                        width: 300,
-                        borderColor: 'Red',
-                      }}
-                      onChange={this.endDate}
-                    />
-                  </Grid>
-                </Grid>
-                <Grid container item xs={12}>
-                  <div
-                    style={{
-                      flexGrow: 1,
-                      alignItems: 'flex-end',
-                      display: 'flex',
-                      flexDirection: 'column',
-                    }}
-                  >
-                    <div style={{ marginTop: '1%' }}>
-                      <Button
-                        variant='contained'
-                        color='primary'
-                        className={classes.buttons}
-                        onClick={this.handleSearchItem}
-                      >
-                        SEARCH
-                      </Button>
-                      <Button
-                        variant='contained'
-                        color='primary'
-                        className={classes.buttons}
-                        onClick={this.handleReset}
-                      >
-                        RESET
-                      </Button>
-                    </div>
-                  </div>
-                </Grid>
-              </Grid>
-            </Container>
-          </Box>
-        ) : null}
-
         <div className={classes.tables}>
           <div
             style={{
-              alignItems: 'flex-end',
+              alignItems: 'center',
               display: 'flex',
               flexDirection: 'column',
               backgroundColor: 'red',
-              bottom: '-10px',
-              padding: '5px',
+              color: 'white',
             }}
           >
             <div>
-              <Button
-                variant='contained'
-                color='default'
-                className={classes.buttons2}
-                startIcon={<CloudDownloadIcon />}
-                onClick={this.handleExport}
-                style={{
-                  border: 'none',
-                  background: 'white',
-                  padding: '5px 18px',
-                  borderRadius: '5px',
-                }}
-              >
-                EXCEL
-              </Button>
+              <p>ALERTS</p>
             </div>
           </div>
 
@@ -611,112 +430,67 @@ class SalesView extends Component {
                     sortDirection='asc'
                     className={classes.table_head_bordertd1}
                   >
-                    SELECT
+                    ID
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
                     className={classes.table_head_bordertd}
                   >
-                    ITEM ID
+                    Message
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
                     className={classes.table_head_bordertd}
                   >
-                    ITEM DESCRIPTION
+                    DATE
                   </TableCell>
                   <TableCell
                     padding='default'
                     sortDirection='asc'
                     className={classes.table_head_bordertd}
                   >
-                    BARCODE
-                  </TableCell>
-                  <TableCell
-                    padding='default'
-                    sortDirection='asc'
-                    className={classes.table_head_bordertd}
-                  >
-                    VPN
-                  </TableCell>
-                  <TableCell
-                    padding='default'
-                    sortDirection='asc'
-                    className={classes.table_head_bordertd}
-                  >
-                    LOCATION
-                  </TableCell>
-                  <TableCell
-                    padding='default'
-                    sortDirection='asc'
-                    className={classes.table_head_bordertd}
-                  >
-                    TOTAL SALES
-                  </TableCell>
-                  <TableCell
-                    padding='default'
-                    sortDirection='asc'
-                    className={classes.table_head_bordertd}
-                  >
-                    RETURN
-                  </TableCell>
-                  <TableCell
-                    padding='default'
-                    sortDirection='asc'
-                    className={classes.table_head_bordertd}
-                  >
-                    NET SALES
-                  </TableCell>
-                  <TableCell
-                    padding='default'
-                    sortDirection='asc'
-                    className={classes.table_head_bordertdL}
-                  >
-                    PROMO SALES
+                    Status
                   </TableCell>
                 </TableRow>
               </TableHead>
 
               <TableBody>
-                {this.state.searchResult.map((row, index) => (
-                  <TableRow>
-                    <TableCell className={classes.table_row_bordertd1}>
-                      <Checkbox
-                        onChange={(event) => this.handleCheck(event, row)}
-                        name='radio-button-demo'
-                      />
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      {row.item}
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      {row.itemDesc}
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      {row.itemUpc}
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      {row.vpn}
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      {row.locationName}
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      {row.totalSale}
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      {row.returns}
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
-                      {row.netSale}
-                    </TableCell>
-                    <TableCell className={classes.table_row_bordertdL}>
-                      {row.promoSale}
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {/* {this.state.searchResult.map((row, index) => ( */}
+                <TableRow>
+                  <TableCell className={classes.table_row_bordertd1}>
+                    0001
+                  </TableCell>
+                  <TableCell className={classes.table_row_bordertd}>
+                    Hey, You Got New Message.
+                  </TableCell>
+                  <TableCell className={classes.table_row_bordertd}>
+                    12th May 2020
+                  </TableCell>
+                  <TableCell className={classes.table_row_bordertdL}>
+                    {true ? (
+                      <Avatar
+                        className={classes.small}
+                        alt='Remy Sharp'
+                        style={{ backgroundColor: '#00FF00' }}
+                      >
+                        {' '}
+                        <CheckIcon />
+                      </Avatar>
+                    ) : (
+                      <Avatar
+                        className={classes.small}
+                        alt='Remy Sharp'
+                        style={{ backgroundColor: 'red' }}
+                      >
+                        {' '}
+                        <CloseIcon />
+                      </Avatar>
+                    )}
+                  </TableCell>
+                </TableRow>
+                {/* ))} */}
               </TableBody>
             </Table>
           </TableContainer>
@@ -731,11 +505,104 @@ class SalesView extends Component {
             }}
           ></div>
         </div>
+
+        {/* below Slider Code */}
+        <Grid
+          container
+          direction='row'
+          justify='center'
+          alignItems='center'
+          style={{ marginTop: '2%' }}
+        >
+          <Grid item xs={7}>
+            <div className={classes.sliderDiv}>
+              <Slider {...settings}>
+                <div
+                  className={classes.avtarbox2}
+                  onClick={() => this.updateView('PO_CONFIG')}
+                >
+                  <Avatar className={classes.large}>
+                    <img
+                      src={require('../../../HomePage/Icons/PO.svg')}
+                      className={classes.icons}
+                    />
+                  </Avatar>
+                  <b>PO Config</b>
+                </div>
+
+                <div
+                  className={classes.avtarbox2}
+                  onClick={() => this.updateView('STOCK_CONFIG')}
+                >
+                  <Avatar className={classes.large}>
+                    <img
+                      src={require('../../../HomePage/Icons/stock.svg')}
+                      className={classes.icons}
+                    />
+                  </Avatar>
+                  <b>Stock Config</b>
+                </div>
+
+                <div
+                  className={classes.avtarbox2}
+                  onClick={() => this.updateView('SALES_CONFIG')}
+                >
+                  <Avatar className={classes.large}>
+                    <img
+                      src={require('../../../HomePage/Icons/sales.svg')}
+                      className={classes.icons}
+                    />
+                  </Avatar>
+                  <b>Sales Config</b>
+                </div>
+
+                <div
+                  className={classes.avtarbox2}
+                  onClick={() => this.updateView('INVOICE_CONFIG')}
+                >
+                  <Avatar className={classes.large}>
+                    <img
+                      src={require('../../../HomePage/Icons/invoices.svg')}
+                      className={classes.icons}
+                    />
+                  </Avatar>
+                  <b>Inv Config</b>
+                </div>
+
+                <div
+                  className={classes.avtarbox2}
+                  onClick={() => this.updateView('ASN_CONFIG')}
+                >
+                  <Avatar className={classes.large}>
+                    <img
+                      src={require('../../../HomePage/Icons/asn.svg')}
+                      className={classes.icons}
+                    />
+                  </Avatar>
+                  <b>ASN Config</b>
+                </div>
+
+                <div
+                  className={classes.avtarbox2}
+                  onClick={() => this.updateView('COST_CONFIG')}
+                >
+                  <Avatar className={classes.large}>
+                    <img
+                      src={require('../../../HomePage/Icons/costchange.svg')}
+                      className={classes.icons}
+                    />
+                  </Avatar>
+                  <b>CO Config</b>
+                </div>
+              </Slider>
+            </div>
+          </Grid>
+        </Grid>
       </Container>
     );
   }
 }
-SalesView.propTypes = {
+NotificationView.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-export default withStyles(styles)(SalesView);
+export default withStyles(styles)(NotificationView);
