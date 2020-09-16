@@ -479,6 +479,15 @@ class POShipment extends Component {
                 </TableBody>
               </Table>
             </TableContainer>
+            <div
+              style={{
+                flexGrow: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                backgroundColor: 'white',
+                padding: '10px',
+              }}
+            ></div>
           </div>
 
           <div
@@ -759,6 +768,15 @@ class POShipment extends Component {
                 </TableBody>
               </Table>
             </TableContainer>
+            <div
+              style={{
+                flexGrow: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                backgroundColor: 'white',
+                padding: '10px',
+              }}
+            ></div>
           </div>
         </div>
       </Container>
