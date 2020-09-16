@@ -3,7 +3,7 @@ import React from 'react';
 export default function SamplePrevArrow(props) {
   const prevArrow = {
     borderRadius: '12px',
-    width: '14%',
+    width: '12%',
     border: '1px solid red',
     color: 'red',
     marginLeft: '-5%',

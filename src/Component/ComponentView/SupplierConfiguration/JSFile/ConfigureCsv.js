@@ -36,7 +36,7 @@ const styles = (theme) => ({
     border: 'solid 1px ',
     borderColor: 'red',
     backgroundColor: 'white',
-    margin: '10px 40px 10px 40px',
+    margin: '10px 45px 10px 45px',
   },
   removeFlex: {
     flexBasis: 'unset',
@@ -131,7 +131,7 @@ const styles = (theme) => ({
     borderLeft: '1px solid #d7d6d6',
     borderTopLeftRadius: ' 10px',
     borderBottomLeftRadius: '10px',
-    padding: '0px',
+    padding: '12px',
     fontSize: '12px',
   },
   table_row_bordertdL: {
@@ -281,6 +281,14 @@ class POShipment extends Component {
         prevArrow: <SamplePrevArrow />,
       },
       items: getItems(10),
+      header: [
+        {
+          name: `column_name___${'PO_CONFIG'}`,
+          desc: `column_desc___${'PO_CONFIG'}`,
+          alternate: `alternate___${'PO_CONFIG'}`,
+          status: `status___${'PO_CONFIG'}`,
+        },
+      ],
     };
     this.onDragEnd = this.onDragEnd.bind(this);
   }
@@ -309,9 +317,93 @@ class POShipment extends Component {
     this.setState({ selectedValue: event.target.value });
   };
 
+  updateView = (status) => {
+    console.log(status, '====>>>status');
+    switch (status) {
+      case 'PO_CONFIG':
+        this.setState({
+          header: [
+            {
+              name: `column_name___${status}`,
+              desc: `column_desc___${status}`,
+              alternate: `alternate___${status}`,
+              status: `status___${status}`,
+            },
+          ],
+        });
+        break;
+      case 'STOCK_CONFIG':
+        this.setState({
+          header: [
+            {
+              name: `column_name___${status}`,
+              desc: `column_desc___${status}`,
+              alternate: `alternate___${status}`,
+              status: `status___${status}`,
+            },
+          ],
+        });
+        break;
+      case 'SALES_CONFIG':
+        this.setState({
+          header: [
+            {
+              name: `column_name___${status}`,
+              desc: `column_desc___${status}`,
+              alternate: `alternate___${status}`,
+              status: `status___${status}`,
+            },
+          ],
+        });
+        break;
+      case 'INVOICE_CONFIG':
+        this.setState({
+          header: [
+            {
+              name: `column_name___${status}`,
+              desc: `column_desc___${status}`,
+              alternate: `alternate___${status}`,
+              status: `status___${status}`,
+            },
+          ],
+        });
+        break;
+      case 'ASN_CONFIG':
+        this.setState({
+          header: [
+            {
+              name: `column_name___${status}`,
+              desc: `column_desc___${status}`,
+              alternate: `alternate___${status}`,
+              status: `status___${status}`,
+            },
+          ],
+        });
+        break;
+      case 'COST_CONFIG':
+        this.setState({
+          header: [
+            {
+              name: `column_name___${status}`,
+              desc: `column_desc___${status}`,
+              alternate: `alternate___${status}`,
+              status: `status___${status}`,
+            },
+          ],
+        });
+        break;
+      default:
+        this.setState({
+          header: [],
+        });
+        break;
+    }
+  };
+
   render() {
     const { classes } = this.props;
-    const { settings, selectedValue } = this.state;
+    const { settings, selectedValue, items } = this.state;
+    console.log(items, '===>>>items');
     return (
       <Container>
         <Toolbar
@@ -336,7 +428,11 @@ class POShipment extends Component {
         </Toolbar>
 
         <div
-          style={{ border: '1px solid red', padding: '1%', margin: '1% 0%' }}
+          style={{
+            border: `1px solid ${selectedValue === 'a' ? 'red' : '#cecece'}`,
+            padding: '0.8%',
+            margin: '1% 0%',
+          }}
         >
           <Grid
             container
@@ -344,7 +440,7 @@ class POShipment extends Component {
             xs={12}
             spacing={0}
             alignItems='center'
-            style={{ margin: '0.5% 0%' }}
+            style={{ margin: '0.1% 0%' }}
           >
             <Grid
               item
@@ -433,7 +529,11 @@ class POShipment extends Component {
         </div>
 
         <div
-          style={{ border: '1px solid red', padding: '1%', margin: '1% 0%' }}
+          style={{
+            border: `1px solid ${selectedValue === 'b' ? 'red' : '#cecece'}`,
+            padding: '0.8%',
+            margin: '1% 0%',
+          }}
         >
           <Grid
             container
@@ -441,7 +541,7 @@ class POShipment extends Component {
             xs={12}
             spacing={1}
             alignItems='center'
-            style={{ margin: '0.5% 0%' }}
+            style={{ margin: '0.1% 0%' }}
           >
             <Grid
               item
@@ -529,100 +629,106 @@ class POShipment extends Component {
           </Grid>
         </div>
 
-        <Grid style={{ border: '1px solid red' }}>
-          <div className={classes.smallSummery}>
-            <p>CSV CONFIGURATION</p>
-          </div>
-          <TableContainer
-            component={Paper}
-            style={{ boxShadow: 'none', height: '250px' }}
-          >
-            <Table
-              stickyHeader
-              aria-label='sticky table'
-              padding='default'
-              size='medium'
-              hover={true}
-              classes={{ root: classes.main_table_root }}
-              className={classes.main_table}
+        {selectedValue === 'a' ? (
+          <Grid style={{ border: '1px solid red' }}>
+            <div className={classes.smallSummery}>
+              <p>CSV CONFIGURATION</p>
+            </div>
+            <TableContainer
+              component={Paper}
+              style={{ boxShadow: 'none', height: '250px' }}
             >
-              <TableHead>
-                <TableRow>
-                  <TableCell
-                    padding='default'
-                    sortDirection='asc'
-                    className={classes.table_head_bordertd1}
-                  >
-                    Column Name
-                  </TableCell>
-                  <TableCell
-                    padding='default'
-                    sortDirection='asc'
-                    className={classes.table_head_bordertd}
-                  >
-                    Column Description
-                  </TableCell>
-                  <TableCell
-                    padding='default'
-                    sortDirection='asc'
-                    className={classes.table_head_bordertd}
-                  >
-                    Alternate Name
-                  </TableCell>
-                  <TableCell
-                    padding='default'
-                    sortDirection='asc'
-                    className={classes.table_head_bordertdL}
-                  >
-                    Status
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody component={DroppableComponent(this.onDragEnd)}>
-                {this.state.items.map((item, index) => (
-                  <TableRow
-                    component={DraggableComponent(item.id, index)}
-                    key={item.id}
-                  >
-                    <TableCell
-                      padding='default'
-                      sortDirection='asc'
-                      className={classes.table_row_bordertd1}
+              <Table
+                stickyHeader
+                aria-label='sticky table'
+                padding='default'
+                size='medium'
+                hover={true}
+                classes={{ root: classes.main_table_root }}
+                className={classes.main_table}
+              >
+                <TableHead>
+                  {this.state.header.map((item, index) => (
+                    <TableRow>
+                      <TableCell
+                        padding='default'
+                        sortDirection='asc'
+                        className={classes.table_head_bordertd1}
+                      >
+                        {item.name}
+                      </TableCell>
+                      <TableCell
+                        padding='default'
+                        sortDirection='asc'
+                        className={classes.table_head_bordertd}
+                      >
+                        {item.desc}
+                      </TableCell>
+                      <TableCell
+                        padding='default'
+                        sortDirection='asc'
+                        className={classes.table_head_bordertd}
+                      >
+                        {item.alternate}
+                      </TableCell>
+                      <TableCell
+                        padding='default'
+                        sortDirection='asc'
+                        className={classes.table_head_bordertdL}
+                      >
+                        {item.status}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableHead>
+                <TableBody component={DroppableComponent(this.onDragEnd)}>
+                  {this.state.items.map((item, index) => (
+                    <TableRow
+                      component={DraggableComponent(item.id, index)}
+                      key={item.id}
                     >
-                      {item.TOTAL_SOH}
-                    </TableCell>
-                    <TableCell
-                      padding='default'
-                      sortDirection='asc'
-                      className={classes.table_row_bordertd}
-                    >
-                      {item.AVL_SOH}
-                    </TableCell>
-                    <TableCell
-                      padding='default'
-                      sortDirection='asc'
-                      className={classes.table_row_bordertd}
-                    >
-                      {' '}
-                      {item.TOTAL_SOH}
-                    </TableCell>
-                    <TableCell
-                      padding='default'
-                      sortDirection='asc'
-                      className={classes.table_row_bordertdL}
-                    >
-                      <Checkbox
-                        onChange={(event) => {}}
-                        name='radio-button-demo'
-                      />
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Grid>
-
+                      <TableCell
+                        padding='default'
+                        sortDirection='asc'
+                        className={classes.table_row_bordertd1}
+                      >
+                        {item.TOTAL_SOH}
+                      </TableCell>
+                      <TableCell
+                        padding='default'
+                        sortDirection='asc'
+                        className={classes.table_row_bordertd}
+                      >
+                        {item.AVL_SOH}
+                      </TableCell>
+                      <TableCell
+                        padding='default'
+                        sortDirection='asc'
+                        className={classes.table_row_bordertd}
+                      >
+                        {' '}
+                        <TextField
+                          id='standard-basic'
+                          defaultValue={item.TOTAL_SOH}
+                        />
+                      </TableCell>
+                      <TableCell
+                        padding='default'
+                        sortDirection='asc'
+                        className={classes.table_row_bordertdL}
+                      >
+                        <Checkbox
+                          onChange={(event) => {}}
+                          name='radio-button-demo'
+                        />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Grid>
+        ) : null}
         {/* below Slider Code */}
         <Grid
           container
@@ -631,69 +737,82 @@ class POShipment extends Component {
           alignItems='center'
           style={{ marginTop: '2%' }}
         >
-          <Grid item xs={5}>
+          <Grid item xs={7}>
             <div className={classes.sliderDiv}>
               <Slider {...settings}>
-                <div className={classes.avtarbox2}>
-                  <Avatar alt='Remy Sharp' className={classes.large}>
+                <div
+                  className={classes.avtarbox2}
+                  onClick={() => this.updateView('PO_CONFIG')}
+                >
+                  <Avatar className={classes.large}>
                     <img
                       src={require('../../../HomePage/Icons/PO.svg')}
                       className={classes.icons}
-                      onClick={(event) => {}}
                     />
                   </Avatar>
                   <b>PO Config</b>
                 </div>
-                <div className={classes.avtarbox2}>
-                  <Avatar alt='Remy Sharp' className={classes.large}>
+
+                <div
+                  className={classes.avtarbox2}
+                  onClick={() => this.updateView('STOCK_CONFIG')}
+                >
+                  <Avatar className={classes.large}>
                     <img
-                      src={require('../../../HomePage/Icons/PO.svg')}
+                      src={require('../../../HomePage/Icons/stock.svg')}
                       className={classes.icons}
-                      onClick={(event) => {}}
                     />
                   </Avatar>
                   <b>Stock Config</b>
                 </div>
 
-                <div className={classes.avtarbox2}>
-                  <Avatar alt='Remy Sharp' className={classes.large}>
+                <div
+                  className={classes.avtarbox2}
+                  onClick={() => this.updateView('SALES_CONFIG')}
+                >
+                  <Avatar className={classes.large}>
                     <img
-                      src={require('../../../HomePage/Icons/PO.svg')}
+                      src={require('../../../HomePage/Icons/sales.svg')}
                       className={classes.icons}
-                      onClick={(event) => {}}
                     />
                   </Avatar>
                   <b>Sales Config</b>
                 </div>
 
-                <div className={classes.avtarbox2}>
-                  <Avatar alt='Remy Sharp' className={classes.large}>
+                <div
+                  className={classes.avtarbox2}
+                  onClick={() => this.updateView('INVOICE_CONFIG')}
+                >
+                  <Avatar className={classes.large}>
                     <img
-                      src={require('../../../HomePage/Icons/PO.svg')}
+                      src={require('../../../HomePage/Icons/invoices.svg')}
                       className={classes.icons}
-                      onClick={(event) => {}}
                     />
                   </Avatar>
                   <b>Inv Config</b>
                 </div>
 
-                <div className={classes.avtarbox2}>
-                  <Avatar alt='Remy Sharp' className={classes.large}>
+                <div
+                  className={classes.avtarbox2}
+                  onClick={() => this.updateView('ASN_CONFIG')}
+                >
+                  <Avatar className={classes.large}>
                     <img
-                      src={require('../../../HomePage/Icons/PO.svg')}
+                      src={require('../../../HomePage/Icons/asn.svg')}
                       className={classes.icons}
-                      onClick={(event) => {}}
                     />
                   </Avatar>
                   <b>ASN Config</b>
                 </div>
 
-                <div className={classes.avtarbox2}>
-                  <Avatar alt='Remy Sharp' className={classes.large}>
+                <div
+                  className={classes.avtarbox2}
+                  onClick={() => this.updateView('COST_CONFIG')}
+                >
+                  <Avatar className={classes.large}>
                     <img
-                      src={require('../../../HomePage/Icons/PO.svg')}
+                      src={require('../../../HomePage/Icons/costchange.svg')}
                       className={classes.icons}
-                      onClick={(event) => {}}
                     />
                   </Avatar>
                   <b>CO Config</b>
