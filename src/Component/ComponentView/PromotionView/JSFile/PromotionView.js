@@ -64,7 +64,7 @@ const styles = (theme) => ({
     flex: 1,
     flexDirection: 'column',
     border: '1px solid red',
-    height: 380,
+    height: '300px',
   },
   paper: {
     paddingTop: theme.spacing(3),

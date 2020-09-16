@@ -36,7 +36,7 @@ const styles = (theme) => ({
     border: 'solid 1px ',
     borderColor: 'red',
     backgroundColor: 'white',
-    margin: '10px 40px 10px 40px',
+    margin: '10px 45px 10px 45px',
   },
   removeFlex: {
     flexBasis: 'unset',
@@ -131,7 +131,7 @@ const styles = (theme) => ({
     borderLeft: '1px solid #d7d6d6',
     borderTopLeftRadius: ' 10px',
     borderBottomLeftRadius: '10px',
-    padding: '0px',
+    padding: '12px',
     fontSize: '12px',
   },
   table_row_bordertdL: {
@@ -336,7 +336,11 @@ class POShipment extends Component {
         </Toolbar>
 
         <div
-          style={{ border: '1px solid red', padding: '1%', margin: '1% 0%' }}
+          style={{
+            border: `1px solid ${selectedValue === 'a' ? 'red' : '#cecece'}`,
+            padding: '0.8%',
+            margin: '1% 0%',
+          }}
         >
           <Grid
             container
@@ -344,7 +348,7 @@ class POShipment extends Component {
             xs={12}
             spacing={0}
             alignItems='center'
-            style={{ margin: '0.5% 0%' }}
+            style={{ margin: '0.1% 0%' }}
           >
             <Grid
               item
@@ -433,7 +437,11 @@ class POShipment extends Component {
         </div>
 
         <div
-          style={{ border: '1px solid red', padding: '1%', margin: '1% 0%' }}
+          style={{
+            border: `1px solid ${selectedValue === 'b' ? 'red' : '#cecece'}`,
+            padding: '0.8%',
+            margin: '1% 0%',
+          }}
         >
           <Grid
             container
@@ -441,7 +449,7 @@ class POShipment extends Component {
             xs={12}
             spacing={1}
             alignItems='center'
-            style={{ margin: '0.5% 0%' }}
+            style={{ margin: '0.1% 0%' }}
           >
             <Grid
               item
@@ -529,100 +537,104 @@ class POShipment extends Component {
           </Grid>
         </div>
 
-        <Grid style={{ border: '1px solid red' }}>
-          <div className={classes.smallSummery}>
-            <p>CSV CONFIGURATION</p>
-          </div>
-          <TableContainer
-            component={Paper}
-            style={{ boxShadow: 'none', height: '250px' }}
-          >
-            <Table
-              stickyHeader
-              aria-label='sticky table'
-              padding='default'
-              size='medium'
-              hover={true}
-              classes={{ root: classes.main_table_root }}
-              className={classes.main_table}
+        {selectedValue === 'a' ? (
+          <Grid style={{ border: '1px solid red' }}>
+            <div className={classes.smallSummery}>
+              <p>CSV CONFIGURATION</p>
+            </div>
+            <TableContainer
+              component={Paper}
+              style={{ boxShadow: 'none', height: '250px' }}
             >
-              <TableHead>
-                <TableRow>
-                  <TableCell
-                    padding='default'
-                    sortDirection='asc'
-                    className={classes.table_head_bordertd1}
-                  >
-                    Column Name
-                  </TableCell>
-                  <TableCell
-                    padding='default'
-                    sortDirection='asc'
-                    className={classes.table_head_bordertd}
-                  >
-                    Column Description
-                  </TableCell>
-                  <TableCell
-                    padding='default'
-                    sortDirection='asc'
-                    className={classes.table_head_bordertd}
-                  >
-                    Alternate Name
-                  </TableCell>
-                  <TableCell
-                    padding='default'
-                    sortDirection='asc'
-                    className={classes.table_head_bordertdL}
-                  >
-                    Status
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody component={DroppableComponent(this.onDragEnd)}>
-                {this.state.items.map((item, index) => (
-                  <TableRow
-                    component={DraggableComponent(item.id, index)}
-                    key={item.id}
-                  >
+              <Table
+                stickyHeader
+                aria-label='sticky table'
+                padding='default'
+                size='medium'
+                hover={true}
+                classes={{ root: classes.main_table_root }}
+                className={classes.main_table}
+              >
+                <TableHead>
+                  <TableRow>
                     <TableCell
                       padding='default'
                       sortDirection='asc'
-                      className={classes.table_row_bordertd1}
+                      className={classes.table_head_bordertd1}
                     >
-                      {item.TOTAL_SOH}
+                      Column Name
                     </TableCell>
                     <TableCell
                       padding='default'
                       sortDirection='asc'
-                      className={classes.table_row_bordertd}
+                      className={classes.table_head_bordertd}
                     >
-                      {item.AVL_SOH}
+                      Column Description
                     </TableCell>
                     <TableCell
                       padding='default'
                       sortDirection='asc'
-                      className={classes.table_row_bordertd}
+                      className={classes.table_head_bordertd}
                     >
-                      {' '}
-                      {item.TOTAL_SOH}
+                      Alternate Name
                     </TableCell>
                     <TableCell
                       padding='default'
                       sortDirection='asc'
-                      className={classes.table_row_bordertdL}
+                      className={classes.table_head_bordertdL}
                     >
-                      <Checkbox
-                        onChange={(event) => {}}
-                        name='radio-button-demo'
-                      />
+                      Status
                     </TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Grid>
-
+                </TableHead>
+                <TableBody component={DroppableComponent(this.onDragEnd)}>
+                  {this.state.items.map((item, index) => (
+                    <TableRow
+                      component={DraggableComponent(item.id, index)}
+                      key={item.id}
+                    >
+                      <TableCell
+                        padding='default'
+                        sortDirection='asc'
+                        className={classes.table_row_bordertd1}
+                      >
+                        {item.TOTAL_SOH}
+                      </TableCell>
+                      <TableCell
+                        padding='default'
+                        sortDirection='asc'
+                        className={classes.table_row_bordertd}
+                      >
+                        {item.AVL_SOH}
+                      </TableCell>
+                      <TableCell
+                        padding='default'
+                        sortDirection='asc'
+                        className={classes.table_row_bordertd}
+                      >
+                        {' '}
+                        <TextField
+                          id='standard-basic'
+                          defaultValue={item.TOTAL_SOH}
+                        />
+                      </TableCell>
+                      <TableCell
+                        padding='default'
+                        sortDirection='asc'
+                        className={classes.table_row_bordertdL}
+                      >
+                        <Checkbox
+                          onChange={(event) => {}}
+                          name='radio-button-demo'
+                        />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Grid>
+        ) : null}
         {/* below Slider Code */}
         <Grid
           container
@@ -631,7 +643,7 @@ class POShipment extends Component {
           alignItems='center'
           style={{ marginTop: '2%' }}
         >
-          <Grid item xs={5}>
+          <Grid item xs={7}>
             <div className={classes.sliderDiv}>
               <Slider {...settings}>
                 <div className={classes.avtarbox2}>

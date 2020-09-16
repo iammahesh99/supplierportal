@@ -3,7 +3,7 @@ import React from 'react';
 export default function SampleNextArrow(props) {
   const nextArrow = {
     borderRadius: '12px',
-    width: '14%',
+    width: '12%',
     border: '1px solid red',
     color: 'red',
     marginRight: '-5%',

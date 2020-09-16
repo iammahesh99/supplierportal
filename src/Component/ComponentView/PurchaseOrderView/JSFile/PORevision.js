@@ -99,7 +99,7 @@ const styles = (theme) => ({
     borderLeft: '1px solid #d7d6d6',
     borderTopLeftRadius: ' 10px',
     borderBottomLeftRadius: '10px',
-    padding: '0px',
+    padding: '12px',
     fontSize: '12px',
   },
   table_row_bordertdL: {
@@ -216,65 +216,261 @@ class POShipment extends Component {
               component={Paper}
               style={{ boxShadow: 'none', height: '350px' }}
             >
-              <Table stickyHeader aria-label='sticky table'>
+              <Table
+                stickyHeader
+                aria-label='sticky table'
+                padding='default'
+                size='medium'
+                hover={true}
+                classes={{ root: classes.main_table_root }}
+                className={classes.main_table}
+              >
                 <TableHead>
                   <TableRow>
-                    <TableCell>Item Id</TableCell>
-                    <TableCell>Item Desc</TableCell>
-                    <TableCell>Barcode</TableCell>
-                    <TableCell>Qty</TableCell>
-                    <TableCell>Unit Cost</TableCell>
-                    <TableCell>Total Cost</TableCell>
+                    <TableCell
+                      padding='default'
+                      sortDirection='asc'
+                      className={classes.table_head_bordertd1}
+                    >
+                      Item Id
+                    </TableCell>
+                    <TableCell
+                      padding='default'
+                      sortDirection='asc'
+                      className={classes.table_head_bordertd}
+                    >
+                      Item Desc
+                    </TableCell>
+                    <TableCell
+                      padding='default'
+                      sortDirection='asc'
+                      className={classes.table_head_bordertd}
+                    >
+                      Barcode
+                    </TableCell>
+                    <TableCell
+                      padding='default'
+                      sortDirection='asc'
+                      className={classes.table_head_bordertd}
+                    >
+                      Qty
+                    </TableCell>
+                    <TableCell
+                      padding='default'
+                      sortDirection='asc'
+                      className={classes.table_head_bordertd}
+                    >
+                      Unit Cost
+                    </TableCell>
+                    <TableCell
+                      padding='default'
+                      sortDirection='asc'
+                      className={classes.table_head_bordertdL}
+                    >
+                      Total Cost
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   <TableRow hover role='checkbox'>
-                    <TableCell>0001234</TableCell>
-                    <TableCell>Stock</TableCell>
-                    <TableCell>123597</TableCell>
-                    <TableCell>100</TableCell>
-                    <TableCell>30000</TableCell>
-                    <TableCell>500000</TableCell>
+                    <TableCell className={classes.table_row_bordertd1}>
+                      0001234
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      Stock
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      123597
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      100
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      30000
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertdL}>
+                      500000
+                    </TableCell>
                   </TableRow>
                   <TableRow hover role='checkbox'>
-                    <TableCell>0001234</TableCell>
-                    <TableCell>Stock</TableCell>
-                    <TableCell>123597</TableCell>
-                    <TableCell>100</TableCell>
-                    <TableCell>30000</TableCell>
-                    <TableCell>500000</TableCell>
+                    <TableCell className={classes.table_row_bordertd1}>
+                      0001234
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      Stock
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      123597
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      100
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      30000
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertdL}>
+                      500000
+                    </TableCell>
                   </TableRow>
                   <TableRow hover role='checkbox'>
-                    <TableCell>0001234</TableCell>
-                    <TableCell>Stock</TableCell>
-                    <TableCell>123597</TableCell>
-                    <TableCell>100</TableCell>
-                    <TableCell>30000</TableCell>
-                    <TableCell>500000</TableCell>
+                    <TableCell className={classes.table_row_bordertd1}>
+                      0001234
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      Stock
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      123597
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      100
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      30000
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertdL}>
+                      500000
+                    </TableCell>
                   </TableRow>
                   <TableRow hover role='checkbox'>
-                    <TableCell>0001234</TableCell>
-                    <TableCell>Stock</TableCell>
-                    <TableCell>123597</TableCell>
-                    <TableCell>100</TableCell>
-                    <TableCell>30000</TableCell>
-                    <TableCell>500000</TableCell>
+                    <TableCell className={classes.table_row_bordertd1}>
+                      0001234
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      Stock
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      123597
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      100
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      30000
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertdL}>
+                      500000
+                    </TableCell>
                   </TableRow>
                   <TableRow hover role='checkbox'>
-                    <TableCell>0001234</TableCell>
-                    <TableCell>Stock</TableCell>
-                    <TableCell>123597</TableCell>
-                    <TableCell>100</TableCell>
-                    <TableCell>30000</TableCell>
-                    <TableCell>500000</TableCell>
+                    <TableCell className={classes.table_row_bordertd1}>
+                      0001234
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      Stock
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      123597
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      100
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      30000
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertdL}>
+                      500000
+                    </TableCell>
                   </TableRow>
                   <TableRow hover role='checkbox'>
-                    <TableCell>0001234</TableCell>
-                    <TableCell>Stock</TableCell>
-                    <TableCell>123597</TableCell>
-                    <TableCell>100</TableCell>
-                    <TableCell>30000</TableCell>
-                    <TableCell>500000</TableCell>
+                    <TableCell className={classes.table_row_bordertd1}>
+                      0001234
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      Stock
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      123597
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      100
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      30000
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertdL}>
+                      500000
+                    </TableCell>
+                  </TableRow>
+                  <TableRow hover role='checkbox'>
+                    <TableCell className={classes.table_row_bordertd1}>
+                      0001234
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      Stock
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      123597
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      100
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      30000
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertdL}>
+                      500000
+                    </TableCell>
+                  </TableRow>
+                  <TableRow hover role='checkbox'>
+                    <TableCell className={classes.table_row_bordertd1}>
+                      0001234
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      Stock
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      123597
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      100
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      30000
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertdL}>
+                      500000
+                    </TableCell>
+                  </TableRow>
+                  <TableRow hover role='checkbox'>
+                    <TableCell className={classes.table_row_bordertd1}>
+                      0001234
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      Stock
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      123597
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      100
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      30000
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertdL}>
+                      500000
+                    </TableCell>
+                  </TableRow>
+                  <TableRow hover role='checkbox'>
+                    <TableCell className={classes.table_row_bordertd1}>
+                      0001234
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      Stock
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      123597
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      100
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      30000
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertdL}>
+                      500000
+                    </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -316,65 +512,241 @@ class POShipment extends Component {
               component={Paper}
               style={{ boxShadow: 'none', height: '350px' }}
             >
-              <Table stickyHeader aria-label='sticky table'>
+              <Table
+                stickyHeader
+                aria-label='sticky table'
+                padding='default'
+                size='medium'
+                hover={true}
+                classes={{ root: classes.main_table_root }}
+                className={classes.main_table}
+              >
                 <TableHead>
                   <TableRow>
-                    <TableCell>Item Id</TableCell>
-                    <TableCell>Item Desc</TableCell>
-                    <TableCell>Barcode</TableCell>
-                    <TableCell>Qty</TableCell>
-                    <TableCell>Unit Cost</TableCell>
-                    <TableCell>Total Cost</TableCell>
+                    <TableCell
+                      padding='default'
+                      sortDirection='asc'
+                      className={classes.table_head_bordertd1}
+                    >
+                      Item Id
+                    </TableCell>
+                    <TableCell
+                      padding='default'
+                      sortDirection='asc'
+                      className={classes.table_head_bordertd}
+                    >
+                      Item Desc
+                    </TableCell>
+                    <TableCell
+                      padding='default'
+                      sortDirection='asc'
+                      className={classes.table_head_bordertd}
+                    >
+                      Barcode
+                    </TableCell>
+                    <TableCell
+                      padding='default'
+                      sortDirection='asc'
+                      className={classes.table_head_bordertd}
+                    >
+                      Qty
+                    </TableCell>
+                    <TableCell
+                      padding='default'
+                      sortDirection='asc'
+                      className={classes.table_head_bordertd}
+                    >
+                      Unit Cost
+                    </TableCell>
+                    <TableCell
+                      padding='default'
+                      sortDirection='asc'
+                      className={classes.table_head_bordertdL}
+                    >
+                      Total Cost
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   <TableRow hover role='checkbox'>
-                    <TableCell>0001234</TableCell>
-                    <TableCell>Stock</TableCell>
-                    <TableCell>123597</TableCell>
-                    <TableCell>100</TableCell>
-                    <TableCell>30000</TableCell>
-                    <TableCell>500000</TableCell>
+                    <TableCell className={classes.table_row_bordertd1}>
+                      0001234
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      Stock
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      123597
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      100
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      30000
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertdL}>
+                      500000
+                    </TableCell>
                   </TableRow>
                   <TableRow hover role='checkbox'>
-                    <TableCell>0001234</TableCell>
-                    <TableCell>Stock</TableCell>
-                    <TableCell>123597</TableCell>
-                    <TableCell>100</TableCell>
-                    <TableCell>30000</TableCell>
-                    <TableCell>500000</TableCell>
+                    <TableCell className={classes.table_row_bordertd1}>
+                      0001234
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      Stock
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      123597
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      100
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      30000
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertdL}>
+                      500000
+                    </TableCell>
                   </TableRow>
                   <TableRow hover role='checkbox'>
-                    <TableCell>0001234</TableCell>
-                    <TableCell>Stock</TableCell>
-                    <TableCell>123597</TableCell>
-                    <TableCell>100</TableCell>
-                    <TableCell>30000</TableCell>
-                    <TableCell>500000</TableCell>
+                    <TableCell className={classes.table_row_bordertd1}>
+                      0001234
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      Stock
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      123597
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      100
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      30000
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertdL}>
+                      500000
+                    </TableCell>
                   </TableRow>
                   <TableRow hover role='checkbox'>
-                    <TableCell>0001234</TableCell>
-                    <TableCell>Stock</TableCell>
-                    <TableCell>123597</TableCell>
-                    <TableCell>100</TableCell>
-                    <TableCell>30000</TableCell>
-                    <TableCell>500000</TableCell>
+                    <TableCell className={classes.table_row_bordertd1}>
+                      0001234
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      Stock
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      123597
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      100
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      30000
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertdL}>
+                      500000
+                    </TableCell>
                   </TableRow>
                   <TableRow hover role='checkbox'>
-                    <TableCell>0001234</TableCell>
-                    <TableCell>Stock</TableCell>
-                    <TableCell>123597</TableCell>
-                    <TableCell>100</TableCell>
-                    <TableCell>30000</TableCell>
-                    <TableCell>500000</TableCell>
+                    <TableCell className={classes.table_row_bordertd1}>
+                      0001234
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      Stock
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      123597
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      100
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      30000
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertdL}>
+                      500000
+                    </TableCell>
                   </TableRow>
                   <TableRow hover role='checkbox'>
-                    <TableCell>0001234</TableCell>
-                    <TableCell>Stock</TableCell>
-                    <TableCell>123597</TableCell>
-                    <TableCell>100</TableCell>
-                    <TableCell>30000</TableCell>
-                    <TableCell>500000</TableCell>
+                    <TableCell className={classes.table_row_bordertd1}>
+                      0001234
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      Stock
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      123597
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      100
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      30000
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertdL}>
+                      500000
+                    </TableCell>
+                  </TableRow>
+                  <TableRow hover role='checkbox'>
+                    <TableCell className={classes.table_row_bordertd1}>
+                      0001234
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      Stock
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      123597
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      100
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      30000
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertdL}>
+                      500000
+                    </TableCell>
+                  </TableRow>
+                  <TableRow hover role='checkbox'>
+                    <TableCell className={classes.table_row_bordertd1}>
+                      0001234
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      Stock
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      123597
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      100
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      30000
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertdL}>
+                      500000
+                    </TableCell>
+                  </TableRow>
+                  <TableRow hover role='checkbox'>
+                    <TableCell className={classes.table_row_bordertd1}>
+                      0001234
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      Stock
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      123597
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      100
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertd}>
+                      30000
+                    </TableCell>
+                    <TableCell className={classes.table_row_bordertdL}>
+                      500000
+                    </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
