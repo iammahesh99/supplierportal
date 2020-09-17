@@ -281,6 +281,7 @@ class POShipment extends Component {
         prevArrow: <SamplePrevArrow />,
       },
       items: getItems(10),
+      selectItem: 'PO',
       header: [
         {
           name: `column_name___${'PO_CONFIG'}`,
@@ -330,6 +331,7 @@ class POShipment extends Component {
               status: `status___${status}`,
             },
           ],
+          selectItem: 'PO',
         });
         break;
       case 'STOCK_CONFIG':
@@ -342,6 +344,7 @@ class POShipment extends Component {
               status: `status___${status}`,
             },
           ],
+          selectItem: 'STOCK',
         });
         break;
       case 'SALES_CONFIG':
@@ -354,6 +357,7 @@ class POShipment extends Component {
               status: `status___${status}`,
             },
           ],
+          selectItem: 'SALES',
         });
         break;
       case 'INVOICE_CONFIG':
@@ -366,6 +370,7 @@ class POShipment extends Component {
               status: `status___${status}`,
             },
           ],
+          selectItem: 'INVOICE',
         });
         break;
       case 'ASN_CONFIG':
@@ -378,6 +383,7 @@ class POShipment extends Component {
               status: `status___${status}`,
             },
           ],
+          selectItem: 'ASN',
         });
         break;
       case 'COST_CONFIG':
@@ -390,6 +396,7 @@ class POShipment extends Component {
               status: `status___${status}`,
             },
           ],
+          selectItem: 'COST',
         });
         break;
       default:
@@ -402,7 +409,7 @@ class POShipment extends Component {
 
   render() {
     const { classes } = this.props;
-    const { settings, selectedValue, items } = this.state;
+    const { settings, selectedValue, items, selectItem } = this.state;
     console.log(items, '===>>>items');
     return (
       <Container>
@@ -632,7 +639,7 @@ class POShipment extends Component {
         {selectedValue === 'a' ? (
           <Grid style={{ border: '1px solid red' }}>
             <div className={classes.smallSummery}>
-              <p>CSV CONFIGURATION</p>
+              <p>{selectItem} CSV CONFIGURATION</p>
             </div>
             <TableContainer
               component={Paper}
@@ -655,28 +662,28 @@ class POShipment extends Component {
                         sortDirection='asc'
                         className={classes.table_head_bordertd1}
                       >
-                        {item.name}
+                        COLUMN NAME
                       </TableCell>
                       <TableCell
                         padding='default'
                         sortDirection='asc'
                         className={classes.table_head_bordertd}
                       >
-                        {item.desc}
+                        COLUMN DESCIPTION
                       </TableCell>
                       <TableCell
                         padding='default'
                         sortDirection='asc'
                         className={classes.table_head_bordertd}
                       >
-                        {item.alternate}
+                        ALTERNATE NAME
                       </TableCell>
                       <TableCell
                         padding='default'
                         sortDirection='asc'
                         className={classes.table_head_bordertdL}
                       >
-                        {item.status}
+                        STATUS
                       </TableCell>
                     </TableRow>
                   ))}

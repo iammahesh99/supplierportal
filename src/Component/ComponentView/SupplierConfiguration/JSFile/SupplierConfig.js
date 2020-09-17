@@ -200,7 +200,7 @@ class SupplierConfig extends Component {
       checkedItems: [],
       options: [],
       detail: false,
-      openConfigModel: true,
+      openConfigModel: false,
     };
   }
 
@@ -715,6 +715,7 @@ class SupplierConfig extends Component {
         </div>
         <Dialog
           fullWidth
+          fullScreen={false}
           open={this.state.openConfigModel}
           maxWidth='lg'
           classes={{ paper: classes.dialogPaper }}

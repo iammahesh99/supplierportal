@@ -8,9 +8,11 @@ import {
   Typography,
   Button,
   AppBar,
+  Dialog,
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
+import FromCreate from '../../ComponentView/FromCreate';
 import { Route, Link, Redirect } from 'react-router-dom';
 
 const styles = (theme) => ({
@@ -76,11 +78,26 @@ class HomePage extends Component {
     super(props);
     this.state = {
       clickedButton: ' ',
+      openModelView: true,
+      createType: '',
     };
   }
 
   _onButtonClick = (event, index) => {
     this.setState({ clickedButton: index });
+  };
+
+  closeModel = () => {
+    this.setState({
+      openModelView: false,
+    });
+  };
+
+  openModel = (type) => {
+    this.setState({
+      openModelView: true,
+      createType: type,
+    });
   };
 
   pageView(param) {
@@ -157,6 +174,7 @@ class HomePage extends Component {
                 classes={{
                   text: this.props.classes.bottonRightBorder,
                 }}
+                onClick={() => this.openModel('Orders')}
               >
                 Create Orders
               </Button>
@@ -203,6 +221,7 @@ class HomePage extends Component {
                 classes={{
                   text: this.props.classes.bottonRightBorder,
                 }}
+                onClick={() => this.openModel('Cost Changes')}
               >
                 Create Cost Change
               </Button>
@@ -238,6 +257,7 @@ class HomePage extends Component {
                 classes={{
                   text: this.props.classes.bottonRightBorder,
                 }}
+                onClick={() => this.openModel('Promotions')}
               >
                 Create Promotions
               </Button>
@@ -273,6 +293,7 @@ class HomePage extends Component {
                 classes={{
                   text: this.props.classes.bottonRightBorder,
                 }}
+                onClick={() => this.openModel('Invoices')}
               >
                 Create Invoices
               </Button>
@@ -287,18 +308,6 @@ class HomePage extends Component {
                 }}
               >
                 View Invoices
-              </Button>
-            </Link>
-
-            <div style={{ borderLeft: '3px solid black' }}></div>
-
-            <Link style={{ textDecoration: 'none' }}>
-              <Button
-                classes={{
-                  text: this.props.classes.bottonRightBorder,
-                }}
-              >
-                View Balances
               </Button>
             </Link>
           </div>
@@ -516,6 +525,20 @@ class HomePage extends Component {
             </Grid>
           </Grid>
         </Container>
+
+        <Dialog
+          fullWidth
+          fullScreen={false}
+          open={this.state.openModelView}
+          maxWidth='lg'
+          aria-labelledby='alert-dialog-title'
+          aria-describedby='alert-dialog-description'
+        >
+          <FromCreate
+            createType={this.state.createType}
+            handleClose={this.closeModel}
+          />
+        </Dialog>
       </>
     );
   }
