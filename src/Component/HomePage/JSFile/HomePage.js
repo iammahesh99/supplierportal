@@ -78,7 +78,7 @@ class HomePage extends Component {
     super(props);
     this.state = {
       clickedButton: ' ',
-      openModelView: true,
+      openModelView: false,
       createType: '',
     };
   }
