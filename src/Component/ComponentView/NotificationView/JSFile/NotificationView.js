@@ -77,7 +77,7 @@ const styles = (theme) => ({
     flex: 1,
     flexDirection: 'column',
     border: '1px solid red',
-    height: 200,
+    height: 500,
   },
   poDetail: {
     marginBottom: theme.spacing(2),
@@ -218,29 +218,12 @@ const styles = (theme) => ({
 
 class NotificationView extends Component {
   constructor(props) {
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth() + 1;
-    if (dd < 10) {
-      dd = '0' + dd;
-    }
-    if (mm < 10) {
-      mm = '0' + mm;
-    }
-    var date = today.getFullYear() + '-' + mm + '-' + dd;
     super(props);
     this.state = {
-      checked: true,
-      currentDate: date,
       searchResult: [],
-      item: '',
-      Desc: '',
-      location: '',
-      bar: '',
-      startDate: '',
-      endDate: '',
       checkedItems: [],
       options: [],
+      selectedAlert: 'PO',
       settings: {
         initialSlide: 0,
         dots: false,
@@ -255,146 +238,46 @@ class NotificationView extends Component {
     };
   }
 
-  handleChange = () => {
-    this.setState({ checked: !this.state.checked });
-  };
-
-  itemChange = (event) => {
-    this.setState({ item: event.target.value });
-    console.log(this.state.item);
-  };
-
-  descChange = (event) => {
-    this.setState({ Desc: event.target.value });
-    console.log(this.state.Desc);
-  };
-
-  locationChange = (event) => {
-    this.setState({ location: event.target.value });
-  };
-
-  barChange = (event) => {
-    this.setState({ bar: event.target.value });
-  };
-
-  startDate = (event) => {
-    this.setState({ startDate: event.target.value });
-  };
-
-  endDate = (event) => {
-    this.setState({ endDate: event.target.value });
-  };
-
-  handleSearchItem = () => {
-    this.setState({ options: [] });
-    this.setState({ checkedItems: [] });
-    this.setState({ searchResult: [] });
-    var item = '';
-    var desc = '';
-    var location = '';
-    var bar = '';
-    var startDate = '';
-    var endDate = '';
-    if (this.state.item != '') {
-      item = ('item=' + this.state.item + '&').replace(/ /g, '');
+  updateView = (status) => {
+    switch (status) {
+      case 'PO_ALERTS':
+        this.setState({
+          selectedAlert: 'PO',
+        });
+        break;
+      case 'STOCK_ALERTS':
+        this.setState({
+          selectedAlert: 'STOCK',
+        });
+        break;
+      case 'SALES_ALERTS':
+        this.setState({
+          selectedAlert: 'SALES',
+        });
+        break;
+      case 'INVOICE_ALERTS':
+        this.setState({
+          selectedAlert: 'INVOICE',
+        });
+        break;
+      case 'ASN_ALERTS':
+        this.setState({
+          selectedAlert: 'ASN',
+        });
+        break;
+      case 'COST_ALERTS':
+        this.setState({
+          selectedAlert: 'COST',
+        });
+        break;
+      default:
+        break;
     }
-    if (this.state.Desc != '') {
-      desc = ('desc=' + this.state.Desc + '&').replace(/ /g, '%20');
-    }
-    if (this.state.location != '') {
-      location = ('location=' + this.state.location + '&').replace(/ /g, '%20');
-    }
-    if (this.state.bar != '') {
-      bar = ('upc=' + this.state.bar + '&').replace(/ /g, '');
-    }
-    if (this.state.startDate != '') {
-      startDate = ('startDate=' + this.state.startDate + '&').replace(/ /g, '');
-    }
-    if (this.state.endDate != '') {
-      endDate = ('endDate=' + this.state.endDate + '&').replace(/ /g, '');
-    }
-    var finalstring = item + desc + location + bar + startDate + endDate;
-    const query = finalstring.substring(0, finalstring.length - 1);
-    console.log(query);
-
-    Toast.loading('Searching');
-    setTimeout(() => {
-      Toast.hide();
-    }, 4000);
-    const proxyurl = 'https://cors-anywhere.herokuapp.com/';
-    const endUrl = properties.endUrl;
-    const baseuri = endUrl + 'api/v1/salesdetail?';
-    const itemsearch = query;
-
-    var myHeaders = new Headers();
-    myHeaders.append(
-      'Authorization',
-      'Bearer ' + ' ' + localStorage.getItem('dataToken')
-    );
-
-    var requestOptions = {
-      method: 'GET',
-      headers: myHeaders,
-      redirect: 'follow',
-    };
-
-    fetch(proxyurl + baseuri + itemsearch, requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        this.setState({ searchResult: result.result });
-      })
-      .catch((error) => console.log('error', error));
-  };
-
-  handleReset = () => {
-    this.setState({ searchResult: [] });
-    this.setState({ item: '' });
-    this.setState({ desc: '' });
-    this.setState({ location: '' });
-    this.setState({ bar: '' });
-    this.setState({ vpn: '' });
-  };
-
-  handleCheck = (event, row) => {
-    const options = this.state.options;
-    let index;
-
-    // check if the check box is checked or unchecked
-    if (event.target.checked) {
-      // add the numerical value of the checkbox to options array
-      options.push(event.target.value);
-    } else {
-      // or remove the value from the unchecked checkbox from the array
-      index = options.indexOf(event.target.value);
-      options.splice(index, 1);
-    }
-
-    // update the state with the new array of options
-    this.setState({ options: options });
-  };
-
-  handleExport = () => {
-    this.setState({ checkedItems: [] });
-    this.state.options.map((data) => {
-      this.state.checkedItems.push(JSON.parse(data));
-    });
-    var ans = 'Sales';
-    var arr = '0123456789qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM';
-    var len = 5;
-    for (var i = len; i > 0; i--) {
-      ans += arr[Math.floor(Math.random() * arr.length)];
-    }
-
-    const sheet = XLSX.utils.json_to_sheet(this.state.checkedItems);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, sheet, 'Sheet 1');
-    XLSX.writeFile(workbook, ans + `.xls`);
   };
 
   render() {
     const { classes } = this.props;
-    const { settings } = this.state;
-    const open = Boolean(this.state.ischecked);
+    const { settings, selectedAlert } = this.state;
 
     return (
       <Container component='main' maxWidth='lg'>
@@ -409,7 +292,7 @@ class NotificationView extends Component {
             }}
           >
             <div>
-              <p>ALERTS</p>
+              <h3>{selectedAlert} ALERTS</h3>
             </div>
           </div>
 
@@ -519,7 +402,7 @@ class NotificationView extends Component {
               <Slider {...settings}>
                 <div
                   className={classes.avtarbox2}
-                  onClick={() => this.updateView('PO_CONFIG')}
+                  onClick={() => this.updateView('PO_ALERTS')}
                 >
                   <Avatar className={classes.large}>
                     <img
@@ -527,12 +410,12 @@ class NotificationView extends Component {
                       className={classes.icons}
                     />
                   </Avatar>
-                  <b>PO Config</b>
+                  <b>PO Alerts</b>
                 </div>
 
                 <div
                   className={classes.avtarbox2}
-                  onClick={() => this.updateView('STOCK_CONFIG')}
+                  onClick={() => this.updateView('STOCK_ALERTS')}
                 >
                   <Avatar className={classes.large}>
                     <img
@@ -540,12 +423,12 @@ class NotificationView extends Component {
                       className={classes.icons}
                     />
                   </Avatar>
-                  <b>Stock Config</b>
+                  <b>Stock Alerts</b>
                 </div>
 
                 <div
                   className={classes.avtarbox2}
-                  onClick={() => this.updateView('SALES_CONFIG')}
+                  onClick={() => this.updateView('SALES_ALERTS')}
                 >
                   <Avatar className={classes.large}>
                     <img
@@ -553,12 +436,12 @@ class NotificationView extends Component {
                       className={classes.icons}
                     />
                   </Avatar>
-                  <b>Sales Config</b>
+                  <b>Sales Alerts</b>
                 </div>
 
                 <div
                   className={classes.avtarbox2}
-                  onClick={() => this.updateView('INVOICE_CONFIG')}
+                  onClick={() => this.updateView('INVOICE_ALERTS')}
                 >
                   <Avatar className={classes.large}>
                     <img
@@ -566,12 +449,12 @@ class NotificationView extends Component {
                       className={classes.icons}
                     />
                   </Avatar>
-                  <b>Inv Config</b>
+                  <b>Inv Alerts</b>
                 </div>
 
                 <div
                   className={classes.avtarbox2}
-                  onClick={() => this.updateView('ASN_CONFIG')}
+                  onClick={() => this.updateView('ASN_ALERTS')}
                 >
                   <Avatar className={classes.large}>
                     <img
@@ -579,12 +462,12 @@ class NotificationView extends Component {
                       className={classes.icons}
                     />
                   </Avatar>
-                  <b>ASN Config</b>
+                  <b>ASN Alerts</b>
                 </div>
 
                 <div
                   className={classes.avtarbox2}
-                  onClick={() => this.updateView('COST_CONFIG')}
+                  onClick={() => this.updateView('COST_ALERTS')}
                 >
                   <Avatar className={classes.large}>
                     <img
@@ -592,7 +475,7 @@ class NotificationView extends Component {
                       className={classes.icons}
                     />
                   </Avatar>
-                  <b>CO Config</b>
+                  <b>CO Alerts</b>
                 </div>
               </Slider>
             </div>
