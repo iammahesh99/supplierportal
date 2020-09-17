@@ -150,6 +150,7 @@ class FromCreate extends Component {
     super(props);
     this.state = {
       fileUpload: false,
+      errorInFile: false,
     };
   }
 
@@ -161,6 +162,10 @@ class FromCreate extends Component {
 
   handleOnError = (err, file, inputElem, reason) => {
     console.log(err);
+    this.setState({
+      errorInFile: true,
+      fileUpload: false,
+    });
   };
 
   handleOnRemoveFile = (data) => {
@@ -178,7 +183,7 @@ class FromCreate extends Component {
   render() {
     const { classes, createType } = this.props;
     console.log(createType, '===>>>>createType');
-    const { fileUpload } = this.state;
+    const { fileUpload, errorInFile } = this.state;
     return (
       <Container>
         <Toolbar
@@ -210,7 +215,7 @@ class FromCreate extends Component {
           <div className={classes.smallSummery}></div>
 
           <div style={{ padding: '15%' }}>
-            {fileUpload ? (
+            {fileUpload == false ? (
               <>
                 <CSVReader
                   onDrop={this.handleOnDrop}
@@ -222,7 +227,11 @@ class FromCreate extends Component {
                   <span>Please Select CSV To Create {createType}</span>
                 </CSVReader>
                 <div style={{ textAlign: 'center', marginTop: '5%' }}>
-                  <Button variant='contained' color='primary'>
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    onClick={this.startUploadOnServer}
+                  >
                     Upload
                   </Button>
                 </div>
@@ -230,6 +239,9 @@ class FromCreate extends Component {
             ) : (
               <Alert severity='success'>File Uploaded Sucessfully</Alert>
             )}
+            {errorInFile == true ? (
+              <Alert severity='success'>Something Went Wrong</Alert>
+            ) : null}
           </div>
         </div>
       </Container>
