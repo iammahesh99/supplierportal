@@ -410,7 +410,6 @@ class POShipment extends Component {
   render() {
     const { classes } = this.props;
     const { settings, selectedValue, items, selectItem } = this.state;
-    console.log(items, '===>>>items');
     return (
       <Container>
         <Toolbar
@@ -637,105 +636,108 @@ class POShipment extends Component {
         </div>
 
         {selectedValue === 'a' ? (
-          <Grid style={{ border: '1px solid red' }}>
-            <div className={classes.smallSummery}>
-              <p>{selectItem} CSV CONFIGURATION</p>
-            </div>
-            <TableContainer
-              component={Paper}
-              style={{ boxShadow: 'none', height: '250px' }}
-            >
-              <Table
-                stickyHeader
-                aria-label='sticky table'
-                padding='default'
-                size='medium'
-                hover={true}
-                classes={{ root: classes.main_table_root }}
-                className={classes.main_table}
+          <>
+            <Grid style={{ border: '1px solid red' }}>
+              <div className={classes.smallSummery}>
+                <p>{selectItem} CSV CONFIGURATION</p>
+              </div>
+              <TableContainer
+                component={Paper}
+                style={{ boxShadow: 'none', height: '250px' }}
               >
-                <TableHead>
-                  {this.state.header.map((item, index) => (
-                    <TableRow>
-                      <TableCell
-                        padding='default'
-                        sortDirection='asc'
-                        className={classes.table_head_bordertd1}
+                <Table
+                  stickyHeader
+                  aria-label='sticky table'
+                  padding='default'
+                  size='medium'
+                  hover={true}
+                  classes={{ root: classes.main_table_root }}
+                  className={classes.main_table}
+                >
+                  <TableHead>
+                    {this.state.header.map((item, index) => (
+                      <TableRow>
+                        <TableCell
+                          padding='default'
+                          sortDirection='asc'
+                          className={classes.table_head_bordertd1}
+                        >
+                          COLUMN NAME
+                        </TableCell>
+                        <TableCell
+                          padding='default'
+                          sortDirection='asc'
+                          className={classes.table_head_bordertd}
+                        >
+                          COLUMN DESCIPTION
+                        </TableCell>
+                        <TableCell
+                          padding='default'
+                          sortDirection='asc'
+                          className={classes.table_head_bordertd}
+                        >
+                          ALTERNATE NAME
+                        </TableCell>
+                        <TableCell
+                          padding='default'
+                          sortDirection='asc'
+                          className={classes.table_head_bordertdL}
+                        >
+                          STATUS
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableHead>
+                  <TableBody component={DroppableComponent(this.onDragEnd)}>
+                    {this.state.items.map((item, index) => (
+                      <TableRow
+                        component={DraggableComponent(item.id, index)}
+                        key={item.id}
                       >
-                        COLUMN NAME
-                      </TableCell>
-                      <TableCell
-                        padding='default'
-                        sortDirection='asc'
-                        className={classes.table_head_bordertd}
-                      >
-                        COLUMN DESCIPTION
-                      </TableCell>
-                      <TableCell
-                        padding='default'
-                        sortDirection='asc'
-                        className={classes.table_head_bordertd}
-                      >
-                        ALTERNATE NAME
-                      </TableCell>
-                      <TableCell
-                        padding='default'
-                        sortDirection='asc'
-                        className={classes.table_head_bordertdL}
-                      >
-                        STATUS
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableHead>
-                <TableBody component={DroppableComponent(this.onDragEnd)}>
-                  {this.state.items.map((item, index) => (
-                    <TableRow
-                      component={DraggableComponent(item.id, index)}
-                      key={item.id}
-                    >
-                      <TableCell
-                        padding='default'
-                        sortDirection='asc'
-                        className={classes.table_row_bordertd1}
-                      >
-                        {item.TOTAL_SOH}
-                      </TableCell>
-                      <TableCell
-                        padding='default'
-                        sortDirection='asc'
-                        className={classes.table_row_bordertd}
-                      >
-                        {item.AVL_SOH}
-                      </TableCell>
-                      <TableCell
-                        padding='default'
-                        sortDirection='asc'
-                        className={classes.table_row_bordertd}
-                      >
-                        {' '}
-                        <TextField
-                          id='standard-basic'
-                          defaultValue={item.TOTAL_SOH}
-                        />
-                      </TableCell>
-                      <TableCell
-                        padding='default'
-                        sortDirection='asc'
-                        className={classes.table_row_bordertdL}
-                      >
-                        <Checkbox
-                          onChange={(event) => {}}
-                          name='radio-button-demo'
-                        />
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Grid>
+                        <TableCell
+                          padding='default'
+                          sortDirection='asc'
+                          className={classes.table_row_bordertd1}
+                        >
+                          {item.TOTAL_SOH}
+                        </TableCell>
+                        <TableCell
+                          padding='default'
+                          sortDirection='asc'
+                          className={classes.table_row_bordertd}
+                        >
+                          {item.AVL_SOH}
+                        </TableCell>
+                        <TableCell
+                          padding='default'
+                          sortDirection='asc'
+                          className={classes.table_row_bordertd}
+                        >
+                          {' '}
+                          <TextField
+                            id='standard-basic'
+                            defaultValue={item.TOTAL_SOH}
+                          />
+                        </TableCell>
+                        <TableCell
+                          padding='default'
+                          sortDirection='asc'
+                          className={classes.table_row_bordertdL}
+                        >
+                          <Checkbox
+                            onChange={(event) => {}}
+                            name='radio-button-demo'
+                          />
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Grid>
+          </>
         ) : null}
+
         {/* below Slider Code */}
         <Grid
           container
