@@ -59,7 +59,7 @@ const styles = (theme) => ({
     border: 'solid 1px ',
     borderColor: 'red',
     backgroundColor: 'white',
-    margin: '10px 45px 10px 45px',
+    margin: '10px 95px 10px 95px',
   },
   removeFlex: {
     flexBasis: 'unset',
@@ -77,7 +77,7 @@ const styles = (theme) => ({
     flex: 1,
     flexDirection: 'column',
     border: '1px solid red',
-    height: 450,
+    height: 300,
   },
   poDetail: {
     marginBottom: theme.spacing(2),
@@ -202,11 +202,7 @@ const styles = (theme) => ({
   fchiddiv: {
     margin: '6px 0px 7px 0px',
   },
-  sliderDiv: {
-    //border: '1px solid red',
-    borderTop: '1px solid red',
-    borderBottom: '1px solid red',
-  },
+  sliderDiv: {},
   slickSlide: {
     padding: '0 8px',
   },
@@ -215,6 +211,45 @@ const styles = (theme) => ({
     height: theme.spacing(3),
   },
 });
+
+const arrayItem = [
+  {
+    id: 1,
+    sku_id: 'PO_ALERTS',
+    display_name: 'PO Alert',
+    image_path: require('../../../HomePage/Icons/PO.svg'),
+  },
+  {
+    id: 2,
+    sku_id: 'STOCK_ALERTS',
+    display_name: 'STOCK Alert',
+    image_path: require('../../../HomePage/Icons/stock.svg'),
+  },
+  {
+    id: 3,
+    sku_id: 'SALES_ALERTS',
+    display_name: 'SALES Alert',
+    image_path: require('../../../HomePage/Icons/sales.svg'),
+  },
+  {
+    id: 4,
+    sku_id: 'INVOICE_ALERTS',
+    display_name: 'INVOICE Alert',
+    image_path: require('../../../HomePage/Icons/invoices.svg'),
+  },
+  {
+    id: 5,
+    sku_id: 'ASN_ALERTS',
+    display_name: 'ASN Alert',
+    image_path: require('../../../HomePage/Icons/asn.svg'),
+  },
+  {
+    id: 6,
+    sku_id: 'COST_ALERTS',
+    display_name: 'COST Alert',
+    image_path: require('../../../HomePage/Icons/costchange.svg'),
+  },
+];
 
 class NotificationView extends Component {
   constructor(props) {
@@ -225,20 +260,17 @@ class NotificationView extends Component {
       options: [],
       selectedAlert: 'PO',
       settings: {
-        initialSlide: 0,
         dots: false,
         infinite: true,
-        speed: 300,
-        slidesToShow: 4,
-        slidesToScroll: 2,
-        centerMode: false,
-        nextArrow: <SampleNextArrow />,
-        prevArrow: <SamplePrevArrow />,
+        speed: 500,
+        slidesToShow: 3,
+        slidesToScroll: 3,
       },
     };
   }
 
   updateView = (status) => {
+    console.log(status, '====>>>>>updateView');
     switch (status) {
       case 'PO_ALERTS':
         this.setState({
@@ -400,83 +432,24 @@ class NotificationView extends Component {
           <Grid item xs={7}>
             <div className={classes.sliderDiv}>
               <Slider {...settings}>
-                <div
-                  className={classes.avtarbox2}
-                  onClick={() => this.updateView('PO_ALERTS')}
-                >
-                  <Avatar className={classes.large}>
-                    <img
-                      src={require('../../../HomePage/Icons/PO.svg')}
-                      className={classes.icons}
-                    />
-                  </Avatar>
-                  <b>PO Alerts</b>
-                </div>
-
-                <div
-                  className={classes.avtarbox2}
-                  onClick={() => this.updateView('STOCK_ALERTS')}
-                >
-                  <Avatar className={classes.large}>
-                    <img
-                      src={require('../../../HomePage/Icons/stock.svg')}
-                      className={classes.icons}
-                    />
-                  </Avatar>
-                  <b>Stock Alerts</b>
-                </div>
-
-                <div
-                  className={classes.avtarbox2}
-                  onClick={() => this.updateView('SALES_ALERTS')}
-                >
-                  <Avatar className={classes.large}>
-                    <img
-                      src={require('../../../HomePage/Icons/sales.svg')}
-                      className={classes.icons}
-                    />
-                  </Avatar>
-                  <b>Sales Alerts</b>
-                </div>
-
-                <div
-                  className={classes.avtarbox2}
-                  onClick={() => this.updateView('INVOICE_ALERTS')}
-                >
-                  <Avatar className={classes.large}>
-                    <img
-                      src={require('../../../HomePage/Icons/invoices.svg')}
-                      className={classes.icons}
-                    />
-                  </Avatar>
-                  <b>Inv Alerts</b>
-                </div>
-
-                <div
-                  className={classes.avtarbox2}
-                  onClick={() => this.updateView('ASN_ALERTS')}
-                >
-                  <Avatar className={classes.large}>
-                    <img
-                      src={require('../../../HomePage/Icons/asn.svg')}
-                      className={classes.icons}
-                    />
-                  </Avatar>
-                  <b>ASN Alerts</b>
-                </div>
-
-                <div
-                  className={classes.avtarbox2}
-                  onClick={() => this.updateView('COST_ALERTS')}
-                >
-                  <Avatar className={classes.large}>
-                    <img
-                      src={require('../../../HomePage/Icons/costchange.svg')}
-                      className={classes.icons}
-                    />
-                  </Avatar>
-                  <b>CO Alerts</b>
-                </div>
+                {arrayItem.map((item, index) => {
+                  return (
+                    <div key={index}>
+                      <div
+                        className={classes.avtarbox2}
+                        onClick={() => this.updateView(item.sku_id)}
+                      >
+                        <Avatar className={classes.large}>
+                          <img
+                            src={item.image_path}
+                            className={classes.icons}
+                          />
+                        </Avatar>
+                        <b>{item.display_name}</b>
+                      </div>
+                    </div>
+                  );
+                })}
               </Slider>
             </div>
           </Grid>

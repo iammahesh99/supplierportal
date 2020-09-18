@@ -36,7 +36,7 @@ const styles = (theme) => ({
     border: 'solid 1px ',
     borderColor: 'red',
     backgroundColor: 'white',
-    margin: '10px 45px 10px 45px',
+    margin: '10px 90px 10px 90px',
   },
   removeFlex: {
     flexBasis: 'unset',
@@ -179,11 +179,7 @@ const styles = (theme) => ({
   fchiddiv: {
     margin: '6px 0px 7px 0px',
   },
-  sliderDiv: {
-    //border: '1px solid red',
-    borderTop: '1px solid red',
-    borderBottom: '1px solid red',
-  },
+  sliderDiv: {},
   slickSlide: {
     padding: '0 8px',
   },
@@ -264,32 +260,59 @@ const DroppableComponent = (onDragEnd: (result, provided) => void) => (
   );
 };
 
+const arrayItem = [
+  {
+    id: 1,
+    sku_id: 'PO_CONFIG',
+    display_name: 'PO Config',
+    image_path: require('../../../HomePage/Icons/PO.svg'),
+  },
+  {
+    id: 2,
+    sku_id: 'STOCK_CONFIG',
+    display_name: 'STOCK Config',
+    image_path: require('../../../HomePage/Icons/stock.svg'),
+  },
+  {
+    id: 3,
+    sku_id: 'SALES_CONFIG',
+    display_name: 'SALES Config',
+    image_path: require('../../../HomePage/Icons/sales.svg'),
+  },
+  {
+    id: 4,
+    sku_id: 'INVOICE_CONFIG',
+    display_name: 'INVOICE Config',
+    image_path: require('../../../HomePage/Icons/invoices.svg'),
+  },
+  {
+    id: 5,
+    sku_id: 'ASN_CONFIG',
+    display_name: 'ASN Config',
+    image_path: require('../../../HomePage/Icons/asn.svg'),
+  },
+  {
+    id: 6,
+    sku_id: 'COST_CONFIG',
+    display_name: 'COST Config',
+    image_path: require('../../../HomePage/Icons/costchange.svg'),
+  },
+];
+
 class POShipment extends Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedValue: 'a',
       settings: {
-        initialSlide: 0,
         dots: false,
         infinite: true,
-        speed: 300,
-        slidesToShow: 4,
-        slidesToScroll: 2,
-        centerMode: false,
-        nextArrow: <SampleNextArrow />,
-        prevArrow: <SamplePrevArrow />,
+        speed: 500,
+        slidesToShow: 3,
+        slidesToScroll: 3,
       },
       items: getItems(10),
       selectItem: 'PO',
-      header: [
-        {
-          name: `column_name___${'PO_CONFIG'}`,
-          desc: `column_desc___${'PO_CONFIG'}`,
-          alternate: `alternate___${'PO_CONFIG'}`,
-          status: `status___${'PO_CONFIG'}`,
-        },
-      ],
     };
     this.onDragEnd = this.onDragEnd.bind(this);
   }
@@ -323,86 +346,35 @@ class POShipment extends Component {
     switch (status) {
       case 'PO_CONFIG':
         this.setState({
-          header: [
-            {
-              name: `column_name___${status}`,
-              desc: `column_desc___${status}`,
-              alternate: `alternate___${status}`,
-              status: `status___${status}`,
-            },
-          ],
           selectItem: 'PO',
         });
         break;
       case 'STOCK_CONFIG':
         this.setState({
-          header: [
-            {
-              name: `column_name___${status}`,
-              desc: `column_desc___${status}`,
-              alternate: `alternate___${status}`,
-              status: `status___${status}`,
-            },
-          ],
           selectItem: 'STOCK',
         });
         break;
       case 'SALES_CONFIG':
         this.setState({
-          header: [
-            {
-              name: `column_name___${status}`,
-              desc: `column_desc___${status}`,
-              alternate: `alternate___${status}`,
-              status: `status___${status}`,
-            },
-          ],
           selectItem: 'SALES',
         });
         break;
       case 'INVOICE_CONFIG':
         this.setState({
-          header: [
-            {
-              name: `column_name___${status}`,
-              desc: `column_desc___${status}`,
-              alternate: `alternate___${status}`,
-              status: `status___${status}`,
-            },
-          ],
           selectItem: 'INVOICE',
         });
         break;
       case 'ASN_CONFIG':
         this.setState({
-          header: [
-            {
-              name: `column_name___${status}`,
-              desc: `column_desc___${status}`,
-              alternate: `alternate___${status}`,
-              status: `status___${status}`,
-            },
-          ],
-          selectItem: 'ASN',
+          m: 'ASN',
         });
         break;
       case 'COST_CONFIG':
         this.setState({
-          header: [
-            {
-              name: `column_name___${status}`,
-              desc: `column_desc___${status}`,
-              alternate: `alternate___${status}`,
-              status: `status___${status}`,
-            },
-          ],
           selectItem: 'COST',
         });
         break;
       default:
-        this.setState({
-          header: [],
-        });
         break;
     }
   };
@@ -655,38 +627,36 @@ class POShipment extends Component {
                   className={classes.main_table}
                 >
                   <TableHead>
-                    {this.state.header.map((item, index) => (
-                      <TableRow>
-                        <TableCell
-                          padding='default'
-                          sortDirection='asc'
-                          className={classes.table_head_bordertd1}
-                        >
-                          COLUMN NAME
-                        </TableCell>
-                        <TableCell
-                          padding='default'
-                          sortDirection='asc'
-                          className={classes.table_head_bordertd}
-                        >
-                          COLUMN DESCIPTION
-                        </TableCell>
-                        <TableCell
-                          padding='default'
-                          sortDirection='asc'
-                          className={classes.table_head_bordertd}
-                        >
-                          ALTERNATE NAME
-                        </TableCell>
-                        <TableCell
-                          padding='default'
-                          sortDirection='asc'
-                          className={classes.table_head_bordertdL}
-                        >
-                          STATUS
-                        </TableCell>
-                      </TableRow>
-                    ))}
+                    <TableRow>
+                      <TableCell
+                        padding='default'
+                        sortDirection='asc'
+                        className={classes.table_head_bordertd1}
+                      >
+                        COLUMN NAME
+                      </TableCell>
+                      <TableCell
+                        padding='default'
+                        sortDirection='asc'
+                        className={classes.table_head_bordertd}
+                      >
+                        COLUMN DESCIPTION
+                      </TableCell>
+                      <TableCell
+                        padding='default'
+                        sortDirection='asc'
+                        className={classes.table_head_bordertd}
+                      >
+                        ALTERNATE NAME
+                      </TableCell>
+                      <TableCell
+                        padding='default'
+                        sortDirection='asc'
+                        className={classes.table_head_bordertdL}
+                      >
+                        STATUS
+                      </TableCell>
+                    </TableRow>
                   </TableHead>
                   <TableBody component={DroppableComponent(this.onDragEnd)}>
                     {this.state.items.map((item, index) => (
@@ -749,83 +719,24 @@ class POShipment extends Component {
           <Grid item xs={7}>
             <div className={classes.sliderDiv}>
               <Slider {...settings}>
-                <div
-                  className={classes.avtarbox2}
-                  onClick={() => this.updateView('PO_CONFIG')}
-                >
-                  <Avatar className={classes.large}>
-                    <img
-                      src={require('../../../HomePage/Icons/PO.svg')}
-                      className={classes.icons}
-                    />
-                  </Avatar>
-                  <b>PO Config</b>
-                </div>
-
-                <div
-                  className={classes.avtarbox2}
-                  onClick={() => this.updateView('STOCK_CONFIG')}
-                >
-                  <Avatar className={classes.large}>
-                    <img
-                      src={require('../../../HomePage/Icons/stock.svg')}
-                      className={classes.icons}
-                    />
-                  </Avatar>
-                  <b>Stock Config</b>
-                </div>
-
-                <div
-                  className={classes.avtarbox2}
-                  onClick={() => this.updateView('SALES_CONFIG')}
-                >
-                  <Avatar className={classes.large}>
-                    <img
-                      src={require('../../../HomePage/Icons/sales.svg')}
-                      className={classes.icons}
-                    />
-                  </Avatar>
-                  <b>Sales Config</b>
-                </div>
-
-                <div
-                  className={classes.avtarbox2}
-                  onClick={() => this.updateView('INVOICE_CONFIG')}
-                >
-                  <Avatar className={classes.large}>
-                    <img
-                      src={require('../../../HomePage/Icons/invoices.svg')}
-                      className={classes.icons}
-                    />
-                  </Avatar>
-                  <b>Inv Config</b>
-                </div>
-
-                <div
-                  className={classes.avtarbox2}
-                  onClick={() => this.updateView('ASN_CONFIG')}
-                >
-                  <Avatar className={classes.large}>
-                    <img
-                      src={require('../../../HomePage/Icons/asn.svg')}
-                      className={classes.icons}
-                    />
-                  </Avatar>
-                  <b>ASN Config</b>
-                </div>
-
-                <div
-                  className={classes.avtarbox2}
-                  onClick={() => this.updateView('COST_CONFIG')}
-                >
-                  <Avatar className={classes.large}>
-                    <img
-                      src={require('../../../HomePage/Icons/costchange.svg')}
-                      className={classes.icons}
-                    />
-                  </Avatar>
-                  <b>CO Config</b>
-                </div>
+                {arrayItem.map((item, index) => {
+                  return (
+                    <div key={index}>
+                      <div
+                        className={classes.avtarbox2}
+                        onClick={() => this.updateView(item.sku_id)}
+                      >
+                        <Avatar className={classes.large}>
+                          <img
+                            src={item.image_path}
+                            className={classes.icons}
+                          />
+                        </Avatar>
+                        <b>{item.display_name}</b>
+                      </div>
+                    </div>
+                  );
+                })}
               </Slider>
             </div>
           </Grid>
