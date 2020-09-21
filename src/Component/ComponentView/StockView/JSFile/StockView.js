@@ -62,7 +62,6 @@ const styles = (theme) => ({
     borderColor: 'red',
   },
   tables: {
-    marginTop: theme.spacing(4),
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
@@ -139,7 +138,7 @@ const styles = (theme) => ({
     borderTop: '1px solid #d7d6d6',
     borderBottom: '1px solid #d7d6d6',
     fontSize: '12px',
-    padding: '6px',
+    padding: '5px',
   },
   table_row_bordertd1: {
     borderTop: '1px solid #d7d6d6',
@@ -147,7 +146,7 @@ const styles = (theme) => ({
     borderLeft: '1px solid #d7d6d6',
     borderTopLeftRadius: ' 10px',
     borderBottomLeftRadius: '10px',
-    padding: '6px',
+    padding: '5px',
     fontSize: '12px',
   },
   table_row_bordertdL: {
@@ -157,7 +156,7 @@ const styles = (theme) => ({
     borderTopRightRadius: ' 10px',
     borderBottomRightRadius: '10px',
     fontSize: '12px',
-    padding: '6px',
+    padding: '5px',
   },
   main_table: {
     borderCollapse: 'separate',
@@ -393,8 +392,6 @@ class StockView extends Component {
   render() {
     const { classes } = this.props;
     const { checkedItems, options } = this.state;
-    console.log(options.indexOf(0) >= 0, '===>>>>options1');
-    console.log(options, '===>>>>options3');
     return (
       <Container component='main' maxWidth='lg'>
         <Grid container spacing={3} direction='row' alignItems='center'>
@@ -584,10 +581,17 @@ class StockView extends Component {
           </Box>
         ) : null}
 
+        <div
+          style={{
+            padding: '1% 0% 0% 0%',
+            fontSize: '20px',
+            height: '50px',
+          }}
+        >
+          {options.length > 0 ? <b>{options.length} Items</b> : null}
+        </div>
+
         <div className={classes.tables}>
-          {options.length > 0 ? (
-            <Alert severity='info'>{options.length} Items</Alert>
-          ) : null}
           <div
             style={{
               display: 'flex',

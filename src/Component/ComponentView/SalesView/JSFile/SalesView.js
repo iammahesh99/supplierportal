@@ -21,10 +21,14 @@ import {
   Checkbox,
   Box,
   Radio,
+  InputBase,
+  IconButton,
 } from '@material-ui/core';
 import Toast from 'light-toast';
 import XLSX from 'xlsx';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
+import SearchIcon from '@material-ui/icons/Search';
+import Alert from '@material-ui/lab/Alert';
 import { properties } from '../../../../Properties.js';
 
 const StyledTableCell = withStyles((theme) => ({
@@ -55,7 +59,6 @@ const styles = (theme) => ({
     borderColor: 'red',
   },
   tables: {
-    marginTop: theme.spacing(4),
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
@@ -140,7 +143,7 @@ const styles = (theme) => ({
     borderLeft: '1px solid #d7d6d6',
     borderTopLeftRadius: ' 10px',
     borderBottomLeftRadius: '10px',
-    padding: '0px',
+    padding: '5px',
     fontSize: '12px',
   },
   table_row_bordertdL: {
@@ -298,22 +301,30 @@ class SalesView extends Component {
     this.setState({ vpn: '' });
   };
 
-  handleCheck = (event, row) => {
+  handleCheck = (event, rowIndex) => {
     const options = this.state.options;
     let index;
+
+    console.log(rowIndex, '===>>>rowIndex');
 
     // check if the check box is checked or unchecked
     if (event.target.checked) {
       // add the numerical value of the checkbox to options array
-      options.push(event.target.value);
+      options.push(rowIndex);
     } else {
       // or remove the value from the unchecked checkbox from the array
-      index = options.indexOf(event.target.value);
+      index = options.indexOf(rowIndex);
       options.splice(index, 1);
     }
 
     // update the state with the new array of options
     this.setState({ options: options });
+
+    if (options.length === 1) {
+      this.setState({ detail: true });
+    } else {
+      this.setState({ detail: false });
+    }
   };
 
   handleExport = () => {
@@ -334,8 +345,65 @@ class SalesView extends Component {
     XLSX.writeFile(workbook, ans + `.xls`);
   };
 
+  handleSearch = (event) => {
+    console.log(event.target.value, '====>>>>>>target');
+
+    const { searchResult: search } = this.state;
+    if (event.target.value == '' || search.length == 0) return true;
+
+    let results = [];
+    let searchField1 = 'item';
+    let searchField2 = 'itemDesc';
+    let searchField3 = 'itemUpc';
+    let searchField4 = 'locType';
+    let searchField5 = 'locationId';
+    let searchField6 = 'locationName';
+    let searchField7 = 'netSale';
+    let searchField8 = 'promoSale';
+    let searchField9 = 'returns';
+    let searchField10 = 'totalSale';
+    let condition = new RegExp(event.target.value);
+    console.log(search, '===>>>>search result');
+
+    for (var i = 0; i < search.length; i++) {
+      if (condition.test(search[i][searchField1])) {
+        results.push(search[i]);
+      }
+
+      if (condition.test(search[i][searchField2])) {
+        results.push(search[i]);
+      }
+      if (condition.test(search[i][searchField3])) {
+        results.push(search[i]);
+      }
+      if (condition.test(search[i][searchField4])) {
+        results.push(search[i]);
+      }
+      if (condition.test(search[i][searchField5])) {
+        results.push(search[i]);
+      }
+      if (condition.test(search[i][searchField6])) {
+        results.push(search[i]);
+      }
+      if (condition.test(search[i][searchField7])) {
+        results.push(search[i]);
+      }
+      if (condition.test(search[i][searchField8])) {
+        results.push(search[i]);
+      }
+      if (condition.test(search[i][searchField9])) {
+        results.push(search[i]);
+      }
+    }
+
+    this.setState({
+      filterResult: results,
+    });
+  };
+
   render() {
     const { classes } = this.props;
+    const { checkedItems, options } = this.state;
     const open = Boolean(this.state.ischecked);
 
     return (
@@ -564,17 +632,46 @@ class SalesView extends Component {
           </Box>
         ) : null}
 
+        <div
+          style={{
+            padding: '1% 0% 0% 0%',
+            fontSize: '20px',
+            height: '50px',
+          }}
+        >
+          {options.length > 0 ? <b>{options.length} Items</b> : null}
+        </div>
+
         <div className={classes.tables}>
           <div
             style={{
-              alignItems: 'flex-end',
               display: 'flex',
-              flexDirection: 'column',
+              justifyContent: 'space-between',
+              flexDirection: 'row',
               backgroundColor: 'red',
               bottom: '-10px',
               padding: '5px',
             }}
           >
+            <div>
+              <Paper component='form' className={classes.root}>
+                <IconButton
+                  type='submit'
+                  aria-label='search'
+                  style={{ padding: 3 }}
+                >
+                  <SearchIcon />
+                </IconButton>
+                <InputBase
+                  onChange={(event) => {
+                    this.handleSearch(event);
+                  }}
+                  placeholder='Search'
+                  inputProps={{ 'aria-label': 'Search' }}
+                />
+              </Paper>
+            </div>
+
             <div>
               <Button
                 variant='contained'
@@ -681,38 +778,74 @@ class SalesView extends Component {
 
               <TableBody>
                 {this.state.searchResult.map((row, index) => (
-                  <TableRow>
-                    <TableCell className={classes.table_row_bordertd1}>
+                  <TableRow
+                    hover
+                    key={index}
+                    aria-checked={options.indexOf(index) >= 0 ? true : false}
+                    selected={options.indexOf(index) >= 0 ? true : false}
+                  >
+                    <TableCell
+                      key={index}
+                      className={classes.table_row_bordertd1}
+                    >
                       <Checkbox
-                        onChange={(event) => this.handleCheck(event, row)}
+                        onChange={(event) => this.handleCheck(event, index)}
+                        name='radio-button-demo'
                         name='radio-button-demo'
                       />
                     </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
+                    <TableCell
+                      key={index}
+                      className={classes.table_row_bordertd}
+                    >
                       {row.item}
                     </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
+                    <TableCell
+                      key={index}
+                      className={classes.table_row_bordertd}
+                    >
                       {row.itemDesc}
                     </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
+                    <TableCell
+                      key={index}
+                      className={classes.table_row_bordertd}
+                    >
                       {row.itemUpc}
                     </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
+                    <TableCell
+                      key={index}
+                      className={classes.table_row_bordertd}
+                    >
                       {row.vpn}
                     </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
+                    <TableCell
+                      key={index}
+                      className={classes.table_row_bordertd}
+                    >
                       {row.locationName}
                     </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
+                    <TableCell
+                      key={index}
+                      className={classes.table_row_bordertd}
+                    >
                       {row.totalSale}
                     </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
+                    <TableCell
+                      key={index}
+                      className={classes.table_row_bordertd}
+                    >
                       {row.returns}
                     </TableCell>
-                    <TableCell className={classes.table_row_bordertd}>
+                    <TableCell
+                      key={index}
+                      className={classes.table_row_bordertd}
+                    >
                       {row.netSale}
                     </TableCell>
-                    <TableCell className={classes.table_row_bordertdL}>
+                    <TableCell
+                      key={index}
+                      className={classes.table_row_bordertdL}
+                    >
                       {row.promoSale}
                     </TableCell>
                   </TableRow>

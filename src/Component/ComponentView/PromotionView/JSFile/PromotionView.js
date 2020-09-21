@@ -24,12 +24,14 @@ import {
   IconButton,
   Box,
   Radio,
+  InputBase,
 } from '@material-ui/core';
 import Toast from 'light-toast';
 import XLSX from 'xlsx';
 import CloseIcon from '@material-ui/icons/Close';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import { properties } from '../../../../Properties.js';
+import SearchIcon from '@material-ui/icons/Search';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -59,7 +61,6 @@ const styles = (theme) => ({
     borderColor: 'red',
   },
   tables: {
-    marginTop: theme.spacing(4),
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
@@ -288,22 +289,29 @@ class PromotionView extends Component {
     this.setState({ bar: '' });
     this.setState({ vpn: '' });
   };
-  handleCheck = (event, row) => {
+  handleCheck = (event, rowIndex) => {
     const options = this.state.options;
     let index;
+
+    console.log(rowIndex, '===>>>rowIndex');
 
     // check if the check box is checked or unchecked
     if (event.target.checked) {
       // add the numerical value of the checkbox to options array
-      options.push(event.target.value);
+      options.push(rowIndex);
     } else {
       // or remove the value from the unchecked checkbox from the array
-      index = options.indexOf(event.target.value);
+      index = options.indexOf(rowIndex);
       options.splice(index, 1);
     }
 
     // update the state with the new array of options
     this.setState({ options: options });
+    if (options.length === 1) {
+      this.setState({ detail: true });
+    } else {
+      this.setState({ detail: false });
+    }
   };
   handleExport = () => {
     this.setState({ checkedItems: [] });
@@ -326,7 +334,7 @@ class PromotionView extends Component {
   render() {
     const { classes } = this.props;
     const open = Boolean(this.state.ischecked);
-    var set = '';
+    const { checkedItems, options } = this.state;
 
     return (
       <Container component='main' maxWidth='lg'>
@@ -607,17 +615,46 @@ class PromotionView extends Component {
           </Box>
         ) : null}
 
+        <div
+          style={{
+            padding: '1% 0% 0% 0%',
+            fontSize: '20px',
+            height: '50px',
+          }}
+        >
+          {options.length > 0 ? <b>{options.length} Items</b> : null}
+        </div>
+
         <div className={classes.tables}>
           <div
             style={{
-              alignItems: 'flex-end',
               display: 'flex',
-              flexDirection: 'column',
+              justifyContent: 'space-between',
+              flexDirection: 'row',
               backgroundColor: 'red',
               bottom: '-10px',
               padding: '5px',
             }}
           >
+            <div>
+              <Paper component='form' className={classes.root}>
+                <IconButton
+                  type='submit'
+                  aria-label='search'
+                  style={{ padding: 3 }}
+                >
+                  <SearchIcon />
+                </IconButton>
+                <InputBase
+                  onChange={(event) => {
+                    this.handleSearch(event);
+                  }}
+                  placeholder='Search'
+                  inputProps={{ 'aria-label': 'Search' }}
+                />
+              </Paper>
+            </div>
+
             <div>
               <Button
                 variant='contained'
@@ -710,10 +747,15 @@ class PromotionView extends Component {
 
               <TableBody>
                 {this.state.searchResult.map((row, index) => (
-                  <TableRow>
+                  <TableRow
+                    hover
+                    key={index}
+                    aria-checked={options.indexOf(index) >= 0 ? true : false}
+                    selected={options.indexOf(index) >= 0 ? true : false}
+                  >
                     <TableCell className={classes.table_row_bordertd1}>
                       <Checkbox
-                        onChange={(event) => this.handleCheck(event, row)}
+                        onChange={(event) => this.handleCheck(event, index)}
                         name='radio-button-demo'
                       />
                     </TableCell>
