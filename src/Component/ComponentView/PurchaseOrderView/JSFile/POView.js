@@ -23,6 +23,8 @@ import {
   TableContainer,
   Radio,
   Box,
+  InputBase,
+  IconButton,
 } from '@material-ui/core';
 import Toast from 'light-toast';
 import XLSX from 'xlsx';
@@ -34,6 +36,7 @@ import PO from '../JSFile/JSON/PO.json';
 import '../CSSFile/POView.css';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import CallToActionIcon from '@material-ui/icons/CallToAction';
+import SearchIcon from '@material-ui/icons/Search';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -278,7 +281,6 @@ class POView extends Component {
 
     // update the state with the new array of options
     this.setState({ options: options });
-
     if (options.length === 1) {
       this.setState({ detail: true });
     } else {
@@ -688,14 +690,32 @@ class POView extends Component {
         <div className={classes.tables}>
           <div
             style={{
-              alignItems: 'flex-end',
               display: 'flex',
-              flexDirection: 'column',
+              justifyContent: 'space-between',
+              flexDirection: 'row',
               backgroundColor: 'red',
               bottom: '-10px',
               padding: '5px',
             }}
           >
+            <div>
+              <Paper component='form' className={classes.root}>
+                <IconButton
+                  type='submit'
+                  aria-label='search'
+                  style={{ padding: 3 }}
+                >
+                  <SearchIcon />
+                </IconButton>
+                <InputBase
+                  onChange={(event) => {
+                    this.handleSearch(event);
+                  }}
+                  placeholder='Search'
+                  inputProps={{ 'aria-label': 'Search' }}
+                />
+              </Paper>
+            </div>
             <div>
               {this.state.detail ? (
                 <>
