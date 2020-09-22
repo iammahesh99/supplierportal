@@ -352,34 +352,34 @@ class StockView extends Component {
     let searchField9 = 'availableStock';
     let condition = new RegExp(event.target.value);
     console.log(search, '===>>>>search result');
-
+    condition = condition.toLowerCase();
     for (var i = 0; i < search.length; i++) {
-      if (condition.test(search[i][searchField1])) {
+      if (condition.test(search[i][searchField1].toLowerCase())) {
         results.push(search[i]);
       }
 
-      if (condition.test(search[i][searchField2])) {
+      if (condition.test(search[i][searchField2].toLowerCase())) {
         results.push(search[i]);
       }
-      if (condition.test(search[i][searchField3])) {
+      if (condition.test(search[i][searchField3].toLowerCase())) {
         results.push(search[i]);
       }
-      if (condition.test(search[i][searchField4])) {
+      if (condition.test(search[i][searchField4].toLowerCase())) {
         results.push(search[i]);
       }
-      if (condition.test(search[i][searchField5])) {
+      if (condition.test(search[i][searchField5].toLowerCase())) {
         results.push(search[i]);
       }
-      if (condition.test(search[i][searchField6])) {
+      if (condition.test(search[i][searchField6].toLowerCase())) {
         results.push(search[i]);
       }
-      if (condition.test(search[i][searchField7])) {
+      if (condition.test(search[i][searchField7].toLowerCase())) {
         results.push(search[i]);
       }
-      if (condition.test(search[i][searchField8])) {
+      if (condition.test(search[i][searchField8].toLowerCase())) {
         results.push(search[i]);
       }
-      if (condition.test(search[i][searchField9])) {
+      if (condition.test(search[i][searchField9].toLowerCase())) {
         results.push(search[i]);
       }
     }
