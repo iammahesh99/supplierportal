@@ -338,7 +338,10 @@ class StockView extends Component {
     console.log(event.target.value, '====>>>>>>target');
 
     const { searchResult: search } = this.state;
-    if (event.target.value == '' || search.length == 0) return true;
+    //if (event.target.value == '' || search.length == 0) return true;
+
+    let SearchText = event.target.value;
+    SearchText = SearchText.toLowerCase();
 
     let results = [];
     let searchField1 = 'item';
@@ -350,36 +353,35 @@ class StockView extends Component {
     let searchField7 = 'locationName';
     let searchField8 = 'totalStock';
     let searchField9 = 'availableStock';
-    let condition = new RegExp(event.target.value);
-    console.log(search, '===>>>>search result');
-    condition = condition.toLowerCase();
+    let condition = new RegExp(SearchText, 'i');
+
     for (var i = 0; i < search.length; i++) {
-      if (condition.test(search[i][searchField1].toLowerCase())) {
+      if (condition.test(search[i][searchField1])) {
         results.push(search[i]);
       }
 
-      if (condition.test(search[i][searchField2].toLowerCase())) {
+      if (condition.test(search[i][searchField2])) {
         results.push(search[i]);
       }
-      if (condition.test(search[i][searchField3].toLowerCase())) {
+      if (condition.test(search[i][searchField3])) {
         results.push(search[i]);
       }
-      if (condition.test(search[i][searchField4].toLowerCase())) {
+      if (condition.test(search[i][searchField4])) {
         results.push(search[i]);
       }
-      if (condition.test(search[i][searchField5].toLowerCase())) {
+      if (condition.test(search[i][searchField5])) {
         results.push(search[i]);
       }
-      if (condition.test(search[i][searchField6].toLowerCase())) {
+      if (condition.test(search[i][searchField6])) {
         results.push(search[i]);
       }
-      if (condition.test(search[i][searchField7].toLowerCase())) {
+      if (condition.test(search[i][searchField7])) {
         results.push(search[i]);
       }
-      if (condition.test(search[i][searchField8].toLowerCase())) {
+      if (condition.test(search[i][searchField8])) {
         results.push(search[i]);
       }
-      if (condition.test(search[i][searchField9].toLowerCase())) {
+      if (condition.test(search[i][searchField9])) {
         results.push(search[i]);
       }
     }
