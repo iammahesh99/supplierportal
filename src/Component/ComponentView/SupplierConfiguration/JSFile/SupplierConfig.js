@@ -96,10 +96,6 @@ const styles = (theme) => ({
     flexDirection: 'column',
     display: 'flex',
   },
-  dialogPaper: {
-    minHeight: '80vh',
-    maxHeight: '80vh',
-  },
   small: {
     width: theme.spacing(3),
     height: theme.spacing(3),
@@ -114,8 +110,8 @@ const styles = (theme) => ({
     padding: 'none',
   },
   dialogPaper: {
-    minHeight: '80vh',
-    maxHeight: '80vh',
+    minHeight: '92%',
+    maxHeight: '92%',
   },
   table_head_bordertd: {
     borderTop: '1px solid #d7d6d6',
@@ -201,7 +197,7 @@ class SupplierConfig extends Component {
       checkedItems: [],
       options: [],
       detail: false,
-      openConfigModel: false,
+      openConfigModel: true,
     };
   }
 
