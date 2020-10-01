@@ -82,7 +82,7 @@ const styles = (theme) => ({
     flex: 1,
     flexDirection: 'column',
     border: '1px solid red',
-    height: 300,
+    height: 500,
   },
   poDetail: {
     marginBottom: theme.spacing(2),

@@ -56,7 +56,8 @@ function ExpandRow(props) {
       <TableRow>
         <TableCell className={classes.table_row_bordertd1}>0001</TableCell>
         <TableCell className={classes.table_row_bordertd}>
-          Hey, You Got New Message.
+          Kotak 811 - a bank account that's ready in minutes. Get your account
+          Now http://kotk.in/4kZnRi *T&C apply
         </TableCell>
         <TableCell className={classes.table_row_bordertd}>
           12th May 2020
@@ -101,7 +102,7 @@ function ExpandRow(props) {
                   variant='h6'
                   gutterBottom
                   component='div'
-                  style={{ fontSize: '14px' }}
+                  style={{ fontSize: '14px', padding: '6px 0px 6px 0px' }}
                 >
                   Hey, You Got New Message. Hey, You Got New Message. Hey, You
                   Got New Message. Hey, You Got New Message.

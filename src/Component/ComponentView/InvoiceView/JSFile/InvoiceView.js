@@ -56,6 +56,12 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 
 const styles = (theme) => ({
+  dot: {
+    height: '10px',
+    width: '10px',
+    borderRadius: '50%',
+    display: 'inline-block',
+  },
   search: {
     display: 'flex',
     flexDirection: 'column',
@@ -776,15 +782,15 @@ class InvoiceView extends Component {
                 {this.state.searchResult
                   .slice(this.state.page * 20, this.state.page * 20 + 20)
                   .map((row, index) => {
-                    let bordercolor = '';
+                    let bkColor = '';
                     if (row.status == 'APPROVED') {
-                      // bordercolor = '2px solid #008000';
+                      bkColor = 'green';
                     }
                     if (row.status == 'REJECTED') {
-                      // bordercolor = '2px solid red';
+                      bkColor = 'red';
                     }
                     if (row.status == 'SUBMITTED') {
-                      // bordercolor = '2px solid #FFFF00';
+                      bkColor = 'orange';
                     }
                     return (
                       <TableRow
@@ -830,7 +836,13 @@ class InvoiceView extends Component {
                           {row.shortQty}
                         </TableCell>
                         <TableCell className={classes.table_row_bordertd}>
-                          {row.status}
+                          <div>
+                            <span
+                              className={classes.dot}
+                              style={{ backgroundColor: bkColor }}
+                            ></span>{' '}
+                            {row.status}
+                          </div>
                         </TableCell>
                       </TableRow>
                     );
