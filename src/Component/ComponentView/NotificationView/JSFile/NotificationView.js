@@ -22,16 +22,21 @@ import {
   Box,
   Radio,
   Avatar,
+  Collapse,
 } from '@material-ui/core';
 import Toast from 'light-toast';
 import XLSX from 'xlsx';
 import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
+import IconButton from '@material-ui/core/IconButton';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import { properties } from '../../../../Properties.js';
 import Slider from 'react-slick';
 import SampleNextArrow from './SampleNextArrow';
 import SamplePrevArrow from './SamplePrevArrow';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import ExpandRow from './ExpandRow';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -218,36 +223,42 @@ const arrayItem = [
     sku_id: 'PO_ALERTS',
     display_name: 'PO Alert',
     image_path: require('../../../HomePage/Icons/PO.svg'),
+    expand: true,
   },
   {
     id: 2,
     sku_id: 'STOCK_ALERTS',
     display_name: 'STOCK Alert',
     image_path: require('../../../HomePage/Icons/stock.svg'),
+    expand: true,
   },
   {
     id: 3,
     sku_id: 'SALES_ALERTS',
     display_name: 'SALES Alert',
     image_path: require('../../../HomePage/Icons/sales.svg'),
+    expand: true,
   },
   {
     id: 4,
     sku_id: 'INVOICE_ALERTS',
     display_name: 'INVOICE Alert',
     image_path: require('../../../HomePage/Icons/invoices.svg'),
+    expand: true,
   },
   {
     id: 5,
     sku_id: 'ASN_ALERTS',
     display_name: 'ASN Alert',
     image_path: require('../../../HomePage/Icons/asn.svg'),
+    expand: true,
   },
   {
     id: 6,
     sku_id: 'COST_ALERTS',
     display_name: 'COST Alert',
     image_path: require('../../../HomePage/Icons/costchange.svg'),
+    expand: true,
   },
 ];
 
@@ -307,9 +318,20 @@ class NotificationView extends Component {
     }
   };
 
+  setOpen = () => {
+    this.setState(
+      {
+        open: !this.state.open,
+      },
+      () => {
+        console.log(this.state.open, '====<<<open state');
+      }
+    );
+  };
+
   render() {
     const { classes } = this.props;
-    const { settings, selectedAlert } = this.state;
+    const { settings, selectedAlert, open } = this.state;
 
     return (
       <Container component='main' maxWidth='lg'>
@@ -368,44 +390,18 @@ class NotificationView extends Component {
                   >
                     Status
                   </TableCell>
+                  <TableCell
+                    padding='default'
+                    sortDirection='asc'
+                    className={classes.table_row_bordertdL}
+                  ></TableCell>
                 </TableRow>
               </TableHead>
 
               <TableBody>
-                {/* {this.state.searchResult.map((row, index) => ( */}
-                <TableRow>
-                  <TableCell className={classes.table_row_bordertd1}>
-                    0001
-                  </TableCell>
-                  <TableCell className={classes.table_row_bordertd}>
-                    Hey, You Got New Message.
-                  </TableCell>
-                  <TableCell className={classes.table_row_bordertd}>
-                    12th May 2020
-                  </TableCell>
-                  <TableCell className={classes.table_row_bordertdL}>
-                    {true ? (
-                      <Avatar
-                        className={classes.small}
-                        alt='Remy Sharp'
-                        style={{ backgroundColor: '#00FF00' }}
-                      >
-                        {' '}
-                        <CheckIcon />
-                      </Avatar>
-                    ) : (
-                      <Avatar
-                        className={classes.small}
-                        alt='Remy Sharp'
-                        style={{ backgroundColor: 'red' }}
-                      >
-                        {' '}
-                        <CloseIcon />
-                      </Avatar>
-                    )}
-                  </TableCell>
-                </TableRow>
-                {/* ))} */}
+                {[0, 1, 2, 3, 4, 5].map((row, index) => {
+                  return <ExpandRow />;
+                })}
               </TableBody>
             </Table>
           </TableContainer>
