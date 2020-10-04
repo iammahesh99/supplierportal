@@ -197,7 +197,7 @@ class SupplierConfig extends Component {
       checkedItems: [],
       options: [],
       detail: false,
-      openConfigModel: true,
+      openConfigModel: false,
     };
   }
 

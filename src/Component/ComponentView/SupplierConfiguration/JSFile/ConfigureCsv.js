@@ -615,7 +615,7 @@ class POShipment extends Component {
               </div>
               <TableContainer
                 component={Paper}
-                style={{ boxShadow: 'none', height: '250px' }}
+                style={{ boxShadow: 'none', height: '300px' }}
               >
                 <Table
                   stickyHeader
