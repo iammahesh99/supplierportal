@@ -32,7 +32,7 @@
     "react-slick": "^0.27.11",
     "reactjs-toastr": "^1.1.0",
     "redux": "^4.0.4",
-    "xlsx": "^0.16.4"
+    "xlsx": "^0.17.0"
   },
   "scripts": {
     "start": "set PORT=4002 && react-scripts start",
